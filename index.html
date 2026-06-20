@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AcademiaX — the school day, in one place</title>
+<link rel="stylesheet" href="css/base.css" />
+<link rel="stylesheet" href="css/landing.css" />
+</head>
+<body>
+  <header class="nav">
+    <div class="container nav-inner">
+      <a class="brand" href="index.html"><span class="mark">A</span>AcademiaX</a>
+      <nav class="nav-links">
+        <a href="#features">Features</a>
+        <a href="login.html">Sign in</a>
+        <a class="btn btn-accent" href="register.html">Register institution</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <span class="eyebrow">Institution operating system</span>
+          <h1>The school day,<br />in one place.</h1>
+          <p class="lead">One shared system for admins, teachers, and parents — attendance, notices, fees, exams, and the everyday back-and-forth, without the paperwork.</p>
+          <div class="hero-cta">
+            <a class="btn btn-accent" href="register.html">Register your institution</a>
+            <a class="btn btn-ghost" href="login.html">Sign in</a>
+          </div>
+          <p class="hero-note">Free to start · No card required · Set up in minutes</p>
+        </div>
+
+        <!-- Signature: a living timetable -->
+        <div class="timetable" aria-hidden="true">
+          <div class="tt-head">
+            <span class="mono">Weekly view<span class="tt-dot"></span></span>
+            <span class="mono">CLASS 5A</span>
+          </div>
+          <div class="tt">
+            <div></div>
+            <div class="h">MON</div><div class="h">TUE</div><div class="h">WED</div><div class="h">THU</div><div class="h">FRI</div>
+
+            <div class="time">09:00</div>
+            <div class="blk ink" style="animation-delay:.05s">Attendance</div>
+            <div class="cell"></div>
+            <div class="blk gold" style="animation-delay:.1s">Maths</div>
+            <div class="cell"></div>
+            <div class="blk soft" style="animation-delay:.15s">Science</div>
+
+            <div class="time">10:00</div>
+            <div class="cell"></div>
+            <div class="blk teal" style="animation-delay:.2s">Notice</div>
+            <div class="cell"></div>
+            <div class="blk soft" style="animation-delay:.25s">English</div>
+            <div class="cell"></div>
+
+            <div class="time">11:00</div>
+            <div class="blk gold" style="animation-delay:.3s">Fees due</div>
+            <div class="cell"></div>
+            <div class="blk soft" style="animation-delay:.35s">Hindi</div>
+            <div class="cell"></div>
+            <div class="blk ink" style="animation-delay:.4s">Exam</div>
+
+            <div class="time">12:00</div>
+            <div class="cell"></div>
+            <div class="blk soft" style="animation-delay:.45s">Games</div>
+            <div class="cell"></div>
+            <div class="blk teal" style="animation-delay:.5s">Reply</div>
+            <div class="cell"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="features">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">What it covers</span>
+          <h2>Everything a school does in a day, handled.</h2>
+          <p class="muted">Each tool works the same way for admins, teachers, and parents — with the right access for each.</p>
+        </div>
+        <div class="features">
+          <article class="feature card"><div class="ic">AT</div><h3>Attendance</h3><p>Mark a whole class in seconds; parents see it the same day.</p></article>
+          <article class="feature card"><div class="ic">NO</div><h3>Notices &amp; fees</h3><p>Send to everyone, a class, or one parent — with amounts and due dates.</p></article>
+          <article class="feature card"><div class="ic">EX</div><h3>Exams &amp; timetable</h3><p>Publish exam schedules and weekly timetables parents can actually find.</p></article>
+          <article class="feature card"><div class="ic">CH</div><h3>Parent chat</h3><p>A direct line between parents and staff, so nothing gets lost in WhatsApp.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="band">
+          <div>
+            <span class="eyebrow">Get started</span>
+            <h2>Register your institution and get your code.</h2>
+          </div>
+          <a class="btn btn-accent" href="register.html">Create your account</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <span>© <span id="yr"></span> AcademiaX</span>
+      <span class="mono">Built for schools &amp; colleges</span>
+    </div>
+  </footer>
+  <script>document.getElementById("yr").textContent = new Date().getFullYear();</script>
+</body>
+</html>

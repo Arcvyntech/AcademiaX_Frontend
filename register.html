@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Register your institution — AcademiaX</title>
+<link rel="stylesheet" href="css/base.css" />
+<link rel="stylesheet" href="css/auth.css" />
+</head>
+<body>
+  <div class="auth-wrap">
+    <aside class="auth-aside">
+      <a class="brand" href="index.html"><span class="mark" style="background:var(--marigold);color:var(--ink)">A</span>AcademiaX</a>
+      <div>
+        <span class="eyebrow">Set up in three steps</span>
+        <h2>Bring your whole institution online.</h2>
+        <p>Tell us about your school, verify your email, and pick a password. You'll get a unique institution code to log in with.</p>
+        <div class="aside-tt">
+          <span class="g"></span><span></span><span class="t"></span><span></span><span></span><span class="g"></span>
+          <span></span><span class="t"></span><span></span><span class="g"></span><span></span><span></span>
+          <span class="g"></span><span></span><span></span><span class="t"></span><span></span><span class="g"></span>
+        </div>
+      </div>
+      <p class="mono" style="color:#8A97A8;font-size:.72rem">Free to start · No card required</p>
+    </aside>
+
+    <main class="auth-main">
+      <div class="auth-card">
+        <div class="stepper">
+          <div class="step active" id="step1"><span class="dot">1</span></div><span class="bar"></span>
+          <div class="step" id="step2"><span class="dot">2</span></div><span class="bar"></span>
+          <div class="step" id="step3"><span class="dot">3</span></div>
+        </div>
+
+        <div id="alert" class="alert"></div>
+
+        <!-- Step 1: details -->
+        <section class="step-pane active" id="pane1">
+          <h1>Register institution</h1>
+          <p class="auth-sub">Start with the basics about your school or college.</p>
+          <form id="form1">
+            <div class="field"><label for="f_name">Institution name</label><input id="f_name" required placeholder="e.g. Sunrise Public School" /></div>
+            <div class="field"><label for="f_type">Type</label>
+              <select id="f_type" required>
+                <option value="School">School</option>
+                <option value="College">College</option>
+                <option value="Coaching">Coaching</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+            <div class="field"><label for="f_state">State</label><input id="f_state" placeholder="e.g. Uttarakhand" /></div>
+            <div class="field"><label for="f_district">District</label><input id="f_district" placeholder="e.g. Nainital" /></div>
+            <div class="field"><label for="f_city">City / Town</label><input id="f_city" placeholder="e.g. Haldwani" /></div>
+            <div class="field"><label for="f_address">Address</label><input id="f_address" placeholder="Street / locality (optional)" /></div>
+            <div class="field"><label for="f_email">Email</label><input id="f_email" type="email" required placeholder="you@school.com" /><span class="hint">We'll send a 6-digit code here.</span></div>
+            <div class="field"><label for="f_mobile">Primary mobile</label><input id="f_mobile" required placeholder="10-digit number" /></div>
+            <div class="field"><label for="f_mobile2">Secondary mobile <span class="hint">(optional)</span></label><input id="f_mobile2" placeholder="10-digit number" /></div>
+            <button class="btn btn-accent btn-block" type="submit">Send verification code</button>
+          </form>
+        </section>
+
+        <!-- Step 2: OTP -->
+        <section class="step-pane" id="pane2">
+          <h1>Verify your email</h1>
+          <p class="auth-sub">We sent a code to <b id="emailOut">your email</b>.</p>
+          <p>Your institution code: <span class="code-pill" id="codeOut">—</span></p>
+          <form id="form2">
+            <div class="otp">
+              <input inputmode="numeric" maxlength="1" /><input inputmode="numeric" maxlength="1" /><input inputmode="numeric" maxlength="1" />
+              <input inputmode="numeric" maxlength="1" /><input inputmode="numeric" maxlength="1" /><input inputmode="numeric" maxlength="1" />
+            </div>
+            <button class="btn btn-accent btn-block" type="submit">Verify</button>
+          </form>
+        </section>
+
+        <!-- Step 3: password -->
+        <section class="step-pane" id="pane3">
+          <h1>Set your password</h1>
+          <p class="auth-sub">Last step — choose a password for this institution.</p>
+          <form id="form3">
+            <div class="field"><label for="f_pass">Password</label><input id="f_pass" type="password" required placeholder="At least 8 characters" /></div>
+            <div class="field"><label for="f_pass2">Confirm password</label><input id="f_pass2" type="password" required /></div>
+            <button class="btn btn-accent btn-block" type="submit">Create account</button>
+          </form>
+        </section>
+
+        <p class="auth-foot">Already registered? <a href="login.html">Sign in</a></p>
+      </div>
+    </main>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/register.js"></script>
+</body>
+</html>

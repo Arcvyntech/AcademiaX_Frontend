@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Dashboard — AcademiaX</title>
+<link rel="stylesheet" href="css/base.css" />
+<link rel="stylesheet" href="css/dashboard.css" />
+</head>
+<body>
+  <div class="dash">
+    <aside class="side">
+      <a class="brand" href="dashboard.html"><span class="mark">A</span>AcademiaX</a>
+      <nav>
+        <a class="active" href="dashboard.html">Dashboard</a>
+        <a href="admin.html">Designations</a>
+        <a href="admin.html">Classes</a>
+        <a href="admin.html">Subjects</a>
+        <a href="admin.html">Staff</a>
+        <a href="admin.html">Students</a>
+        <a href="admin.html">Hierarchy</a>
+        <a href="admin.html">Credentials</a>
+      </nav>
+      <button class="btn btn-ghost" id="logout" style="color:#fff;border-color:rgba(255,255,255,.25)">Log out</button>
+    </aside>
+
+    <div class="dash-main">
+      <header class="topbar">
+        <div class="inst">
+          <b id="instName">Loading…</b>
+          <span>Code: <span id="instCode">—</span></span>
+        </div>
+        <a class="btn btn-accent" href="admin.html">Manage institution</a>
+      </header>
+
+      <div class="dash-body">
+        <div class="welcome">
+          <h1>Welcome, <span id="welcomeName">there</span> 👋</h1>
+          <p>Your institution at a glance.</p>
+        </div>
+        <div class="tiles">
+          <div class="tile card"><div class="ic">ST</div><h3 id="stStaff">—</h3><p>Staff members</p></div>
+          <div class="tile card"><div class="ic">CL</div><h3 id="stClasses">—</h3><p>Classes</p></div>
+          <div class="tile card"><div class="ic">SU</div><h3 id="stSubjects">—</h3><p>Subjects</p></div>
+          <div class="tile card"><div class="ic">SD</div><h3 id="stStudents">—</h3><p>Students</p></div>
+        </div>
+        <div style="margin-top:24px">
+          <a class="btn btn-accent" href="admin.html">Manage institution →</a>
+          <p class="muted" style="margin-top:10px;font-size:.9rem">Add designations, classes, subjects, staff, students, set up hierarchy, map subjects/teachers, and create staff logins.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,74 @@
+/* AcademiaX — base design system
+   Identity: deep navy ink + marigold accent on warm paper, timetable-grid motif.
+   Fonts: Bricolage Grotesque (display), Inter (body), Space Mono (data/codes). */
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap');
+
+:root{
+  --ink:#15233B; --ink-2:#26344F; --paper:#FBFAF6; --surface:#FFFFFF;
+  --line:#E7E2D6; --line-2:#D8D2C3;
+  --marigold:#F4A521; --marigold-2:#C97D0A; --teal:#2F6F6A;
+  --slate:#5B6B82; --slate-2:#8A97A8;
+  --radius:14px; --radius-sm:10px; --radius-lg:22px;
+  --shadow-sm:0 1px 0 rgba(21,35,59,.04), 0 6px 18px -12px rgba(21,35,59,.18);
+  --shadow:0 22px 55px -24px rgba(21,35,59,.32);
+  --maxw:1160px;
+  --f-display:"Bricolage Grotesque",system-ui,sans-serif;
+  --f-body:"Inter",system-ui,sans-serif;
+  --f-mono:"Space Mono",ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{font-family:var(--f-body);background:var(--paper);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+h1,h2,h3,h4{font-family:var(--f-display);font-weight:600;line-height:1.04;letter-spacing:-.02em;margin:0}
+h1{font-size:clamp(2.4rem,6vw,4.1rem)}
+h2{font-size:clamp(1.7rem,3.5vw,2.6rem)}
+p{margin:0}
+.container{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+.eyebrow{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--marigold-2)}
+.mono{font-family:var(--f-mono)}
+.muted{color:var(--slate)}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;font-family:var(--f-body);font-weight:600;font-size:.98rem;padding:.85rem 1.4rem;border-radius:999px;border:1.5px solid transparent;cursor:pointer;transition:transform .12s ease,box-shadow .2s ease,background .2s,border-color .2s;line-height:1}
+.btn:active{transform:translateY(1px)}
+.btn-primary{background:var(--ink);color:var(--paper)}
+.btn-primary:hover{box-shadow:0 12px 26px -10px rgba(21,35,59,.55)}
+.btn-accent{background:var(--marigold);color:var(--ink)}
+.btn-accent:hover{background:var(--marigold-2);color:#fff}
+.btn-ghost{background:transparent;color:var(--ink);border-color:var(--line-2)}
+.btn-ghost:hover{border-color:var(--ink)}
+.btn-block{width:100%}
+.btn:disabled{opacity:.55;cursor:not-allowed}
+
+/* fields */
+.field{display:flex;flex-direction:column;gap:.4rem;margin-bottom:1rem}
+.field label{font-size:.85rem;font-weight:600;color:var(--ink-2)}
+.field input,.field select{font-family:var(--f-body);font-size:1rem;padding:.8rem .9rem;border:1.5px solid var(--line-2);border-radius:var(--radius-sm);background:var(--surface);color:var(--ink);transition:border-color .15s,box-shadow .15s}
+.field input:focus,.field select:focus{outline:none;border-color:var(--marigold);box-shadow:0 0 0 4px rgba(244,165,33,.16)}
+.field .hint{font-size:.78rem;color:var(--slate-2)}
+
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-sm)}
+
+/* nav */
+.nav{position:sticky;top:0;z-index:30;background:rgba(251,250,246,.82);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:70px}
+.brand{display:flex;align-items:center;gap:.55rem;font-family:var(--f-display);font-weight:700;font-size:1.2rem;letter-spacing:-.02em}
+.brand .mark{width:30px;height:30px;border-radius:8px;background:var(--ink);display:grid;place-items:center;color:var(--marigold);font-family:var(--f-mono);font-weight:700;font-size:.95rem}
+.nav-links{display:flex;align-items:center;gap:1.4rem}
+.nav-links a{font-size:.95rem;font-weight:500;color:var(--ink-2)}
+.nav-links a:hover{color:var(--marigold-2)}
+
+/* alerts */
+.alert{padding:.8rem 1rem;border-radius:var(--radius-sm);font-size:.9rem;margin-bottom:1rem;display:none}
+.alert.show{display:block}
+.alert-error{background:#FCEDE9;color:#9A3412;border:1px solid #F3C9BC}
+.alert-success{background:#E9F6EE;color:#1B5E36;border:1px solid #BFE4CC}
+
+/* footer */
+.footer{border-top:1px solid var(--line);margin-top:5rem;padding:2.4rem 0;color:var(--slate);font-size:.9rem}
+.footer-inner{display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;align-items:center}
+
+@media (max-width:720px){.nav-links a:not(.btn){display:none}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}

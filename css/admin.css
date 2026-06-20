@@ -1,0 +1,22 @@
+/* Plain, functional admin styles — meant to be re-skinned by the team. */
+.admin-top{height:64px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 24px;background:var(--surface);position:sticky;top:0;z-index:20}
+.admin-wrap{max-width:1040px;margin:0 auto;padding:22px 20px 80px}
+.tabs{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px}
+.tabs button{font-family:var(--f-body);font-size:.9rem;font-weight:600;padding:.55rem 1rem;border-radius:999px;border:1.5px solid var(--line-2);background:var(--surface);color:var(--ink-2);cursor:pointer}
+.tabs button.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+.panel{display:none}
+.panel.active{display:block}
+.panel h2{font-size:1.3rem;margin-bottom:.3rem}
+.panel .sub{color:var(--slate);font-size:.92rem;margin-bottom:1.1rem}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;margin-bottom:14px}
+.row .field{margin-bottom:0;flex:1;min-width:160px}
+table{width:100%;border-collapse:collapse;background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden;font-size:.9rem}
+th{text-align:left;background:#F4F1E8;color:var(--ink-2);font-weight:600;padding:.6rem .8rem;font-size:.78rem;text-transform:uppercase;letter-spacing:.04em}
+td{padding:.6rem .8rem;border-top:1px solid var(--line)}
+.chip{display:inline-block;background:#F4F1E8;border-radius:6px;padding:.1rem .45rem;font-size:.75rem;margin:1px}
+.btn-sm{padding:.35rem .7rem;font-size:.8rem;border-radius:8px;border:1.5px solid var(--line-2);background:var(--surface);cursor:pointer;font-weight:600}
+.btn-sm.danger{color:#9A3412;border-color:#F3C9BC}
+.btn-sm.primary{background:var(--marigold);border-color:var(--marigold);color:var(--ink)}
+.multi{border:1.5px solid var(--line-2);border-radius:10px;padding:8px;max-height:150px;overflow:auto;background:var(--surface)}
+.multi label{display:flex;align-items:center;gap:8px;font-size:.88rem;padding:2px 0}
+.empty{color:var(--slate-2);font-size:.88rem;padding:10px 2px}

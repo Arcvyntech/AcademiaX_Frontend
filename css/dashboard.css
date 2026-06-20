@@ -1,0 +1,26 @@
+.dash{display:grid;grid-template-columns:248px 1fr;min-height:100vh}
+.side{background:var(--ink);color:#fff;padding:22px 16px;display:flex;flex-direction:column}
+.side .brand{color:#fff;margin:6px 8px 24px}
+.side .brand .mark{background:var(--marigold);color:var(--ink)}
+.side nav{display:flex;flex-direction:column;gap:2px;flex:1}
+.side nav a{display:flex;align-items:center;gap:10px;padding:.7rem .8rem;border-radius:10px;color:#C3CCDB;font-size:.94rem;font-weight:500}
+.side nav a:hover{background:rgba(255,255,255,.06);color:#fff}
+.side nav a.active{background:var(--marigold);color:var(--ink);font-weight:600}
+.side nav a .soon{margin-left:auto;font-family:var(--f-mono);font-size:.58rem;color:var(--slate-2);text-transform:uppercase;letter-spacing:.08em}
+.dash-main{background:var(--paper);min-width:0}
+.topbar{height:70px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 28px;background:var(--surface)}
+.topbar .inst{display:flex;flex-direction:column;line-height:1.25}
+.topbar .inst b{font-family:var(--f-display);font-size:1.02rem}
+.topbar .inst span{font-family:var(--f-mono);font-size:.72rem;color:var(--slate-2)}
+.dash-body{padding:28px}
+.welcome{margin-bottom:22px}
+.welcome h1{font-size:1.7rem}
+.welcome p{color:var(--slate)}
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.tile{padding:20px}
+.tile .ic{width:40px;height:40px;border-radius:10px;background:#F4F1E8;display:grid;place-items:center;font-family:var(--f-mono);font-weight:700;color:var(--marigold-2);margin-bottom:12px}
+.tile h3{font-size:1.04rem;margin-bottom:.3rem}
+.tile p{font-size:.88rem;color:var(--slate)}
+.tile .soon{display:inline-block;margin-top:10px;font-family:var(--f-mono);font-size:.6rem;text-transform:uppercase;letter-spacing:.1em;color:var(--marigold-2);background:#F4F1E8;padding:.2rem .5rem;border-radius:6px}
+@media (max-width:900px){.dash{grid-template-columns:1fr}.side{display:none}.tiles{grid-template-columns:1fr 1fr}}
+@media (max-width:560px){.tiles{grid-template-columns:1fr}}
