@@ -30,12 +30,23 @@
         <p class="auth-sub">Admin access to your institution.</p>
         <div id="alert" class="alert"></div>
         <form id="loginForm">
-          <div class="field"><label for="code">Institution code</label><input id="code" required placeholder="e.g. DEMO1234" style="text-transform:uppercase" /></div>
-          <div class="field"><label for="password">Password</label><input id="password" type="password" required /></div>
+          <div class="field">
+            <label for="code">Institution code</label>
+            <input id="code" required placeholder="e.g. DEMO1234" style="text-transform:uppercase" autocomplete="username" />
+          </div>
+          <div class="field">
+            <label for="password">Password</label>
+            <div style="position:relative">
+              <input id="password" type="password" required autocomplete="current-password" style="width:100%;padding-right:3.4rem" />
+              <button type="button" id="togglePass" aria-label="Show password"
+                style="position:absolute;right:.7rem;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--slate);cursor:pointer;font-family:var(--f-mono);font-size:.72rem;letter-spacing:.05em">SHOW</button>
+            </div>
+            <a href="forgot-password.html" style="align-self:flex-end;font-size:.82rem;color:var(--marigold-2);font-weight:600;margin-top:.4rem">Forgot password?</a>
+          </div>
           <button class="btn btn-accent btn-block" type="submit">Sign in</button>
         </form>
-        <p class="auth-foot"><a href="forgot-password.html">Forgot password?</a></p>
         <p class="auth-foot">New here? <a href="register.html">Register your institution</a></p>
+        <p class="auth-foot" style="margin-top:.4rem"><a href="index.html" style="color:var(--slate)">← Back to home</a></p>
       </div>
     </main>
   </div>

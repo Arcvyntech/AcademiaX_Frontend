@@ -3,6 +3,38 @@ let regCode = "";
 
 function val(id) { return document.getElementById(id).value.trim(); }
 
+/* ---------- State -> District cascading dropdowns ---------- */
+const stateSel = document.getElementById("f_state");
+const districtSel = document.getElementById("f_district");
+
+// Populate states on load (INDIA_STATES + INDIA_GEO come from india-geo.js)
+INDIA_STATES.forEach((s) => {
+  const o = document.createElement("option");
+  o.value = s; o.textContent = s;
+  stateSel.appendChild(o);
+});
+
+// When a state changes, fill its districts
+stateSel.addEventListener("change", () => {
+  const districts = INDIA_GEO[stateSel.value] || [];
+  districtSel.innerHTML = "";
+  if (!districts.length) {
+    districtSel.innerHTML = '<option value="">First select a state</option>';
+    districtSel.disabled = true;
+    return;
+  }
+  districtSel.disabled = false;
+  const first = document.createElement("option");
+  first.value = ""; first.textContent = "Select district";
+  districtSel.appendChild(first);
+  districts.forEach((d) => {
+    const o = document.createElement("option");
+    o.value = d; o.textContent = d;
+    districtSel.appendChild(o);
+  });
+});
+
+/* ---------- Step navigation ---------- */
 function setStep(n) {
   [1, 2, 3].forEach((i) => {
     document.getElementById("step" + i).classList.toggle("active", i === n);
@@ -11,6 +43,7 @@ function setStep(n) {
   });
 }
 
+/* ---------- OTP boxes ---------- */
 function wireOtp(scope) {
   const inputs = Array.from(scope.querySelectorAll(".otp input"));
   inputs.forEach((inp, idx) => {
@@ -27,9 +60,12 @@ function otpValue(scope) {
   return Array.from(scope.querySelectorAll(".otp input")).map((i) => i.value).join("");
 }
 
+/* ---------- Step 1: details ---------- */
 document.getElementById("form1").addEventListener("submit", async (e) => {
   e.preventDefault();
   hideAlert(A);
+  if (!val("f_state")) return showAlert(A, "Please select a state.");
+  if (!val("f_district")) return showAlert(A, "Please select a district.");
   const btn = e.submitter; btn.disabled = true;
   try {
     const body = {
@@ -45,6 +81,7 @@ document.getElementById("form1").addEventListener("submit", async (e) => {
   } catch (err) { showAlert(A, err.message); } finally { btn.disabled = false; }
 });
 
+/* ---------- Step 2: verify OTP ---------- */
 document.getElementById("form2").addEventListener("submit", async (e) => {
   e.preventDefault();
   hideAlert(A);
@@ -57,6 +94,7 @@ document.getElementById("form2").addEventListener("submit", async (e) => {
   } catch (err) { showAlert(A, err.message); } finally { btn.disabled = false; }
 });
 
+/* ---------- Step 3: set password ---------- */
 document.getElementById("form3").addEventListener("submit", async (e) => {
   e.preventDefault();
   hideAlert(A);

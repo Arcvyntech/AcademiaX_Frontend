@@ -48,8 +48,16 @@
                 <option value="Other">Other</option>
               </select>
             </div>
-            <div class="field"><label for="f_state">State</label><input id="f_state" placeholder="e.g. Uttarakhand" /></div>
-            <div class="field"><label for="f_district">District</label><input id="f_district" placeholder="e.g. Nainital" /></div>
+            <div class="field"><label for="f_state">State / UT</label>
+              <select id="f_state" required>
+                <option value="">Select state</option>
+              </select>
+            </div>
+            <div class="field"><label for="f_district">District</label>
+              <select id="f_district" required disabled>
+                <option value="">First select a state</option>
+              </select>
+            </div>
             <div class="field"><label for="f_city">City / Town</label><input id="f_city" placeholder="e.g. Haldwani" /></div>
             <div class="field"><label for="f_address">Address</label><input id="f_address" placeholder="Street / locality (optional)" /></div>
             <div class="field"><label for="f_email">Email</label><input id="f_email" type="email" required placeholder="you@school.com" /><span class="hint">We'll send a 6-digit code here.</span></div>
@@ -90,6 +98,7 @@
   </div>
 
   <script src="js/config.js"></script>
+  <script src="js/india-geo.js"></script>
   <script src="js/api.js"></script>
   <script src="js/register.js"></script>
 </body>
