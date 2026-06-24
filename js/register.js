@@ -74,6 +74,7 @@ document.getElementById("form1").addEventListener("submit", async (e) => {
       city: val("f_city"), address: val("f_address"),
     };
     const data = await apiFetch("/auth/register", { method: "POST", body });
+    console.log("Register Response:", data);
     regCode = data.institutionCode;
     document.getElementById("codeOut").textContent = regCode;
     document.getElementById("emailOut").textContent = body.email;
