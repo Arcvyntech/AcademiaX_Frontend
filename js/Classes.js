@@ -1,6 +1,8 @@
 // ─── classes.js ──────────────────────────────────────────────────────────────
 // Depends on: admin.js  (api, cache, $, esc, fail, ok)
 
+let editingClassId = null; // kaunsi row abhi edit mode mein hai
+
 async function loadClasses() {
   try {
     if (!cache.subjects.length) cache.subjects = (await api("/subjects")).data;
@@ -19,15 +21,29 @@ async function loadClasses() {
                     }/> ${esc(s.name)}</label>`
                 )
                 .join("") || `<span class="empty">Add subjects first</span>`;
+
+            const isEditing = editingClassId === c._id;
+
+            const nameCell = isEditing
+              ? `<input type="text" id="edit-cname-${c._id}" value="${esc(c.name)}" style="width:100px;margin-bottom:4px"/><br/>
+                 <input type="text" id="edit-cnick-${c._id}" value="${esc(c.nickname || "")}" placeholder="Nickname" style="width:100px"/>`
+              : `${esc(c.name)}${c.nickname ? ` <span class="chip">${esc(c.nickname)}</span>` : ""}`;
+
+            const actionsCell = isEditing
+              ? `<button class="btn-sm" onclick="saveClass('${c._id}')">Save</button>
+                 <button class="btn-sm" onclick="cancelClassEdit()">Cancel</button>`
+              : `<button class="btn-sm" onclick="editClass('${c._id}')">Edit</button>
+                 <button class="btn-sm danger" onclick="delClass('${c._id}')">Delete</button>`;
+
             return `<tr>
-              <td>${esc(c.name)}${c.nickname ? ` <span class="chip">${esc(c.nickname)}</span>` : ""}</td>
+              <td>${nameCell}</td>
               <td>${c.studentCount}</td>
               <td>
                 <div class="multi" id="cs-${c._id}">${opts}</div>
                 <button class="btn-sm primary" style="margin-top:6px"
                         onclick="saveClassSubjects('${c._id}')">Save subjects</button>
               </td>
-              <td><button class="btn-sm danger" onclick="delClass('${c._id}')">Delete</button></td>
+              <td>${actionsCell}</td>
             </tr>`;
           })
           .join("")
@@ -56,6 +72,28 @@ window.saveClassSubjects = async (id) => {
   try {
     await api("/classes/" + id + "/subjects", "PUT", { subjectIds: ids });
     ok("Subjects saved");
+    loadClasses();
+  } catch (e) { fail(e); }
+};
+
+window.editClass = (id) => {
+  editingClassId = id;
+  loadClasses();
+};
+
+window.cancelClassEdit = () => {
+  editingClassId = null;
+  loadClasses();
+};
+
+window.saveClass = async (id) => {
+  const name = $("edit-cname-" + id).value.trim();
+  const nickname = $("edit-cnick-" + id).value.trim();
+  if (!name) return fail({ message: "Class name khali nahi ho sakta" });
+  try {
+    await api("/classes/" + id, "PUT", { name, nickname });
+    editingClassId = null;
+    ok("Updated");
     loadClasses();
   } catch (e) { fail(e); }
 };

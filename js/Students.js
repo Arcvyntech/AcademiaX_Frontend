@@ -1,6 +1,8 @@
 // ─── students.js ─────────────────────────────────────────────────────────────
 // Depends on: admin.js  (api, cache, $, esc, fail, ok, A, showAlert)
 
+let editingStuId = null; // kaunsi row abhi edit mode mein hai
+
 async function loadStudents() {
   try {
     cache.classes = (await api("/classes")).data;
@@ -19,18 +21,52 @@ async function renderStudents() {
     if (classId) q.set("classId", classId);
     if (search)  q.set("search", search);
     const { data } = await api("/students?" + q.toString());
+    cache.studentsList = data; // edit ke time class options ke liye kaam aayega
+
     $("stu-body").innerHTML = data.length
       ? data
-          .map(
-            (s) =>
-              `<tr>
-                <td>${esc(s.name)}</td>
-                <td>${esc(s.fatherName)}</td>
-                <td>${s.classId ? esc(s.classId.name) : "—"}</td>
-                <td>${esc(s.mobileNo)}</td>
-                <td><button class="btn-sm danger" onclick="delStudent('${s._id}')">Delete</button></td>
-              </tr>`
-          )
+          .map((s) => {
+            const isEditing = editingStuId === s._id;
+
+            const nameCell = isEditing
+              ? `<input type="text" id="edit-stuname-${s._id}" value="${esc(s.name)}" style="width:100px"/>`
+              : esc(s.name);
+
+            const fatherCell = isEditing
+              ? `<input type="text" id="edit-stufather-${s._id}" value="${esc(s.fatherName || "")}" style="width:100px"/>`
+              : esc(s.fatherName);
+
+            const classCell = isEditing
+              ? `<select id="edit-stuclass-${s._id}">` +
+                cache.classes
+                  .map(
+                    (c) =>
+                      `<option value="${c._id}" ${
+                        s.classId && s.classId._id === c._id ? "selected" : ""
+                      }>${esc(c.name)}</option>`
+                  )
+                  .join("") +
+                `</select>`
+              : (s.classId ? esc(s.classId.name) : "—");
+
+            const mobileCell = isEditing
+              ? `<input type="text" id="edit-stumobile-${s._id}" value="${esc(s.mobileNo)}" style="width:110px"/>`
+              : esc(s.mobileNo);
+
+            const actionsCell = isEditing
+              ? `<button class="btn-sm" onclick="saveStudent('${s._id}')">Save</button>
+                 <button class="btn-sm" onclick="cancelStuEdit()">Cancel</button>`
+              : `<button class="btn-sm" onclick="editStudent('${s._id}')">Edit</button>
+                 <button class="btn-sm danger" onclick="delStudent('${s._id}')">Delete</button>`;
+
+            return `<tr>
+                <td>${nameCell}</td>
+                <td>${fatherCell}</td>
+                <td>${classCell}</td>
+                <td>${mobileCell}</td>
+                <td>${actionsCell}</td>
+              </tr>`;
+          })
           .join("")
       : `<tr><td colspan="5" class="empty">No students.</td></tr>`;
   } catch (e) { fail(e); }
@@ -77,4 +113,28 @@ $("stu-bulk-add").onclick = async () => {
 
 window.delStudent = async (id) => {
   try { await api("/students/" + id, "DELETE"); renderStudents(); } catch (e) { fail(e); }
+};
+
+window.editStudent = (id) => {
+  editingStuId = id;
+  renderStudents();
+};
+
+window.cancelStuEdit = () => {
+  editingStuId = null;
+  renderStudents();
+};
+
+window.saveStudent = async (id) => {
+  const name       = $("edit-stuname-" + id).value.trim();
+  const fatherName = $("edit-stufather-" + id).value.trim();
+  const mobileNo   = $("edit-stumobile-" + id).value.trim();
+  const classId    = $("edit-stuclass-" + id).value || null;
+  if (!name || !mobileNo) return fail({ message: "Name aur mobile dono zaroori hain" });
+  try {
+    await api("/students/" + id, "PUT", { name, fatherName, mobileNo, classId });
+    editingStuId = null;
+    ok("Updated");
+    renderStudents();
+  } catch (e) { fail(e); }
 };

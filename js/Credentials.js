@@ -12,22 +12,68 @@ async function loadCredentials() {
       : `<option value="">All staff have logins</option>`;
 
     const { data } = await api("/credentials");
+    cache.credentials = data; // keep reference for edit mode
     $("cr-body").innerHTML = data.length
-      ? data
-          .map(
-            (c) =>
-              `<tr>
-                <td class="mono">${esc(c.loginId)}</td>
-                <td>${esc(c.staffName)}</td>
-                <td>${c.feeAccess ? "yes" : "no"}</td>
-                <td>${c.isActive ? "active" : "disabled"}</td>
-                <td><button class="btn-sm danger" onclick="delCred('${c.id}')">Delete</button></td>
-              </tr>`
-          )
-          .join("")
+      ? data.map((c) => renderRow(c)).join("")
       : `<tr><td colspan="5" class="empty">No credentials yet.</td></tr>`;
   } catch (e) { fail(e); }
 }
+
+// normal (view) row
+function renderRow(c) {
+  return `<tr id="cr-row-${c.id}">
+    <td class="mono">${esc(c.loginId)}</td>
+    <td>${esc(c.staffName)}</td>
+    <td>${c.feeAccess ? "yes" : "no"}</td>
+    <td>${c.isActive ? "active" : "disabled"}</td>
+    <td>
+      <button class="btn-sm" onclick="editCred('${c.id}')">Edit</button>
+      <button class="btn-sm danger" onclick="delCred('${c.id}')">Delete</button>
+    </td>
+  </tr>`;
+}
+
+// edit-mode row
+function renderEditRow(c) {
+  return `<tr id="cr-row-${c.id}">
+    <td class="mono">${esc(c.loginId)}</td>
+    <td>${esc(c.staffName)}</td>
+    <td>
+      <label class="inline-check">
+        <input type="checkbox" id="cr-edit-fee-${c.id}" ${c.feeAccess ? "checked" : ""}/>
+      </label>
+    </td>
+    <td>${c.isActive ? "active" : "disabled"}</td>
+    <td>
+      <input type="password" id="cr-edit-pass-${c.id}" class="input-sm" placeholder="new password (optional)" />
+      <button class="btn-sm primary" onclick="saveCred('${c.id}')">Save</button>
+      <button class="btn-sm" onclick="loadCredentials()">Cancel</button>
+    </td>
+  </tr>`;
+}
+
+window.editCred = (id) => {
+  const c = cache.credentials.find((x) => x.id === id);
+  if (!c) return;
+  const row = document.getElementById(`cr-row-${id}`);
+  if (row) row.outerHTML = renderEditRow(c);
+};
+
+window.saveCred = async (id) => {
+  const passEl = $(`cr-edit-pass-${id}`);
+  const feeEl  = $(`cr-edit-fee-${id}`);
+  const password = passEl.value.trim();
+  const feeAccess = feeEl.checked;
+
+  const payload = { feeAccess };
+  if (password) payload.password = password;
+
+  try {
+    await api("/credentials/" + id, "PUT", payload);
+    ok("Credentials updated");
+    loadCredentials();
+  } catch (e) { fail(e); }
+};
 
 $("cr-add").onclick = async () => {
   const staffId  = $("cr-staff").value;
