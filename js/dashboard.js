@@ -2,17 +2,28 @@
   const token = localStorage.getItem("ax_token");
   if (!token) { location.href = "login.html"; return; }
   try {
-    const data = await apiFetch("/institution/profile", { auth: true });
+    const data =await apiFetch("/institution/profile", {
+    auth: true,
+    tokenKey: "ax_token"
+});
     document.getElementById("instName").textContent = data.institution.name;
     document.getElementById("instCode").textContent = data.institution.code;
     document.getElementById("welcomeName").textContent = data.institution.name;
   } catch (err) {
-    localStorage.removeItem("ax_token");
-    location.href = "login.html";
+
+    console.error("PROFILE ERROR:", err);
+
+    alert(err.message);
+
     return;
+
+
   }
   try {
-    const { data } = await apiFetch("/admin/stats", { auth: true });
+    const { data } = await apiFetch("/admin/stats", {
+    auth: true,
+    tokenKey: "ax_token"
+});
     document.getElementById("stStaff").textContent = data.staff;
     document.getElementById("stClasses").textContent = data.classes;
     document.getElementById("stSubjects").textContent = data.subjects;
