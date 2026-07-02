@@ -6,21 +6,67 @@ let editingStuId = null; // kaunsi row abhi edit mode mein hai
 async function loadStudents() {
   try {
     cache.classes = (await api("/classes")).data;
+
+    // unique class names, in the order they first appear
+    const seen = new Set();
+    cache.classNames = [];
+    cache.classes.forEach((c) => {
+      if (!seen.has(c.name)) { seen.add(c.name); cache.classNames.push(c.name); }
+    });
+
     $("stu-class").innerHTML =
       `<option value="">All classes</option>` +
-      cache.classes.map((c) => `<option value="${c._id}">${esc(c.name)}</option>`).join("");
+      cache.classNames.map((n) => `<option value="${esc(n)}">${esc(n)}</option>`).join("");
+
+    renderSectionDropdown();
     renderStudents();
   } catch (e) { fail(e); }
 }
 
+// fills the Section dropdown based on whichever Class name is currently picked
+function renderSectionDropdown() {
+  const className = $("stu-class").value;
+
+  if (!className) {
+    $("stu-section").innerHTML = `<option value="">All sections</option>`;
+    $("stu-section").disabled = true;
+    return;
+  }
+
+  const sections = cache.classes.filter((c) => c.name === className);
+  $("stu-section").disabled = false;
+  $("stu-section").innerHTML =
+    `<option value="">All sections</option>` +
+    sections.map((c) => `<option value="${c._id}">${esc(c.nickname || c.name)}</option>`).join("");
+}
+
+$("stu-class").onchange = () => {
+  renderSectionDropdown();
+  renderStudents();
+};
+
+$("stu-section").onchange = renderStudents;
+
 async function renderStudents() {
   try {
-    const classId = $("stu-class").value;
-    const search  = $("stu-search").value.trim();
+    const className = $("stu-class").value;
+    const sectionId = $("stu-section").value;
+    const search    = $("stu-search").value.trim();
+
     const q = new URLSearchParams();
-    if (classId) q.set("classId", classId);
-    if (search)  q.set("search", search);
-    const { data } = await api("/students?" + q.toString());
+    if (sectionId) q.set("classId", sectionId);
+    if (search)    q.set("search", search);
+
+    let { data } = await api("/students?" + q.toString());
+
+    // class name chosen but "All sections" -> merge every section of that class, client-side
+    if (className && !sectionId) {
+      const idsForClass = new Set(
+        cache.classes.filter((c) => c.name === className).map((c) => c._id)
+      );
+      data = data.filter((s) => s.classId && idsForClass.has(s.classId._id));
+    }
+
     cache.studentsList = data; // edit ke time class options ke liye kaam aayega
 
     $("stu-body").innerHTML = data.length
@@ -43,11 +89,11 @@ async function renderStudents() {
                     (c) =>
                       `<option value="${c._id}" ${
                         s.classId && s.classId._id === c._id ? "selected" : ""
-                      }>${esc(c.name)}</option>`
+                      }>${esc(c.name)}${c.nickname ? " - " + esc(c.nickname) : ""}</option>`
                   )
                   .join("") +
                 `</select>`
-              : (s.classId ? esc(s.classId.name) : "—");
+              : (s.classId ? `${esc(s.classId.name)}${s.classId.nickname ? " - " + esc(s.classId.nickname) : ""}` : "—");
 
             const mobileCell = isEditing
               ? `<input type="text" id="edit-stumobile-${s._id}" value="${esc(s.mobileNo)}" style="width:110px"/>`
@@ -78,12 +124,17 @@ $("stu-add").onclick = async () => {
   const name     = $("stu-name").value.trim();
   const mobileNo = $("stu-mobile").value.trim();
   if (!name || !mobileNo) return showAlert(A, "Name and mobile are required");
+
+  const className = $("stu-class").value;
+  const sectionId = $("stu-section").value;
+  if (className && !sectionId) return showAlert(A, "Pick a specific section before adding a student");
+
   try {
     await api("/students", "POST", {
       name,
       fatherName: $("stu-father").value.trim(),
       mobileNo,
-      classId: $("stu-class").value || null,
+      classId: sectionId || null,
     });
     $("stu-name").value   = "";
     $("stu-father").value = "";
@@ -96,13 +147,18 @@ $("stu-add").onclick = async () => {
 $("stu-bulk-add").onclick = async () => {
   const raw = $("stu-bulk").value.trim();
   if (!raw) return;
+
+  const className = $("stu-class").value;
+  const sectionId = $("stu-section").value;
+  if (className && !sectionId) return showAlert(A, "Pick a specific section before bulk adding");
+
   const students = raw.split("\n").map((line) => {
     const [name, fatherName, mobileNo] = line.split(",").map((x) => (x || "").trim());
     return { name, fatherName, mobileNo };
   });
   try {
     const r = await api("/students/bulk", "POST", {
-      classId: $("stu-class").value || null,
+      classId: sectionId || null,
       students,
     });
     $("stu-bulk").value = "";

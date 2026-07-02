@@ -20,9 +20,9 @@
     <div id="alert" class="alert"></div>
     <div class="tabs">
       <button data-tab="designations" class="active">Designations</button>
-      <button data-tab="subjects">Subjects</button>
       <button data-tab="classes">Classes</button>
       <button data-tab="staff">Staff</button>
+      <button data-tab="subjects">Subjects</button>
       <button data-tab="students">Students</button>
       <button data-tab="hierarchy">Hierarchy</button>
       <button data-tab="credentials">Credentials</button>
@@ -37,17 +37,6 @@
         <button class="btn btn-accent" id="d-add">Add</button>
       </div>
       <table><thead><tr><th>Name</th><th>Staff</th><th>Level</th><th>Actions</th></tr></thead><tbody id="d-body"></tbody></table>
-    </section>
-
-    <!-- Subjects -->
-    <section class="panel" id="p-subjects">
-      <h2>Subjects</h2>
-      <p class="sub">All subjects taught at your institution.</p>
-      <div class="row">
-        <div class="field"><label>Subject name</label><input id="s-name" placeholder="e.g. Mathematics" /></div>
-        <button class="btn btn-accent" id="s-add">Add</button>
-      </div>
-      <table><thead><tr><th>Name</th><th>Actions</th></tr></thead><tbody id="s-body"></tbody></table>
     </section>
 
     <!-- Classes -->
@@ -79,11 +68,12 @@
     <section class="panel" id="p-students">
       <h2>Students</h2>
       <p class="sub">Add students individually or in bulk. The mobile number is the parent's login.</p>
-      <div class="row">
+     <div class="row">
         <div class="field"><label>Class</label><select id="stu-class"></select></div>
+        <div class="field"><label>Section</label><select id="stu-section"></select></div>
         <div class="field"><label>Search</label><input id="stu-search" placeholder="name / father / mobile" /></div>
         <button class="btn btn-ghost" id="stu-find">Search</button>
-      </div>
+    </div>
       <div class="row" style="border-top:1px solid var(--line);padding-top:14px">
         <div class="field"><label>Name</label><input id="stu-name" placeholder="Student name" /></div>
         <div class="field"><label>Father</label><input id="stu-father" placeholder="Father's name" /></div>
@@ -98,6 +88,17 @@
       <table><thead><tr><th>Name</th><th>Father</th><th>Class</th><th>Mobile</th><th>Actions</th></tr></thead><tbody id="stu-body"></tbody></table>
     </section>
 
+    <!-- Subjects -->
+    <section class="panel" id="p-subjects">
+      <h2>Subjects</h2>
+      <p class="sub">All subjects taught at your institution.</p>
+      <div class="row">
+        <div class="field"><label>Subject name</label><input id="s-name" placeholder="e.g. Mathematics" /></div>
+        <button class="btn btn-accent" id="s-add">Add</button>
+      </div>
+      <table><thead><tr><th>Name</th><th>Actions</th></tr></thead><tbody id="s-body"></tbody></table>
+    </section>
+
     <!-- Hierarchy -->
     <section class="panel" id="p-hierarchy">
       <h2>Hierarchy</h2>
@@ -108,20 +109,47 @@
       </div>
     </section>
 
-    <!-- Credentials -->
-    <section class="panel" id="p-credentials">
-      <h2>Staff login credentials</h2>
-      <p class="sub">Create login access for staff. Their mobile number becomes their login ID.</p>
-      <div class="row">
-        <div class="field"><label>Staff</label><select id="cr-staff"></select></div>
-        <div class="field"><label>Password</label><input id="cr-pass" type="text" placeholder="min 6 characters" /></div>
-        <div class="field" style="flex:0"><label>Fee access</label><input id="cr-fee" type="checkbox" style="width:20px;height:20px" /></div>
-        <button class="btn btn-accent" id="cr-add">Create</button>
-      </div>
-      <table><thead><tr><th>Login ID</th><th>Staff</th><th>Fee access</th><th>Status</th><th>Actions</th></tr></thead><tbody id="cr-body"></tbody></table>
-    </section>
+  <!-- Credentials -->
+<section class="panel" id="p-credentials">
+  <h2>Staff login credentials</h2>
+  <p class="sub">Create login access for staff. Their mobile number becomes their login ID.</p>
+
+  <div class="row">
+    <div class="field"><label>Search staff</label><input id="cr-staff-search" placeholder="Type name or mobile..." oninput="filterStaffDropdown()" /></div>
+    <div class="field"><label>Staff</label><select id="cr-staff"></select></div>
   </div>
 
+  <div class="row">
+    <div class="field" style="flex:2">
+      <label>Password</label>
+      <div style="display:flex;gap:6px;align-items:center">
+        <input id="cr-pass" type="password" placeholder="min 6 characters" style="flex:1" />
+        <button type="button" class="btn btn-ghost btn-sm" onclick="togglePass('cr-pass', this)" style="flex:0 0 auto">👁</button>
+        <button type="button" class="btn btn-ghost btn-sm" onclick="generatePassword('cr-pass')" style="flex:0 0 auto;white-space:nowrap">Generate</button>
+      </div>
+    </div>
+  </div>
+
+ <div class="row" style="align-items:center">
+  <button class="btn btn-accent" id="cr-add">Create</button>
+</div>
+
+  <div class="row">
+    <div class="field"><label>Filter table</label><input id="cr-filter" placeholder="search login id / staff name" /></div>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th style="cursor:pointer" onclick="sortCred('loginId')">Login ID <span id="sort-loginId"></span></th>
+        <th style="cursor:pointer" onclick="sortCred('staffName')">Staff <span id="sort-staffName"></span></th>
+        <th style="cursor:pointer" onclick="sortCred('isActive')">Status <span id="sort-isActive"></span></th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody id="cr-body"></tbody>
+  </table>
+</section>
   <script src="js/config.js"></script>
   <script src="js/api.js"></script>
   
