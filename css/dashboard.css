@@ -24,3 +24,239 @@
 .tile .soon{display:inline-block;margin-top:10px;font-family:var(--f-mono);font-size:.6rem;text-transform:uppercase;letter-spacing:.1em;color:var(--marigold-2);background:#F4F1E8;padding:.2rem .5rem;border-radius:6px}
 @media (max-width:900px){.dash{grid-template-columns:1fr}.side{display:none}.tiles{grid-template-columns:1fr 1fr}}
 @media (max-width:560px){.tiles{grid-template-columns:1fr}}
+/* =======================
+   Top Header Buttons
+======================= */
+
+.top-actions{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+/* Subscription Button */
+
+.btn-subscription{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+
+    padding:12px 24px;
+
+    background:#16233F;
+    color:#fff;
+
+    border:none;
+    border-radius:12px;
+
+    text-decoration:none;
+
+    font-weight:600;
+    font-size:14px;
+
+    transition:.3s ease;
+}
+
+.btn-subscription:hover{
+
+    background:#F4A51C;
+
+    color:#16233F;
+
+    transform:translateY(-2px);
+
+    box-shadow:0 8px 18px rgba(244,165,28,.35);
+
+}
+
+/* Existing Manage Button spacing */
+
+.btn-accent{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+}
+/* ==========================================================
+   Current Subscription Card
+========================================================== */
+
+.subscription-card{
+
+    margin-top:30px;
+
+    background:#fff;
+
+    border-radius:20px;
+
+    padding:28px;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+
+}
+
+.subscription-top{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:25px;
+
+}
+
+.subscription-top h2{
+
+    color:#16233F;
+
+    font-size:28px;
+
+    margin-bottom:6px;
+
+}
+
+.subscription-top p{
+
+    color:#666;
+
+    font-size:15px;
+
+}
+
+.subscription-status{
+
+    padding:8px 18px;
+
+    border-radius:30px;
+
+    font-size:14px;
+
+    font-weight:700;
+
+}
+
+/* Active */
+
+.subscription-status.active{
+
+    background:#DCFCE7;
+
+    color:#15803D;
+
+}
+
+/* Pending */
+
+.subscription-status.pending{
+
+    background:#FEF3C7;
+
+    color:#B45309;
+
+}
+
+/* Expired */
+
+.subscription-status.expired{
+
+    background:#FEE2E2;
+
+    color:#B91C1C;
+
+}
+
+/* Cancelled */
+
+.subscription-status.cancelled{
+
+    background:#E5E7EB;
+
+    color:#374151;
+
+}
+
+.subscription-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+
+    gap:20px;
+
+}
+
+.subscription-item{
+
+    background:#F8FAFC;
+
+    border-radius:14px;
+
+    padding:18px;
+
+}
+
+.subscription-item small{
+
+    display:block;
+
+    color:#666;
+
+    margin-bottom:8px;
+
+    font-size:13px;
+
+}
+
+.subscription-item h3{
+
+    color:#16233F;
+
+    font-size:22px;
+
+}
+
+.subscription-item:hover{
+
+    transform:translateY(-3px);
+
+    transition:.3s;
+
+    box-shadow:0 8px 18px rgba(0,0,0,.08);
+
+}
+
+@media(max-width:900px){
+
+    .subscription-grid{
+
+        grid-template-columns:repeat(2,1fr);
+
+    }
+
+}
+
+@media(max-width:600px){
+
+    .subscription-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .subscription-top{
+
+        flex-direction:column;
+
+        align-items:flex-start;
+
+        gap:12px;
+
+    }
+
+}
