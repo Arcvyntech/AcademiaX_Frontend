@@ -2,7 +2,7 @@
 .admin-top{height:64px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 24px;background:var(--surface);position:sticky;top:0;z-index:20}
 .admin-wrap{max-width:1040px;margin:0 auto;padding:22px 20px 80px}
 .tabs{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px}
-.tabs button{font-family:var(--f-body);font-size:.9rem;font-weight:600;padding:.55rem 1rem;border-radius:999px;border:1.5px solid var(--line-2);background:var(--surface);color:var(--ink-2);cursor:pointer}
+.tabs button{font-family:var(--f-body);font-size:.9rem;font-weight:600;padding:.55rem 1rem;border-radius:999px;border:1.5px solid var(--line-2);background:var(--surface);color:var(--ink-2);cursor:pointer;display:inline-flex;align-items:center;gap:6px}
 .tabs button.active{background:var(--ink);color:#fff;border-color:var(--ink)}
 .panel{display:none}
 .panel.active{display:block}
@@ -10,6 +10,7 @@
 .panel .sub{color:var(--slate);font-size:.92rem;margin-bottom:1.1rem}
 .row{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;margin-bottom:14px}
 .row .field{margin-bottom:0;flex:1;min-width:160px}
+.row > button,.row > .btn{flex:0 0 auto;white-space:nowrap}
 table{width:100%;border-collapse:collapse;background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden;font-size:.9rem}
 th{text-align:left;background:#F4F1E8;color:var(--ink-2);font-weight:600;padding:.6rem .8rem;font-size:.78rem;text-transform:uppercase;letter-spacing:.04em}
 td{padding:.6rem .8rem;border-top:1px solid var(--line)}
@@ -20,3 +21,375 @@ td{padding:.6rem .8rem;border-top:1px solid var(--line)}
 .multi{border:1.5px solid var(--line-2);border-radius:10px;padding:8px;max-height:150px;overflow:auto;background:var(--surface)}
 .multi label{display:flex;align-items:center;gap:8px;font-size:.88rem;padding:2px 0}
 .empty{color:var(--slate-2);font-size:.88rem;padding:10px 2px}
+
+
+/* Tabs sit inside a soft pill-container; the active tab looks
+   like a raised card instead of a solid-fill pill */
+.tabs-wrap{
+    background:#F4F1E8;
+    padding:6px;
+    border-radius:14px;
+    display:inline-block;
+    margin-bottom:24px;
+}
+.tabs-wrap .tabs{margin-bottom:0}
+.tabs-wrap .tabs button{
+    border:none;
+    background:transparent;
+    border-radius:9px;
+    color:var(--ink-2);
+    transition:background .15s ease, color .15s ease, transform .1s ease;
+}
+.tabs-wrap .tabs button:hover:not(.active){
+    background:rgba(255,255,255,.6);
+    color:var(--ink);
+}
+.tabs-wrap .tabs button:active{transform:scale(.97)}
+.tabs-wrap .tabs button.active{
+    background:var(--surface);
+    color:var(--ink);
+    box-shadow:0 1px 3px rgba(0,0,0,.1);
+}
+.tabs-wrap .tabs button.active i{color:var(--marigold-2)}
+
+/* Panel header row + count chip next to the title */
+.panel-head{margin-bottom:20px}
+.panel-head h2{display:flex;align-items:center;gap:10px;margin-bottom:.3rem}
+.count-chip{
+    background:#FDF1D9;
+    color:var(--marigold-2);
+    font-size:.68rem;
+    font-weight:700;
+    padding:.2rem .6rem;
+    border-radius:999px;
+}
+
+/* Add-form wrapped in its own card */
+.add-card{
+    background:#FAFAF7;
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:16px 18px;
+    margin-bottom:22px;
+}
+.add-card-label{
+    display:block;
+    font-size:.72rem;
+    font-weight:700;
+    color:var(--slate);
+    text-transform:uppercase;
+    letter-spacing:.04em;
+    margin-bottom:8px;
+}
+
+/* Icon inside the "Designation name" input */
+.field-icon{position:relative}
+.field-icon i{
+    position:absolute;
+    left:12px;
+    top:50%;
+    transform:translateY(-50%);
+    font-size:16px;
+    color:var(--slate-2);
+    pointer-events:none;
+}
+.field-icon input{padding-left:38px}
+
+/* Add button icon spacing */
+#p-designations #d-add{display:inline-flex;align-items:center;gap:6px}
+
+/* Table wrapper: rounded container so header + body share one border */
+.table-wrap{border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.table-wrap table{border:none;border-radius:0;table-layout:fixed}
+.table-wrap th{background:#F4F1E8}
+.table-wrap td{border-top:1px solid var(--line)}
+.table-wrap .th-right{text-align:right}
+.table-wrap td:last-child{text-align:right}
+
+#p-designations .table-wrap th:nth-child(1),
+#p-designations .table-wrap td:nth-child(1){width:38%}
+#p-designations .table-wrap th:nth-child(2),
+#p-designations .table-wrap td:nth-child(2){width:18%}
+#p-designations .table-wrap th:nth-child(3),
+#p-designations .table-wrap td:nth-child(3){width:18%}
+#p-designations .table-wrap th:nth-child(4),
+#p-designations .table-wrap td:nth-child(4){width:26%}
+
+/* Row hover highlight — applies to any table inside .table-wrap */
+.table-wrap tbody tr{transition:background .15s ease}
+.table-wrap tbody tr:hover{background:#FAFAF7}
+
+/* "Level" badge — solid accent pill instead of plain outline */
+#p-designations td .level-badge{
+    display:inline-block;
+    background:#FDF1D9;
+    color:var(--marigold-2);
+    border-radius:999px;
+    padding:.25rem .7rem;
+    font-size:.76rem;
+    font-weight:700;
+}
+
+/* "Level" is still an editable <input>, just styled to look like a pill */
+#p-designations td .level-input{
+    width:56px;
+    background:#FDF1D9;
+    color:var(--marigold-2);
+    border:none;
+    border-radius:999px;
+    padding:.3rem .7rem;
+    font-size:.8rem;
+    font-weight:700;
+    text-align:center;
+}
+#p-designations td .level-input:focus{
+    outline:2px solid var(--marigold);
+    outline-offset:1px;
+}
+
+/* A count value with a small icon (staff count, student count, etc.) —
+   reusable across any table inside .table-wrap */
+.table-wrap td .count-inline{
+    display:inline-flex;
+    align-items:center;
+    gap:5px;
+    color:var(--slate);
+}
+.table-wrap td .count-inline i{font-size:.85rem}
+
+.table-wrap td .name-cell{
+    display:flex;
+    align-items:center;
+    gap:11px;
+}
+.table-wrap td .name-cell .ic-box{
+    width:32px;
+    height:32px;
+    border-radius:9px;
+    background:#FDF1D9;
+    color:var(--marigold-2);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-shrink:0;
+    font-size:15px;
+}
+.table-wrap td .name-cell .ic-box.tone-green{background:#DCFCE7;color:#15803D}
+.table-wrap td .name-cell .ic-box.tone-blue{background:#DBEAFE;color:#1D4ED8}
+.table-wrap td .name-cell .name-text{font-weight:600}
+
+
+.table-wrap .btn-sm{
+    display:inline-flex;
+    align-items:center;
+    gap:5px;
+    margin-left:6px;
+    height:34px;
+    padding:0 14px;
+    box-sizing:border-box;
+    border-radius:8px;
+}
+.table-wrap .btn-sm.danger{
+    color:#DC2626;
+    border-color:#F3C9BC;
+    background:transparent;
+}
+.table-wrap .btn-sm.danger:hover{background:#FEF2F2}
+.table-wrap .btn-sm:not(.danger):not(.primary):not(.warning):not(.success):hover{background:#F4F1E8}
+
+/* Row-count footer text */
+.table-meta{
+    font-size:.78rem;
+    color:var(--slate-2);
+    margin:12px 2px 0;
+}
+
+/* Sortable column headers (Credentials) get a subtle hover cue */
+.table-wrap th[onclick]{transition:color .15s ease}
+.table-wrap th[onclick]:hover{color:var(--ink)}
+
+.btn-icon-only{
+    width:38px;height:38px;padding:0;
+    display:inline-flex;align-items:center;justify-content:center;
+}
+
+/* ==========================================================
+   Staff — table layout
+   (reuses .name-cell/.ic-box, .subject-chips/.subject-chip
+    for class assignment, and the shared balanced buttons)
+========================================================== */
+
+#p-staff .table-wrap th:nth-child(1),
+#p-staff .table-wrap td:nth-child(1){width:14%}
+#p-staff .table-wrap th:nth-child(2),
+#p-staff .table-wrap td:nth-child(2){width:12%}
+#p-staff .table-wrap th:nth-child(3),
+#p-staff .table-wrap td:nth-child(3){width:13%}
+#p-staff .table-wrap th:nth-child(4),
+#p-staff .table-wrap td:nth-child(4){width:28%}
+#p-staff .table-wrap th:nth-child(5),
+#p-staff .table-wrap td:nth-child(5){width:8%}
+#p-staff .table-wrap th:nth-child(6),
+#p-staff .table-wrap td:nth-child(6){width:25%}
+#p-staff .table-wrap td{vertical-align:top}
+#p-staff .name-cell input[type="text"]{margin-bottom:0}
+
+/* Keep Edit + Delete on a single line instead of stacking */
+#p-staff .table-wrap td:last-child{white-space:nowrap}
+
+.subject-chips.compact{gap:5px 6px}
+.subject-chips.compact .subject-chip{
+    padding:.2rem .55rem;
+    font-size:.74rem;
+    gap:4px;
+}
+.subject-chips.compact .subject-chip .chip-check{font-size:.68rem}
+
+/* A small yes/no style pill, e.g. for the "Login" column */
+.status-pill{
+    display:inline-block;
+    border-radius:999px;
+    padding:.2rem .6rem;
+    font-size:.72rem;
+    font-weight:700;
+}
+.status-pill.yes{background:#DCFCE7;color:#15803D}
+.status-pill.no{background:#F4F1E8;color:var(--slate)}
+.status-pill.active{background:#DCFCE7;color:#15803D}
+.status-pill.disabled{background:#FEE2E2;color:#B91C1C}
+
+/* Disable / Enable toggle button — distinct from the neutral Edit button */
+.table-wrap .btn-sm.warning{
+    color:#B45309;
+    border-color:#FDE4B0;
+    background:#FFFBEB;
+}
+.table-wrap .btn-sm.warning:hover{background:#FEF3C7}
+.table-wrap .btn-sm.success{
+    color:#15803D;
+    border-color:#BBF7D0;
+    background:#F0FDF4;
+}
+.table-wrap .btn-sm.success:hover{background:#DCFCE7}
+
+.table-wrap .btn-sm.icon-only{width:34px;padding:0;justify-content:center}
+
+/* ==========================================================
+   Credentials — table layout
+========================================================== */
+
+#p-credentials .table-wrap th:nth-child(1),
+#p-credentials .table-wrap td:nth-child(1){width:18%}
+#p-credentials .table-wrap th:nth-child(2),
+#p-credentials .table-wrap td:nth-child(2){width:22%}
+#p-credentials .table-wrap th:nth-child(3),
+#p-credentials .table-wrap td:nth-child(3){width:14%}
+#p-credentials .table-wrap th:nth-child(4),
+#p-credentials .table-wrap td:nth-child(4){width:46%}
+#p-credentials .table-wrap td{vertical-align:top}
+
+.cr-btn-group{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    flex:0 0 auto;
+}
+.cr-btn-group .btn{
+    height:38px;
+    box-sizing:border-box;
+    display:inline-flex;
+    align-items:center;
+}
+
+@media (max-width: 640px){
+    #p-credentials .row{flex-direction:column;align-items:stretch}
+    #p-credentials .field[style*="flex:2"]{flex:1 1 auto !important}
+    .cr-btn-group{width:100%}
+    .cr-btn-group #cr-add{flex:1 1 auto;justify-content:center}
+}
+
+/* ==========================================================
+   Subjects — table layout
+========================================================== */
+
+#p-subjects .table-wrap th:nth-child(1),
+#p-subjects .table-wrap td:nth-child(1){width:70%}
+#p-subjects .table-wrap th:nth-child(2),
+#p-subjects .table-wrap td:nth-child(2){width:30%}
+
+/* ==========================================================
+   Students — table layout
+========================================================== */
+
+#p-students .table-wrap th:nth-child(1),
+#p-students .table-wrap td:nth-child(1){width:22%}
+#p-students .table-wrap th:nth-child(2),
+#p-students .table-wrap td:nth-child(2){width:20%}
+#p-students .table-wrap th:nth-child(3),
+#p-students .table-wrap td:nth-child(3){width:16%}
+#p-students .table-wrap th:nth-child(4),
+#p-students .table-wrap td:nth-child(4){width:18%}
+#p-students .table-wrap th:nth-child(5),
+#p-students .table-wrap td:nth-child(5){width:24%}
+#p-students .table-wrap td{vertical-align:top}
+#p-students .table-wrap td:last-child{white-space:nowrap}
+
+/* Column widths: Class / Students / Subjects / Actions */
+#p-classes .table-wrap th:nth-child(1),
+#p-classes .table-wrap td:nth-child(1){width:20%}
+#p-classes .table-wrap th:nth-child(2),
+#p-classes .table-wrap td:nth-child(2){width:12%}
+#p-classes .table-wrap th:nth-child(3),
+#p-classes .table-wrap td:nth-child(3){width:46%}
+#p-classes .table-wrap th:nth-child(4),
+#p-classes .table-wrap td:nth-child(4){width:22%}
+
+#p-classes .table-wrap td{vertical-align:top}
+
+#p-classes .name-cell .chip{margin-left:2px}
+
+.subject-chips{
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px 8px;
+    max-height:150px;
+    overflow:auto;
+    margin-bottom:10px;
+}
+.subject-chip{
+    position:relative;
+    display:inline-flex;
+    align-items:center;
+    gap:5px;
+    border:1.5px solid var(--line-2);
+    border-radius:8px;
+    padding:.32rem .75rem;
+    font-size:.8rem;
+    font-weight:600;
+    color:var(--slate);
+    cursor:pointer;
+    background:var(--surface);
+    transition:background .15s ease, border-color .15s ease, color .15s ease;
+}
+.subject-chip input{position:absolute;opacity:0;width:0;height:0;pointer-events:none}
+.subject-chip .chip-check{display:none;font-size:.75rem}
+.subject-chip:has(input:checked){
+    background:#FDF1D9;
+    border-color:#F4A51C;
+    color:var(--marigold-2);
+}
+.subject-chip:has(input:checked) .chip-check{display:inline}
+.subject-chip:hover{border-color:var(--slate-2)}
+
+#p-classes .btn-sm.primary{
+    height:34px;
+    padding:0 16px;
+    box-sizing:border-box;
+    display:inline-flex;
+    align-items:center;
+    background:var(--marigold);
+    border-color:var(--marigold);
+    color:var(--ink);
+}
+
+#p-classes .name-cell input[type="text"]{margin-bottom:4px}

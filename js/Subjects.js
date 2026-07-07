@@ -3,23 +3,35 @@
 
 let editingSubId = null; // kaunsi row abhi edit mode mein hai
 
+const SUBJECT_TONES = ["", "tone-green", "tone-blue"];
+
 async function loadSubjects() {
   try {
     const { data } = await api("/subjects");
     cache.subjects = data;
+
+    // Count chip next to the "Subjects" heading
+    const countEl = $("s-count");
+    if (countEl) countEl.textContent = data.length ? `${data.length} ${data.length === 1 ? "subject" : "subjects"}` : "";
+
     $("s-body").innerHTML = data.length
       ? data
-          .map((s) => {
+          .map((s, i) => {
+            const tone = SUBJECT_TONES[i % SUBJECT_TONES.length];
             const isEditing = editingSubId === s._id;
+
             const nameCell = isEditing
               ? `<input type="text" id="edit-sub-${s._id}" value="${esc(s.name)}" style="width:160px"/>`
-              : esc(s.name);
+              : `<div class="name-cell">
+                   <div class="ic-box ${tone}"><i class="ti ti-book"></i></div>
+                   <span class="name-text">${esc(s.name)}</span>
+                 </div>`;
 
             const actionsCell = isEditing
-              ? `<button class="btn-sm" onclick="saveSub('${s._id}')">Save</button>
-                 <button class="btn-sm" onclick="cancelSubEdit()">Cancel</button>`
-              : `<button class="btn-sm" onclick="editSub('${s._id}')">Edit</button>
-                 <button class="btn-sm danger" onclick="delSub('${s._id}')">Delete</button>`;
+              ? `<button class="btn-sm" onclick="saveSub('${s._id}')"><i class="ti ti-check"></i>Save</button>
+                 <button class="btn-sm" onclick="cancelSubEdit()"><i class="ti ti-x"></i>Cancel</button>`
+              : `<button class="btn-sm" onclick="editSub('${s._id}')"><i class="ti ti-edit"></i>Edit</button>
+                 <button class="btn-sm danger" onclick="delSub('${s._id}')"><i class="ti ti-trash"></i>Delete</button>`;
 
             return `<tr><td>${nameCell}</td>
                <td>${actionsCell}</td></tr>`;

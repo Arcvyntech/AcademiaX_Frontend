@@ -6,6 +6,7 @@
 <title>Manage institution — AcademiaX</title>
 <link rel="stylesheet" href="css/base.css" />
 <link rel="stylesheet" href="css/admin.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont/dist/tabler-icons.min.css" />
 </head>
 <body>
   <header class="admin-top">
@@ -18,137 +19,203 @@
 
   <div class="admin-wrap">
     <div id="alert" class="alert"></div>
-    <div class="tabs">
-      <button data-tab="designations" class="active">Designations</button>
-      <button data-tab="classes">Classes</button>
-      <button data-tab="staff">Staff</button>
-      <button data-tab="subjects">Subjects</button>
-      <button data-tab="students">Students</button>
-      <button data-tab="hierarchy">Hierarchy</button>
-      <button data-tab="credentials">Credentials</button>
+    <div class="tabs-wrap">
+      <div class="tabs">
+        <button data-tab="designations" class="active"><i class="ti ti-briefcase"></i>Designations</button>
+        <button data-tab="classes"><i class="ti ti-school"></i>Classes</button>
+        <button data-tab="staff"><i class="ti ti-id-badge-2"></i>Staff</button>
+        <button data-tab="subjects"><i class="ti ti-book"></i>Subjects</button>
+        <button data-tab="students"><i class="ti ti-users-group"></i>Students</button>
+        <button data-tab="hierarchy"><i class="ti ti-sitemap"></i>Hierarchy</button>
+        <button data-tab="credentials"><i class="ti ti-key"></i>Credentials</button>
+      </div>
     </div>
 
     <!-- Designations -->
     <section class="panel active" id="p-designations">
-      <h2>Designations</h2>
-      <p class="sub">Roles like Principal, Teacher, Coordinator. You can also assign a hierarchy level to each.</p>
-      <div class="row">
-        <div class="field"><label>Designation name</label><input id="d-name" placeholder="e.g. Principal" /></div>
-        <button class="btn btn-accent" id="d-add">Add</button>
+      <div class="panel-head">
+        <h2>Designations <span class="count-chip" id="d-count"></span></h2>
+        <p class="sub">Roles like Principal, Teacher, Coordinator. You can also assign a hierarchy level to each.</p>
       </div>
-      <table><thead><tr><th>Name</th><th>Staff</th><th>Level</th><th>Actions</th></tr></thead><tbody id="d-body"></tbody></table>
+
+      <div class="add-card">
+        <label class="add-card-label">Add a new designation</label>
+        <div class="row" style="margin-bottom:0">
+          <div class="field field-icon">
+            <i class="ti ti-briefcase"></i>
+            <input id="d-name" placeholder="e.g. Principal" />
+          </div>
+          <button class="btn btn-accent" id="d-add"><i class="ti ti-plus"></i>Add</button>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Name</th><th>Staff</th><th>Level</th><th class="th-right">Actions</th></tr></thead>
+          <tbody id="d-body"></tbody>
+        </table>
+      </div>
     </section>
 
     <!-- Classes -->
     <section class="panel" id="p-classes">
-      <h2>Classes</h2>
-      <p class="sub">Create classes and assign the subjects taught in each.</p>
-      <div class="row">
-        <div class="field"><label>Class name</label><input id="c-name" placeholder="e.g. Class 5" /></div>
-        <div class="field"><label>Nickname (optional)</label><input id="c-nick" placeholder="e.g. 5A" /></div>
-        <button class="btn btn-accent" id="c-add">Add</button>
+      <div class="panel-head">
+        <h2>Classes <span class="count-chip" id="c-count"></span></h2>
+        <p class="sub">Create classes and assign the subjects taught in each.</p>
       </div>
-      <table><thead><tr><th>Class</th><th>Students</th><th>Subjects</th><th>Actions</th></tr></thead><tbody id="c-body"></tbody></table>
+      <div class="add-card">
+        <label class="add-card-label">Add a new class</label>
+        <div class="row" style="margin-bottom:0">
+          <div class="field field-icon"><i class="ti ti-school"></i><input id="c-name" placeholder="e.g. Class 5" /></div>
+          <div class="field"><input id="c-nick" placeholder="Nickname, e.g. 5A" /></div>
+          <button class="btn btn-accent" id="c-add"><i class="ti ti-plus"></i>Add</button>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Class</th><th>Students</th><th>Subjects</th><th class="th-right">Actions</th></tr></thead>
+          <tbody id="c-body"></tbody>
+        </table>
+      </div>
     </section>
 
     <!-- Staff -->
     <section class="panel" id="p-staff">
-      <h2>Staff</h2>
-      <p class="sub">Add staff, give them a designation, and assign classes.</p>
-      <div class="row">
-        <div class="field"><label>Name</label><input id="st-name" placeholder="Full name" /></div>
-        <div class="field"><label>Mobile</label><input id="st-mobile" placeholder="10-digit number" /></div>
-        <div class="field"><label>Designation</label><select id="st-desig"></select></div>
-        <button class="btn btn-accent" id="st-add">Add</button>
+      <div class="panel-head">
+        <h2>Staff <span class="count-chip" id="st-count"></span></h2>
+        <p class="sub">Add staff, give them a designation, and assign classes.</p>
       </div>
-      <table><thead><tr><th>Name</th><th>Mobile</th><th>Designation</th><th>Classes</th><th>Login</th><th>Actions</th></tr></thead><tbody id="st-body"></tbody></table>
+      <div class="add-card">
+        <label class="add-card-label">Add a new staff member</label>
+        <div class="row" style="margin-bottom:0">
+          <div class="field field-icon"><i class="ti ti-user"></i><input id="st-name" placeholder="Full name" /></div>
+          <div class="field field-icon"><i class="ti ti-phone"></i><input id="st-mobile" placeholder="10-digit number" /></div>
+          <div class="field"><select id="st-desig"></select></div>
+          <button class="btn btn-accent" id="st-add"><i class="ti ti-plus"></i>Add</button>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table><thead><tr><th>Name</th><th>Mobile</th><th>Designation</th><th>Classes</th><th>Login</th><th class="th-right">Actions</th></tr></thead><tbody id="st-body"></tbody></table>
+      </div>
     </section>
 
     <!-- Students -->
     <section class="panel" id="p-students">
-      <h2>Students</h2>
-      <p class="sub">Add students individually or in bulk. The mobile number is the parent's login.</p>
-     <div class="row">
-        <div class="field"><label>Class</label><select id="stu-class"></select></div>
-        <div class="field"><label>Section</label><select id="stu-section"></select></div>
-        <div class="field"><label>Search</label><input id="stu-search" placeholder="name / father / mobile" /></div>
-        <button class="btn btn-ghost" id="stu-find">Search</button>
-    </div>
-      <div class="row" style="border-top:1px solid var(--line);padding-top:14px">
-        <div class="field"><label>Name</label><input id="stu-name" placeholder="Student name" /></div>
-        <div class="field"><label>Father</label><input id="stu-father" placeholder="Father's name" /></div>
-        <div class="field"><label>Mobile</label><input id="stu-mobile" placeholder="Parent's 10-digit number" /></div>
-        <button class="btn btn-accent" id="stu-add">Add</button>
+      <div class="panel-head">
+        <h2>Students <span class="count-chip" id="stu-count"></span></h2>
+        <p class="sub">Add students individually or in bulk. The mobile number is the parent's login.</p>
       </div>
-      <p class="sub">Bulk add: paste rows as <span class="mono">Name, Father, Mobile</span> (one per line), pick a class above, then Bulk add.</p>
-      <div class="row">
-        <div class="field" style="flex:2"><label>Bulk rows</label><input id="stu-bulk" placeholder="Aarav, Rakesh, 9876543210" /></div>
-        <button class="btn btn-ghost" id="stu-bulk-add">Bulk add</button>
+
+      <div class="add-card">
+        <label class="add-card-label">Find students</label>
+        <div class="row" style="margin-bottom:0">
+          <div class="field"><select id="stu-class"></select></div>
+          <div class="field"><select id="stu-section"></select></div>
+          <div class="field field-icon"><i class="ti ti-search"></i><input id="stu-search" placeholder="name / father / mobile" /></div>
+          <button class="btn btn-ghost" id="stu-find"><i class="ti ti-search"></i>Search</button>
+        </div>
       </div>
-      <table><thead><tr><th>Name</th><th>Father</th><th>Class</th><th>Mobile</th><th>Actions</th></tr></thead><tbody id="stu-body"></tbody></table>
+
+      <div class="add-card">
+        <label class="add-card-label">Add a new student</label>
+        <div class="row" style="margin-bottom:0">
+          <div class="field field-icon"><i class="ti ti-user"></i><input id="stu-name" placeholder="Student name" /></div>
+          <div class="field"><input id="stu-father" placeholder="Father's name" /></div>
+          <div class="field field-icon"><i class="ti ti-phone"></i><input id="stu-mobile" placeholder="Parent's 10-digit number" /></div>
+          <button class="btn btn-accent" id="stu-add"><i class="ti ti-plus"></i>Add</button>
+        </div>
+      </div>
+
+      <div class="add-card">
+        <label class="add-card-label">Bulk add</label>
+        <p class="sub" style="margin-bottom:10px">Paste rows as <span class="mono">Name, Father, Mobile</span> (one per line), pick a class above, then Bulk add.</p>
+        <div class="row" style="margin-bottom:0">
+          <div class="field" style="flex:2"><input id="stu-bulk" placeholder="Aarav, Rakesh, 9876543210" /></div>
+          <button class="btn btn-ghost" id="stu-bulk-add"><i class="ti ti-upload"></i>Bulk add</button>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table><thead><tr><th>Name</th><th>Father</th><th>Class</th><th>Mobile</th><th class="th-right">Actions</th></tr></thead><tbody id="stu-body"></tbody></table>
+      </div>
     </section>
 
     <!-- Subjects -->
     <section class="panel" id="p-subjects">
-      <h2>Subjects</h2>
-      <p class="sub">All subjects taught at your institution.</p>
-      <div class="row">
-        <div class="field"><label>Subject name</label><input id="s-name" placeholder="e.g. Mathematics" /></div>
-        <button class="btn btn-accent" id="s-add">Add</button>
+      <div class="panel-head">
+        <h2>Subjects <span class="count-chip" id="s-count"></span></h2>
+        <p class="sub">All subjects taught at your institution.</p>
       </div>
-      <table><thead><tr><th>Name</th><th>Actions</th></tr></thead><tbody id="s-body"></tbody></table>
+      <div class="add-card">
+        <label class="add-card-label">Add a new subject</label>
+        <div class="row" style="margin-bottom:0">
+          <div class="field field-icon"><i class="ti ti-book"></i><input id="s-name" placeholder="e.g. Mathematics" /></div>
+          <button class="btn btn-accent" id="s-add"><i class="ti ti-plus"></i>Add</button>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table><thead><tr><th>Name</th><th class="th-right">Actions</th></tr></thead><tbody id="s-body"></tbody></table>
+      </div>
     </section>
 
     <!-- Hierarchy -->
     <section class="panel" id="p-hierarchy">
-      <h2>Hierarchy</h2>
-      <p class="sub">How many hierarchy levels your institution has (1–10).</p>
-      <div class="row">
-        <div class="field"><label>Number of levels</label><input id="h-levels" type="number" min="0" max="10" /></div>
-        <button class="btn btn-accent" id="h-save">Save</button>
+      <div class="panel-head">
+        <h2>Hierarchy</h2>
+        <p class="sub">How many hierarchy levels your institution has (1–10).</p>
+      </div>
+      <div class="add-card">
+        <label class="add-card-label">Number of levels</label>
+        <div class="row" style="margin-bottom:0">
+          <div class="field field-icon"><i class="ti ti-sitemap"></i><input id="h-levels" type="number" min="0" max="10" /></div>
+          <button class="btn btn-accent" id="h-save"><i class="ti ti-device-floppy"></i>Save</button>
+        </div>
       </div>
     </section>
 
   <!-- Credentials -->
 <section class="panel" id="p-credentials">
-  <h2>Staff login credentials</h2>
-  <p class="sub">Create login access for staff. Their mobile number becomes their login ID.</p>
-
-  <div class="row">
-    <div class="field"><label>Search staff</label><input id="cr-staff-search" placeholder="Type name or mobile..." oninput="filterStaffDropdown()" /></div>
-    <div class="field"><label>Staff</label><select id="cr-staff"></select></div>
+  <div class="panel-head">
+    <h2>Staff login credentials <span class="count-chip" id="cr-count"></span></h2>
+    <p class="sub">Create login access for staff. Their mobile number becomes their login ID.</p>
   </div>
 
-  <div class="row">
-    <div class="field" style="flex:2">
-      <label>Password</label>
-      <div style="display:flex;gap:6px;align-items:center">
-        <input id="cr-pass" type="password" placeholder="min 6 characters" style="flex:1" />
-        <button type="button" class="btn btn-ghost btn-sm" onclick="togglePass('cr-pass', this)" style="flex:0 0 auto">👁</button>
-        <button type="button" class="btn btn-ghost btn-sm" onclick="generatePassword('cr-pass')" style="flex:0 0 auto;white-space:nowrap">Generate</button>
+  <div class="add-card">
+    <label class="add-card-label">Create a login</label>
+    <div class="row">
+      <div class="field field-icon"><i class="ti ti-search"></i><input id="cr-staff-search" placeholder="Type name or mobile..." oninput="filterStaffDropdown()" /></div>
+      <div class="field"><select id="cr-staff"></select></div>
+    </div>
+    <div class="row" style="margin-bottom:0">
+      <div class="field field-icon" style="flex:2 1 200px">
+        <i class="ti ti-lock"></i>
+        <input id="cr-pass" type="password" placeholder="min 6 characters" style="width:100%" />
+      </div>
+      <div class="cr-btn-group">
+        <button type="button" class="btn btn-ghost btn-sm btn-icon-only" onclick="togglePass('cr-pass', this)" aria-label="Show password"><i class="ti ti-eye"></i></button>
+        <button type="button" class="btn btn-ghost btn-sm" onclick="generatePassword('cr-pass')"><i class="ti ti-refresh"></i>Generate</button>
+        <button class="btn btn-accent" id="cr-add"><i class="ti ti-plus"></i>Create</button>
       </div>
     </div>
   </div>
 
- <div class="row" style="align-items:center">
-  <button class="btn btn-accent" id="cr-add">Create</button>
-</div>
-
   <div class="row">
-    <div class="field"><label>Filter table</label><input id="cr-filter" placeholder="search login id / staff name" /></div>
+    <div class="field field-icon"><i class="ti ti-filter"></i><input id="cr-filter" placeholder="search login id / staff name" /></div>
   </div>
 
-  <table>
-    <thead>
-      <tr>
-        <th style="cursor:pointer" onclick="sortCred('loginId')">Login ID <span id="sort-loginId"></span></th>
-        <th style="cursor:pointer" onclick="sortCred('staffName')">Staff <span id="sort-staffName"></span></th>
-        <th style="cursor:pointer" onclick="sortCred('isActive')">Status <span id="sort-isActive"></span></th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody id="cr-body"></tbody>
-  </table>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th style="cursor:pointer" onclick="sortCred('loginId')">Login ID <span id="sort-loginId"></span></th>
+          <th style="cursor:pointer" onclick="sortCred('staffName')">Staff <span id="sort-staffName"></span></th>
+          <th style="cursor:pointer" onclick="sortCred('isActive')">Status <span id="sort-isActive"></span></th>
+          <th class="th-right">Actions</th>
+        </tr>
+      </thead>
+      <tbody id="cr-body"></tbody>
+    </table>
+  </div>
 </section>
   <script src="js/config.js"></script>
   <script src="js/api.js"></script>

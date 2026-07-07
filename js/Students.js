@@ -3,6 +3,8 @@
 
 let editingStuId = null; // kaunsi row abhi edit mode mein hai
 
+const STUDENT_TONES = ["", "tone-green", "tone-blue"];
+
 async function loadStudents() {
   try {
     cache.classes = (await api("/classes")).data;
@@ -69,14 +71,22 @@ async function renderStudents() {
 
     cache.studentsList = data; // edit ke time class options ke liye kaam aayega
 
+    // Count chip next to the "Students" heading (reflects the current filter)
+    const countEl = $("stu-count");
+    if (countEl) countEl.textContent = data.length ? `${data.length} ${data.length === 1 ? "student" : "students"}` : "";
+
     $("stu-body").innerHTML = data.length
       ? data
-          .map((s) => {
+          .map((s, i) => {
+            const tone = STUDENT_TONES[i % STUDENT_TONES.length];
             const isEditing = editingStuId === s._id;
 
             const nameCell = isEditing
               ? `<input type="text" id="edit-stuname-${s._id}" value="${esc(s.name)}" style="width:100px"/>`
-              : esc(s.name);
+              : `<div class="name-cell">
+                   <div class="ic-box ${tone}"><i class="ti ti-user"></i></div>
+                   <span class="name-text">${esc(s.name)}</span>
+                 </div>`;
 
             const fatherCell = isEditing
               ? `<input type="text" id="edit-stufather-${s._id}" value="${esc(s.fatherName || "")}" style="width:100px"/>`
@@ -93,17 +103,19 @@ async function renderStudents() {
                   )
                   .join("") +
                 `</select>`
-              : (s.classId ? `${esc(s.classId.name)}${s.classId.nickname ? " - " + esc(s.classId.nickname) : ""}` : "—");
+              : s.classId
+                ? `<span class="chip">${esc(s.classId.name)}${s.classId.nickname ? " · " + esc(s.classId.nickname) : ""}</span>`
+                : `<span class="empty">—</span>`;
 
             const mobileCell = isEditing
               ? `<input type="text" id="edit-stumobile-${s._id}" value="${esc(s.mobileNo)}" style="width:110px"/>`
-              : esc(s.mobileNo);
+              : `<span class="count-inline"><i class="ti ti-phone"></i>${esc(s.mobileNo)}</span>`;
 
             const actionsCell = isEditing
-              ? `<button class="btn-sm" onclick="saveStudent('${s._id}')">Save</button>
-                 <button class="btn-sm" onclick="cancelStuEdit()">Cancel</button>`
-              : `<button class="btn-sm" onclick="editStudent('${s._id}')">Edit</button>
-                 <button class="btn-sm danger" onclick="delStudent('${s._id}')">Delete</button>`;
+              ? `<button class="btn-sm" onclick="saveStudent('${s._id}')"><i class="ti ti-check"></i>Save</button>
+                 <button class="btn-sm" onclick="cancelStuEdit()"><i class="ti ti-x"></i>Cancel</button>`
+              : `<button class="btn-sm" onclick="editStudent('${s._id}')"><i class="ti ti-edit"></i>Edit</button>
+                 <button class="btn-sm danger" onclick="delStudent('${s._id}')"><i class="ti ti-trash"></i>Delete</button>`;
 
             return `<tr>
                 <td>${nameCell}</td>
