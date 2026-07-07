@@ -260,3 +260,141 @@
     }
 
 }
+/* ===========================================
+   MODULES SECTION
+=========================================== */
+
+.modules-section{
+    margin-top:35px;
+}
+
+.modules-title{
+    font-size:24px;
+    font-weight:700;
+    margin-bottom:18px;
+    color:#1e293b;
+}
+
+.module-card{
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    background:#ffffff;
+
+    border-radius:18px;
+
+    padding:22px;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+
+    transition:.3s;
+
+}
+
+.module-card:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:0 15px 35px rgba(0,0,0,.12);
+
+}
+
+.module-left{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:18px;
+
+}
+
+.module-icon{
+
+    width:60px;
+
+    height:60px;
+
+    border-radius:16px;
+
+    background:#eef5ff;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-size:28px;
+
+}
+
+.module-left h3{
+
+    margin:0;
+
+    font-size:20px;
+
+    color:#1f2937;
+
+}
+
+.module-left p{
+
+    margin-top:6px;
+
+    color:#64748b;
+
+    font-size:14px;
+
+}
+
+.module-right{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:18px;
+
+}
+
+#feeModuleStatus{
+
+    padding:8px 18px;
+
+    border-radius:25px;
+
+    font-size:14px;
+
+    font-weight:600;
+
+    background:#f1f5f9;
+
+}
+
+#feeModuleBtn{
+
+    border:none;
+
+    padding:12px 22px;
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+    font-size:15px;
+
+    font-weight:600;
+
+    transition:.3s;
+
+}
+
+#feeModuleBtn:hover{
+
+    transform:scale(1.03);
+
+}

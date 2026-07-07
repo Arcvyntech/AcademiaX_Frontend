@@ -1,0 +1,1010 @@
+/* ==========================================================
+   AcademiaX ERP
+   Fee Heads Module
+   Version : 1.0
+========================================================== */
+
+:root{
+
+    --primary:#5964FF;
+    --secondary:#7D4DFF;
+
+    --success:#16A34A;
+    --danger:#DC2626;
+    --warning:#F59E0B;
+
+    --background:#F4F7FB;
+    --card:#FFFFFF;
+
+    --text:#1E293B;
+    --muted:#64748B;
+
+    --border:#E2E8F0;
+
+    --radius:18px;
+
+    --shadow:0 10px 30px rgba(15,23,42,.08);
+
+    --transition:.30s ease;
+
+}
+
+*{
+
+    margin:0;
+    padding:0;
+
+    box-sizing:border-box;
+
+    font-family:"Inter",sans-serif;
+
+}
+
+html{
+
+    scroll-behavior:smooth;
+
+}
+
+body{
+
+    background:var(--background);
+
+    color:var(--text);
+
+}
+
+/* ==========================================================
+                    PAGE
+========================================================== */
+
+.page{
+
+    width:95%;
+
+    margin:auto;
+
+    padding:35px 0 50px;
+
+}
+
+/* ==========================================================
+                    HEADER
+========================================================== */
+
+.page-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:28px;
+
+}
+
+.header-left{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:18px;
+
+}
+
+.header-left h1{
+
+    font-size:34px;
+
+    font-weight:700;
+
+}
+
+.header-left p{
+
+    margin-top:6px;
+
+    color:var(--muted);
+
+    font-size:15px;
+
+}
+
+.header-right{
+
+    display:flex;
+
+    gap:14px;
+
+}
+
+/* ==========================================================
+                    BUTTONS
+========================================================== */
+
+button{
+
+    cursor:pointer;
+
+    transition:var(--transition);
+
+}
+
+.back-btn{
+
+    width:52px;
+
+    height:52px;
+
+    border:none;
+
+    border-radius:16px;
+
+    background:var(--card);
+
+    box-shadow:var(--shadow);
+
+    font-size:18px;
+
+}
+
+.back-btn:hover{
+
+    transform:translateY(-3px);
+
+}
+
+.primary-btn{
+
+    border:none;
+
+    border-radius:14px;
+
+    background:linear-gradient(
+        135deg,
+        var(--primary),
+        var(--secondary)
+    );
+
+    color:#fff;
+
+    padding:14px 24px;
+
+    font-size:15px;
+
+    font-weight:600;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    box-shadow:0 10px 25px rgba(89,100,255,.25);
+
+}
+
+.primary-btn:hover{
+
+    transform:translateY(-2px);
+
+}
+
+.secondary-btn{
+
+    border:none;
+
+    border-radius:14px;
+
+    background:#fff;
+
+    color:var(--text);
+
+    padding:14px 22px;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    box-shadow:var(--shadow);
+
+}
+
+.secondary-btn:hover{
+
+    transform:translateY(-2px);
+
+}
+
+/* ==========================================================
+                    TOOLBAR
+========================================================== */
+
+.toolbar{
+
+    background:#fff;
+
+    border-radius:20px;
+
+    padding:20px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    box-shadow:var(--shadow);
+
+    margin-bottom:28px;
+
+}
+
+.search-box{
+
+    position:relative;
+
+    width:340px;
+
+}
+
+.search-box i{
+
+    position:absolute;
+
+    left:18px;
+
+    top:50%;
+
+    transform:translateY(-50%);
+
+    color:#94A3B8;
+
+}
+
+.search-box input{
+
+    width:100%;
+
+    padding:15px 18px 15px 50px;
+
+    border:1px solid var(--border);
+
+    border-radius:14px;
+
+    outline:none;
+
+    font-size:15px;
+
+    transition:var(--transition);
+
+}
+
+.search-box input:focus{
+
+    border-color:var(--primary);
+
+}
+
+.toolbar-right{
+
+    display:flex;
+
+    gap:14px;
+
+}
+
+.toolbar-right select{
+
+    min-width:170px;
+
+    padding:14px;
+
+    border-radius:14px;
+
+    border:1px solid var(--border);
+
+    background:#fff;
+
+    outline:none;
+
+    transition:var(--transition);
+
+}
+
+.toolbar-right select:focus{
+
+    border-color:var(--primary);
+
+}
+
+/* ==========================================================
+                    TABLE CARD
+========================================================== */
+
+.table-card{
+
+    background:#fff;
+
+    border-radius:22px;
+
+    box-shadow:var(--shadow);
+
+    overflow:hidden;
+
+}
+
+.table-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:26px 30px;
+
+    border-bottom:1px solid var(--border);
+
+}
+
+.table-header h2{
+
+    font-size:24px;
+
+}
+
+.table-header p{
+
+    margin-top:6px;
+
+    color:var(--muted);
+
+}
+
+.table-count{
+
+    font-size:15px;
+
+    color:var(--muted);
+
+}
+
+.table-count span{
+
+    color:var(--primary);
+
+    font-weight:700;
+
+}
+/* ==========================================================
+                    TABLE
+========================================================== */
+
+.table-wrapper{
+
+    width:100%;
+
+    overflow:auto;
+
+}
+
+table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+}
+
+thead{
+
+    background:#F8FAFC;
+
+}
+
+thead th{
+
+    padding:18px 20px;
+
+    text-align:left;
+
+    font-size:14px;
+
+    font-weight:600;
+
+    color:#475569;
+
+    border-bottom:1px solid var(--border);
+
+}
+
+tbody td{
+
+    padding:18px 20px;
+
+    border-bottom:1px solid #EEF2F7;
+
+    font-size:14px;
+
+    color:#334155;
+
+}
+
+tbody tr{
+
+    transition:var(--transition);
+
+}
+
+tbody tr:hover{
+
+    background:#F8FAFC;
+
+}
+
+/* ==========================================================
+                    EMPTY STATE
+========================================================== */
+
+.empty-state{
+
+    padding:80px 20px;
+
+    text-align:center;
+
+}
+
+.empty-icon{
+
+    width:90px;
+
+    height:90px;
+
+    margin:auto;
+
+    border-radius:50%;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    background:linear-gradient(
+        135deg,
+        var(--primary),
+        var(--secondary)
+    );
+
+    color:#fff;
+
+    font-size:38px;
+
+    margin-bottom:25px;
+
+}
+
+.empty-state h2{
+
+    font-size:26px;
+
+    margin-bottom:10px;
+
+}
+
+.empty-state p{
+
+    color:var(--muted);
+
+    margin-bottom:30px;
+
+}
+
+/* ==========================================================
+                    MODAL
+========================================================== */
+
+.modal{
+
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(15,23,42,.45);
+
+    backdrop-filter:blur(10px);
+
+    display:none;
+
+    align-items:center;
+
+    justify-content:center;
+
+    z-index:999;
+
+    padding:25px;
+
+}
+
+.modal.active{
+
+    display:flex;
+
+}
+
+.modal-content{
+
+    width:100%;
+
+    max-width:760px;
+
+    background:#fff;
+
+    border-radius:22px;
+
+    overflow:hidden;
+
+    animation:modalShow .25s ease;
+
+}
+
+@keyframes modalShow{
+
+from{
+
+opacity:0;
+
+transform:translateY(30px) scale(.97);
+
+}
+
+to{
+
+opacity:1;
+
+transform:none;
+
+}
+
+}
+
+.modal-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:24px 30px;
+
+    border-bottom:1px solid var(--border);
+
+}
+
+.modal-header h2{
+
+    font-size:28px;
+
+}
+
+.modal-header p{
+
+    margin-top:6px;
+
+    color:var(--muted);
+
+}
+
+.close-btn{
+
+    width:44px;
+
+    height:44px;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:#F1F5F9;
+
+    font-size:18px;
+
+}
+
+.close-btn:hover{
+
+    background:#E2E8F0;
+
+}
+
+/* ==========================================================
+                    FORM
+========================================================== */
+
+#feeHeadForm{
+
+    padding:30px;
+
+}
+
+.form-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:20px;
+
+}
+
+.form-group{
+
+    display:flex;
+
+    flex-direction:column;
+
+    margin-bottom:22px;
+
+}
+
+.form-group label{
+
+    font-size:14px;
+
+    margin-bottom:10px;
+
+    font-weight:600;
+
+}
+
+.form-group input,
+
+.form-group select,
+
+.form-group textarea{
+
+    width:100%;
+
+    border:1px solid var(--border);
+
+    border-radius:14px;
+
+    padding:15px;
+
+    outline:none;
+
+    transition:var(--transition);
+
+    resize:none;
+
+}
+
+.form-group input:focus,
+
+.form-group select:focus,
+
+.form-group textarea:focus{
+
+    border-color:var(--primary);
+
+}
+
+/* ==========================================================
+                    FOOTER
+========================================================== */
+
+.modal-footer{
+
+    display:flex;
+
+    justify-content:flex-end;
+
+    gap:14px;
+
+    margin-top:10px;
+
+}
+
+/* ==========================================================
+                    DELETE MODAL
+========================================================== */
+
+.delete-modal{
+
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(0,0,0,.45);
+
+    display:none;
+
+    align-items:center;
+
+    justify-content:center;
+
+    z-index:1000;
+
+}
+
+.delete-modal.active{
+
+    display:flex;
+
+}
+
+.delete-box{
+
+    width:420px;
+
+    background:#fff;
+
+    border-radius:22px;
+
+    padding:35px;
+
+    text-align:center;
+
+    animation:modalShow .25s ease;
+
+}
+
+.delete-icon{
+
+    width:80px;
+
+    height:80px;
+
+    margin:auto;
+
+    border-radius:50%;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    background:#FEE2E2;
+
+    color:var(--danger);
+
+    font-size:32px;
+
+    margin-bottom:20px;
+
+}
+
+.delete-actions{
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:14px;
+
+    margin-top:30px;
+
+}
+
+.danger-btn{
+
+    border:none;
+
+    background:var(--danger);
+
+    color:#fff;
+
+    border-radius:14px;
+
+    padding:14px 24px;
+
+}
+
+/* ==========================================================
+                    TOAST
+========================================================== */
+
+.toast{
+
+    position:fixed;
+
+    right:30px;
+
+    bottom:30px;
+
+    background:#16A34A;
+
+    color:#fff;
+
+    border-radius:16px;
+
+    padding:16px 24px;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    transform:translateY(120px);
+
+    transition:.35s;
+
+    z-index:1500;
+
+}
+
+.toast.show{
+
+    transform:translateY(0);
+
+}
+
+/* ==========================================================
+                    LOADER
+========================================================== */
+
+.loader{
+
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(255,255,255,.8);
+
+    display:none;
+
+    align-items:center;
+
+    justify-content:center;
+
+    z-index:2000;
+
+}
+
+.loader.show{
+
+    display:flex;
+
+}
+
+.spinner{
+
+    width:60px;
+
+    height:60px;
+
+    border:5px solid #E2E8F0;
+
+    border-top:5px solid var(--primary);
+
+    border-radius:50%;
+
+    animation:spin .8s linear infinite;
+
+}
+
+@keyframes spin{
+
+to{
+
+transform:rotate(360deg);
+
+}
+
+}
+
+/* ==========================================================
+                    RESPONSIVE
+========================================================== */
+
+@media(max-width:992px){
+
+.page-header{
+
+flex-direction:column;
+
+align-items:flex-start;
+
+gap:20px;
+
+}
+
+.header-right{
+
+width:100%;
+
+}
+
+.primary-btn,
+
+.secondary-btn{
+
+flex:1;
+
+justify-content:center;
+
+}
+
+.toolbar{
+
+flex-direction:column;
+
+align-items:stretch;
+
+gap:18px;
+
+}
+
+.search-box{
+
+width:100%;
+
+}
+
+.toolbar-right{
+
+flex-direction:column;
+
+}
+
+.toolbar-right select{
+
+width:100%;
+
+}
+
+.form-grid{
+
+grid-template-columns:1fr;
+
+}
+
+.modal-content{
+
+max-width:100%;
+
+}
+
+}
+
+@media(max-width:600px){
+
+.page{
+
+width:92%;
+
+}
+
+.header-left h1{
+
+font-size:28px;
+
+}
+
+.table-header{
+
+flex-direction:column;
+
+align-items:flex-start;
+
+gap:10px;
+
+}
+
+thead th,
+
+tbody td{
+
+padding:15px;
+
+}
+
+}

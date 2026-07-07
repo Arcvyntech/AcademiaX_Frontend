@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>AcademiaX | Fee Heads</title>
+
+    <!-- Google Font -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+    <!-- Font Awesome -->
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css">
+
+    <!-- CSS -->
+
+    <link rel="stylesheet"
+          href="fee-heads.css">
+
+</head>
+
+<body>
+
+<div class="page">
+
+    <!-- ===========================================
+                PAGE HEADER
+    ============================================ -->
+
+    <header class="page-header">
+
+        <div class="header-left">
+
+            <button
+                id="backBtn"
+                class="back-btn">
+
+                <i class="fa-solid fa-arrow-left"></i>
+
+            </button>
+
+            <div>
+
+                <h1>
+
+                    Fee Heads
+
+                </h1>
+
+                <p>
+
+                    Create and manage all fee categories of your institution.
+
+                </p>
+
+            </div>
+
+        </div>
+
+        <div class="header-right">
+
+            <button
+                id="exportBtn"
+                class="secondary-btn">
+
+                <i class="fa-solid fa-file-export"></i>
+
+                Export
+
+            </button>
+
+            <button
+                id="addFeeHeadBtn"
+                class="primary-btn">
+
+                <i class="fa-solid fa-plus"></i>
+
+                Add Fee Head
+
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <!-- ===========================================
+                    TOOLBAR
+    ============================================ -->
+
+    <section class="toolbar">
+
+        <div class="search-box">
+
+            <i class="fa-solid fa-magnifying-glass"></i>
+
+            <input
+                type="text"
+                id="searchFee"
+                placeholder="Search Fee Head...">
+
+        </div>
+
+        <div class="toolbar-right">
+
+            <select id="filterType">
+
+                <option value="">
+
+                    All Types
+
+                </option>
+
+                <option value="mandatory">
+
+                    Mandatory
+
+                </option>
+
+                <option value="optional">
+
+                    Optional
+
+                </option>
+
+            </select>
+
+            <select id="filterFrequency">
+
+                <option value="">
+
+                    All Frequency
+
+                </option>
+
+                <option value="monthly">
+
+                    Monthly
+
+                </option>
+
+                <option value="quarterly">
+
+                    Quarterly
+
+                </option>
+
+                <option value="half-yearly">
+
+                    Half Yearly
+
+                </option>
+
+                <option value="yearly">
+
+                    Yearly
+
+                </option>
+
+                <option value="one-time">
+
+                    One Time
+
+                </option>
+
+            </select>
+
+            <select id="filterStatus">
+
+                <option value="">
+
+                    All Status
+
+                </option>
+
+                <option value="active">
+
+                    Active
+
+                </option>
+
+                <option value="inactive">
+
+                    Inactive
+
+                </option>
+
+            </select>
+
+        </div>
+
+    </section>
+
+
+    <!-- ===========================================
+                TABLE CARD
+    ============================================ -->
+
+    <section class="table-card">
+
+        <div class="table-header">
+
+            <div>
+
+                <h2>
+
+                    Fee Heads
+
+                </h2>
+
+                <p>
+
+                    Manage fee heads used while creating fee structures.
+
+                </p>
+
+            </div>
+
+            <div class="table-count">
+
+                Total :
+
+                <span id="totalFeeHeads">
+
+                    0
+
+                </span>
+
+            </div>
+
+        </div>
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+
+                <tr>
+
+                    <th>
+
+                        Fee Head
+
+                    </th>
+
+                    <th>
+
+                        Type
+
+                    </th>
+
+                    <th>
+
+                        Frequency
+
+                    </th>
+
+                    <th>
+
+                        Status
+
+                    </th>
+
+                    <th>
+
+                        Students
+
+                    </th>
+
+                    <th>
+
+                        Created
+
+                    </th>
+
+                    <th>
+
+                        Action
+
+                    </th>
+
+                </tr>
+
+                </thead>
+
+                <tbody id="feeHeadTable">
+
+                    <tr>
+
+                        <td colspan="7">
+
+                            <div class="empty-state">
+
+                                <div class="empty-icon">
+
+                                    <i class="fa-solid fa-wallet"></i>
+
+                                </div>
+
+                                <h2>
+
+                                    No Fee Heads Found
+
+                                </h2>
+
+                                <p>
+
+                                    Start by creating your first fee head.
+
+                                </p>
+
+                                <button
+                                    class="primary-btn"
+                                    id="createFirstFeeHead">
+
+                                    <i class="fa-solid fa-plus"></i>
+
+                                    Create Fee Head
+
+                                </button>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+        <!-- ===========================================
+                ADD FEE HEAD MODAL
+    ============================================ -->
+
+    <div class="modal" id="feeHeadModal">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <div>
+
+                    <h2>
+
+                        Add Fee Head
+
+                    </h2>
+
+                    <p>
+
+                        Create a new fee category for your institution.
+
+                    </p>
+
+                </div>
+
+                <button
+                    id="closeModal"
+                    class="close-btn">
+
+                    <i class="fa-solid fa-xmark"></i>
+
+                </button>
+
+            </div>
+
+            <form id="feeHeadForm">
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+
+                        <label>
+
+                            Fee Head Name
+
+                        </label>
+
+                        <input
+                            type="text"
+                            id="feeName"
+                            placeholder="Example : Tuition Fee">
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>
+
+                            Fee Type
+
+                        </label>
+
+                        <select id="feeType">
+
+                            <option value="mandatory">
+
+                                Mandatory
+
+                            </option>
+
+                            <option value="optional">
+
+                                Optional
+
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>
+
+                            Frequency
+
+                        </label>
+
+                        <select id="feeFrequency">
+
+                            <option value="monthly">
+
+                                Monthly
+
+                            </option>
+
+                            <option value="quarterly">
+
+                                Quarterly
+
+                            </option>
+
+                            <option value="half-yearly">
+
+                                Half Yearly
+
+                            </option>
+
+                            <option value="yearly">
+
+                                Yearly
+
+                            </option>
+
+                            <option value="one-time">
+
+                                One Time
+
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>
+
+                            Status
+
+                        </label>
+
+                        <select id="feeStatus">
+
+                            <option value="active">
+
+                                Active
+
+                            </option>
+
+                            <option value="inactive">
+
+                                Inactive
+
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>
+
+                        Description
+
+                    </label>
+
+                    <textarea
+                        id="feeDescription"
+                        rows="5"
+                        placeholder="Write description here..."></textarea>
+
+                </div>
+
+                <div class="modal-footer">
+
+                    <button
+                        type="button"
+                        id="cancelBtn"
+                        class="secondary-btn">
+
+                        Cancel
+
+                    </button>
+
+                    <button
+                        type="submit"
+                        class="primary-btn">
+
+                        <i class="fa-solid fa-floppy-disk"></i>
+
+                        Save Fee Head
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    <!-- ===========================================
+            DELETE CONFIRMATION MODAL
+    ============================================ -->
+
+    <div class="delete-modal" id="deleteModal">
+
+        <div class="delete-box">
+
+            <div class="delete-icon">
+
+                <i class="fa-solid fa-trash"></i>
+
+            </div>
+
+            <h2>
+
+                Delete Fee Head
+
+            </h2>
+
+            <p>
+
+                Are you sure you want to delete this fee head?
+
+            </p>
+
+            <div class="delete-actions">
+
+                <button
+                    id="cancelDelete"
+                    class="secondary-btn">
+
+                    Cancel
+
+                </button>
+
+                <button
+                    id="confirmDelete"
+                    class="danger-btn">
+
+                    Delete
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ===========================================
+                    SUCCESS TOAST
+    ============================================ -->
+
+    <div class="toast" id="toast">
+
+        <i class="fa-solid fa-circle-check"></i>
+
+        <span>
+
+            Fee Head Saved Successfully
+
+        </span>
+
+    </div>
+
+    <!-- ===========================================
+                    LOADER
+    ============================================ -->
+
+    <div class="loader" id="loader">
+
+        <div class="spinner"></div>
+
+    </div>
+
+</div>
+<script src="../../js/config.js"></script>
+<script src="../../js/api.js"></script>
+<script src="fee-heads.js"></script>
+
+</body>
+
+</html>

@@ -1,3 +1,4 @@
+
 // ======================================================
 // AcademiaX Dashboard
 // Part 1
@@ -151,6 +152,7 @@
             sub.paymentStatus
 
         );
+        renderFeeModule(sub);
 
     }
 
