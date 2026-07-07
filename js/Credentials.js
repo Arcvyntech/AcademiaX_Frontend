@@ -5,6 +5,8 @@ let editingCredId = null;
 let credSort = { key: null, dir: 1 };
 let credFilterText = "";
 
+const CRED_TONES = ["", "tone-green", "tone-blue"];
+
 async function loadCredentials() {
   try {
     cache.staff = (await api("/staff")).data;
@@ -39,7 +41,8 @@ window.togglePass = (inputId, btn) => {
   const el = $(inputId);
   const hidden = el.type === "password";
   el.type = hidden ? "text" : "password";
-  btn.textContent = hidden ? "🙈" : "👁";
+  const icon = btn.querySelector("i");
+  if (icon) icon.className = hidden ? "ti ti-eye-off" : "ti ti-eye";
 };
 
 window.generatePassword = (inputId) => {
@@ -74,9 +77,14 @@ window.renderCredTable = () => {
     });
   }
 
+  // Count chip next to the "Staff login credentials" heading
+  // (reflects whatever the filter box currently shows)
+  const countEl = $("cr-count");
+  if (countEl) countEl.textContent = rows.length ? `${rows.length} ${rows.length === 1 ? "login" : "logins"}` : "";
+
   $("cr-body").innerHTML = rows.length
-    ? rows.map((c) => (editingCredId === c.id ? renderEditRow(c) : renderRow(c))).join("")
-    : `<tr><td colspan="5" class="empty">No credentials yet.</td></tr>`;
+    ? rows.map((c, i) => (editingCredId === c.id ? renderEditRow(c) : renderRow(c, i))).join("")
+    : `<tr><td colspan="4" class="empty">No credentials yet.</td></tr>`;
 
   ["loginId", "staffName", "isActive"].forEach((k) => {
     const el = $(`sort-${k}`);
@@ -96,30 +104,48 @@ $("cr-filter").oninput = () => {
 };
 
 // ---------- row renderers ----------
-function renderRow(c) {
+function renderRow(c, i) {
+  const tone = CRED_TONES[i % CRED_TONES.length];
+  const statusPill = c.isActive
+    ? '<span class="status-pill active">Active</span>'
+    : '<span class="status-pill disabled">Disabled</span>';
+
   return `<tr id="cr-row-${c.id}">
-    <td class="mono">${esc(c.loginId)}</td>
-    <td>${esc(c.staffName)}</td>
-    <td>${c.isActive ? "active" : "disabled"}</td>
+    <td><span class="count-inline mono"><i class="ti ti-key"></i>${esc(c.loginId)}</span></td>
     <td>
-      <button class="btn-sm" onclick="editCred('${c.id}')">Edit</button>
-      <button class="btn-sm" onclick="toggleActive('${c.id}')">${c.isActive ? "Disable" : "Enable"}</button>
-      <button class="btn-sm danger" onclick="delCred('${c.id}')">Delete</button>
+      <div class="name-cell">
+        <div class="ic-box ${tone}"><i class="ti ti-user"></i></div>
+        <span class="name-text">${esc(c.staffName)}</span>
+      </div>
+    </td>
+    <td>${statusPill}</td>
+    <td>
+      <button class="btn-sm" onclick="editCred('${c.id}')"><i class="ti ti-edit"></i>Edit</button>
+      <button class="btn-sm ${c.isActive ? "warning" : "success"}" onclick="toggleActive('${c.id}')">
+        <i class="ti ti-${c.isActive ? "lock" : "lock-open"}"></i>${c.isActive ? "Disable" : "Enable"}
+      </button>
+      <button class="btn-sm danger" onclick="delCred('${c.id}')"><i class="ti ti-trash"></i>Delete</button>
     </td>
   </tr>`;
 }
 
 function renderEditRow(c) {
+  const statusPill = c.isActive
+    ? '<span class="status-pill active">Active</span>'
+    : '<span class="status-pill disabled">Disabled</span>';
+
   return `<tr id="cr-row-${c.id}">
-    <td class="mono">${esc(c.loginId)}</td>
+    <td><span class="count-inline mono"><i class="ti ti-key"></i>${esc(c.loginId)}</span></td>
     <td>${esc(c.staffName)}</td>
-    <td>${c.isActive ? "active" : "disabled"}</td>
+    <td>${statusPill}</td>
     <td>
-      <input type="password" id="cr-edit-pass-${c.id}" class="input-sm" placeholder="new password (optional)" style="width:130px" />
-      <button type="button" class="btn-sm" onclick="togglePass('cr-edit-pass-${c.id}', this)">👁</button>
-      <button type="button" class="btn-sm" onclick="generatePassword('cr-edit-pass-${c.id}')">Gen</button>
-      <button class="btn-sm primary" onclick="saveCred('${c.id}')">Save</button>
-      <button class="btn-sm" onclick="cancelEditCred()">Cancel</button>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center">
+        <input type="password" id="cr-edit-pass-${c.id}" placeholder="new password (optional)" style="width:150px" />
+        <button type="button" class="btn-sm icon-only" onclick="togglePass('cr-edit-pass-${c.id}', this)" aria-label="Show password"><i class="ti ti-eye"></i></button>
+        <button type="button" class="btn-sm icon-only" onclick="generatePassword('cr-edit-pass-${c.id}')" aria-label="Generate password"><i class="ti ti-refresh"></i></button>
+        <button class="btn-sm primary" onclick="saveCred('${c.id}')"><i class="ti ti-check"></i>Save</button>
+        <button class="btn-sm" onclick="cancelEditCred()"><i class="ti ti-x"></i>Cancel</button>
+      </div>
     </td>
   </tr>`;
 }

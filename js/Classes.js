@@ -1,47 +1,63 @@
-// ─── classes.js ──────────────────────────────────────────────────────────────
+// ─── classes.js ──────────────────────────────────────────────────────────
 // Depends on: admin.js  (api, cache, $, esc, fail, ok)
 
 let editingClassId = null; // kaunsi row abhi edit mode mein hai
+
+const CLASS_TONES = ["", "tone-green", "tone-blue"];
 
 async function loadClasses() {
   try {
     if (!cache.subjects.length) cache.subjects = (await api("/subjects")).data;
     const { data } = await api("/classes");
     cache.classes = data;
+
+    // Count chip next to the "Classes" heading
+    const countEl = $("c-count");
+    if (countEl) countEl.textContent = data.length ? `${data.length} ${data.length === 1 ? "class" : "classes"}` : "";
+
     $("c-body").innerHTML = data.length
       ? data
-          .map((c) => {
+          .map((c, i) => {
+            const tone = CLASS_TONES[i % CLASS_TONES.length];
             const assigned = (c.subjectIds || []).map((s) => s._id);
+
+            // Each subject renders as a clickable chip; the checkbox itself
+            // stays functional (hidden), only its look changes.
             const opts =
               cache.subjects
                 .map(
-                  (s) =>
-                    `<label><input type="checkbox" value="${s._id}" ${
-                      assigned.includes(s._id) ? "checked" : ""
-                    }/> ${esc(s.name)}</label>`
+                  (s) => `
+              <label class="subject-chip">
+                <input type="checkbox" value="${s._id}" ${assigned.includes(s._id) ? "checked" : ""}/>
+                <i class="ti ti-check chip-check"></i>${esc(s.name)}
+              </label>`
                 )
                 .join("") || `<span class="empty">Add subjects first</span>`;
 
             const isEditing = editingClassId === c._id;
 
             const nameCell = isEditing
-              ? `<input type="text" id="edit-cname-${c._id}" value="${esc(c.name)}" style="width:100px;margin-bottom:4px"/><br/>
-                 <input type="text" id="edit-cnick-${c._id}" value="${esc(c.nickname || "")}" placeholder="Nickname" style="width:100px"/>`
-              : `${esc(c.name)}${c.nickname ? ` <span class="chip">${esc(c.nickname)}</span>` : ""}`;
+              ? `<input type="text" id="edit-cname-${c._id}" value="${esc(c.name)}" style="width:120px"/><br/>
+                 <input type="text" id="edit-cnick-${c._id}" value="${esc(c.nickname || "")}" placeholder="Nickname" style="width:120px"/>`
+              : `<div class="name-cell">
+                   <div class="ic-box ${tone}"><i class="ti ti-school"></i></div>
+                   <span class="name-text">${esc(c.name)}${c.nickname ? ` <span class="chip">${esc(c.nickname)}</span>` : ""}</span>
+                 </div>`;
 
             const actionsCell = isEditing
-              ? `<button class="btn-sm" onclick="saveClass('${c._id}')">Save</button>
-                 <button class="btn-sm" onclick="cancelClassEdit()">Cancel</button>`
-              : `<button class="btn-sm" onclick="editClass('${c._id}')">Edit</button>
-                 <button class="btn-sm danger" onclick="delClass('${c._id}')">Delete</button>`;
+              ? `<button class="btn-sm" onclick="saveClass('${c._id}')"><i class="ti ti-check"></i>Save</button>
+                 <button class="btn-sm" onclick="cancelClassEdit()"><i class="ti ti-x"></i>Cancel</button>`
+              : `<button class="btn-sm" onclick="editClass('${c._id}')"><i class="ti ti-edit"></i>Edit</button>
+                 <button class="btn-sm danger" onclick="delClass('${c._id}')"><i class="ti ti-trash"></i>Delete</button>`;
 
             return `<tr>
               <td>${nameCell}</td>
-              <td>${c.studentCount}</td>
+              <td><span class="count-inline"><i class="ti ti-users"></i>${c.studentCount}</span></td>
               <td>
-                <div class="multi" id="cs-${c._id}">${opts}</div>
-                <button class="btn-sm primary" style="margin-top:6px"
-                        onclick="saveClassSubjects('${c._id}')">Save subjects</button>
+                <div class="subject-chips" id="cs-${c._id}">${opts}</div>
+                <button class="btn-sm primary" onclick="saveClassSubjects('${c._id}')">
+                  <i class="ti ti-device-floppy"></i>Save subjects
+                </button>
               </td>
               <td>${actionsCell}</td>
             </tr>`;

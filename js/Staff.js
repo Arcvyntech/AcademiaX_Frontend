@@ -3,6 +3,8 @@
 
 let editingStaffId = null; // kaunsi row abhi edit mode mein hai
 
+const STAFF_TONES = ["", "tone-green", "tone-blue"];
+
 async function loadStaff() {
   try {
     cache.designations = (await api("/designations")).data;
@@ -15,19 +17,32 @@ async function loadStaff() {
     const { data } = await api("/staff");
     cache.staff = data;
 
+    // Count chip next to the "Staff" heading
+    const countEl = $("st-count");
+    if (countEl) countEl.textContent = data.length ? `${data.length} staff` : "";
+
     $("st-body").innerHTML = data.length
       ? data
-          .map((s) => {
+          .map((s, i) => {
+            const tone = STAFF_TONES[i % STAFF_TONES.length];
             const assigned = (s.assignedClassIds || []).map((c) => c._id);
+
+            // Classes render as clickable chips, same pattern as the
+            // subjects picker — works fine with any number of classes.
+            // Includes the nickname (e.g. "5 · 5B") since class names
+            // like plain numbers can repeat and need disambiguation.
             const classOpts =
               cache.classes
-                .map(
-                  (c) =>
-                    `<label><input type="checkbox" value="${c._id}" ${
-                      assigned.includes(c._id) ? "checked" : ""
-                    }/> ${esc(c.name)}</label>`
-                )
+                .map((c) => {
+                  const label = c.nickname ? `${esc(c.name)} · ${esc(c.nickname)}` : esc(c.name);
+                  return `
+              <label class="subject-chip">
+                <input type="checkbox" value="${c._id}" ${assigned.includes(c._id) ? "checked" : ""}/>
+                <i class="ti ti-check chip-check"></i>${label}
+              </label>`;
+                })
                 .join("") || `<span class="empty">Add classes first</span>`;
+
             const desigOpts =
               `<option value="">— none —</option>` +
               cache.designations
@@ -43,28 +58,36 @@ async function loadStaff() {
 
             const nameCell = isEditing
               ? `<input type="text" id="edit-sname-${s._id}" value="${esc(s.name)}" style="width:110px"/>`
-              : esc(s.name);
+              : `<div class="name-cell">
+                   <div class="ic-box ${tone}"><i class="ti ti-user"></i></div>
+                   <span class="name-text">${esc(s.name)}</span>
+                 </div>`;
 
             const mobileCell = isEditing
               ? `<input type="text" id="edit-smobile-${s._id}" value="${esc(s.mobileNo)}" style="width:110px"/>`
-              : esc(s.mobileNo);
+              : `<span class="count-inline"><i class="ti ti-phone"></i>${esc(s.mobileNo)}</span>`;
 
             const editActions = isEditing
-              ? `<button class="btn-sm" onclick="saveStaffInfo('${s._id}')">Save</button>
-                 <button class="btn-sm" onclick="cancelStaffEdit()">Cancel</button>`
-              : `<button class="btn-sm" onclick="editStaff('${s._id}')">Edit</button>
-                 <button class="btn-sm danger" onclick="delStaff('${s._id}')">Delete</button>`;
+              ? `<button class="btn-sm" onclick="saveStaffInfo('${s._id}')"><i class="ti ti-check"></i>Save</button>
+                 <button class="btn-sm" onclick="cancelStaffEdit()"><i class="ti ti-x"></i>Cancel</button>`
+              : `<button class="btn-sm" onclick="editStaff('${s._id}')"><i class="ti ti-edit"></i>Edit</button>
+                 <button class="btn-sm danger" onclick="delStaff('${s._id}')"><i class="ti ti-trash"></i>Delete</button>`;
+
+            const loginPill = s.hasCredentials
+              ? '<span class="status-pill yes">Yes</span>'
+              : '<span class="status-pill no">No</span>';
 
             return `<tr>
               <td>${nameCell}</td>
               <td>${mobileCell}</td>
               <td><select id="sd-${s._id}">${desigOpts}</select></td>
               <td>
-                <div class="multi" id="sc-${s._id}">${classOpts}</div>
-                <button class="btn-sm primary" style="margin-top:6px"
-                        onclick="saveStaffClasses('${s._id}')">Save</button>
+                <div class="subject-chips compact" id="sc-${s._id}">${classOpts}</div>
+                <button class="btn-sm primary" onclick="saveStaffClasses('${s._id}')">
+                  <i class="ti ti-device-floppy"></i>Save
+                </button>
               </td>
-              <td>${s.hasCredentials ? '<span class="chip">yes</span>' : '<span class="empty">no</span>'}</td>
+              <td>${loginPill}</td>
               <td>${editActions}</td>
             </tr>`;
           })
