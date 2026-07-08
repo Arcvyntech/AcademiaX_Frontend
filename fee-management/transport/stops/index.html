@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>
+
+AcademiaX | Transport Stops
+
+</title>
+
+<link
+rel="stylesheet"
+href="stops.css">
+
+<link
+rel="preconnect"
+href="https://fonts.googleapis.com">
+
+<link
+rel="preconnect"
+href="https://fonts.gstatic.com"
+crossorigin>
+
+<link
+href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+rel="stylesheet">
+
+</head>
+
+<body>
+
+<!-- ======================================================
+HEADER
+====================================================== -->
+
+<header class="page-header">
+
+<div class="header-left">
+
+<button
+id="backBtn"
+class="back-btn">
+
+←
+
+</button>
+
+<div>
+
+<h1>
+
+Transport Stops
+
+</h1>
+
+<p>
+
+Manage pickup & drop locations for every transport route.
+
+</p>
+
+</div>
+
+</div>
+
+<button
+id="addStopBtn"
+class="primary-btn">
+
++ Add Stop
+
+</button>
+
+</header>
+
+<!-- ======================================================
+ROUTE SELECTOR
+====================================================== -->
+
+<section class="route-selector-card">
+
+<div class="route-selector-left">
+
+<div class="route-icon">
+
+🚌
+
+</div>
+
+<div class="route-selector-text">
+
+<h2>
+
+Transport Route
+
+</h2>
+
+<p>
+
+Select a route to manage transport stops.
+
+</p>
+
+</div>
+
+</div>
+
+<select
+id="routeSelect"
+class="route-select">
+
+<option value="">
+
+Select Transport Route
+
+</option>
+
+</select>
+
+</section>
+
+<!-- ======================================================
+ROUTE INFORMATION
+====================================================== -->
+
+<section class="route-info-card">
+
+<h2 id="routeName">
+
+No Route Selected
+
+</h2>
+
+<p id="routeDescription">
+
+Choose a transport route from above to manage all pickup
+and drop locations.
+
+</p>
+
+</section>
+
+<!-- ======================================================
+SUMMARY
+====================================================== -->
+
+<section class="summary-grid">
+
+<div class="summary-card">
+
+<h3>
+
+Total Stops
+
+</h3>
+
+<h2 id="totalStops">
+
+0
+
+</h2>
+
+<small>
+
+Available Pickup Points
+
+</small>
+
+</div>
+
+<div class="summary-card">
+
+<h3>
+
+Active Stops
+
+</h3>
+
+<h2 id="activeStops">
+
+0
+
+</h2>
+
+<small>
+
+Currently Active
+
+</small>
+
+</div>
+
+<div class="summary-card">
+
+<h3>
+
+Students
+
+</h3>
+
+<h2 id="totalStudents">
+
+0
+
+</h2>
+
+<small>
+
+Assigned Students
+
+</small>
+
+</div>
+
+<div class="summary-card">
+
+<h3>
+
+Monthly Fee
+
+</h3>
+
+<h2 id="routeFee">
+
+₹0
+
+</h2>
+
+<small>
+
+Current Route Fee
+
+</small>
+
+</div>
+
+</section>
+<!-- ======================================================
+INFO BANNER
+====================================================== -->
+
+<section class="info-banner">
+
+<div class="info-banner-left">
+
+<div class="info-icon">
+
+📍
+
+</div>
+
+<div>
+
+<h3>
+
+Transport Route Overview
+
+</h3>
+
+<p>
+
+Manage pickup points, assigned students and transport
+details from one place.
+
+</p>
+
+</div>
+
+</div>
+
+<button
+class="primary-btn"
+id="refreshBtn">
+
+🔄 Refresh
+
+</button>
+
+</section>
+
+<!-- ======================================================
+SECTION TITLE
+====================================================== -->
+
+<div class="section-title">
+
+<h2>
+
+All Transport Stops
+
+</h2>
+
+<span id="stopCountLabel">
+
+0 Stops Found
+
+</span>
+
+</div>
+
+<!-- ======================================================
+SEARCH TOOLBAR
+====================================================== -->
+
+<section class="toolbar">
+
+<input
+type="text"
+id="searchStop"
+placeholder="🔍 Search stop by name...">
+
+<select id="filterStatus">
+
+<option value="">
+
+All Status
+
+</option>
+
+<option value="active">
+
+🟢 Active
+
+</option>
+
+<option value="inactive">
+
+🔴 Inactive
+
+</option>
+
+</select>
+
+<button id="addStopToolbar">
+
++ Add Stop
+
+</button>
+
+</section>
+
+<!-- ======================================================
+STOPS GRID
+====================================================== -->
+
+<section
+class="stops-container"
+id="stopsContainer">
+
+<div class="empty-state">
+
+<div class="empty-icon">
+
+🚌
+
+</div>
+
+<h2>
+
+No Stops Available
+
+</h2>
+
+<p>
+
+Select a route and create your first transport stop.
+
+</p>
+
+<button
+id="createFirstStop"
+class="primary-btn">
+
++ Create First Stop
+
+</button>
+
+</div>
+
+</section>
+<!-- ======================================================
+ADD STOP MODAL
+====================================================== -->
+
+<div class="modal" id="stopModal">
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+
+            <h2>
+
+                ➕ Add Transport Stop
+
+            </h2>
+
+            <button id="closeModal">
+
+                ✕
+
+            </button>
+
+        </div>
+
+        <form id="stopForm">
+
+            <div class="form-group">
+
+                <label>
+
+                    Stop Name
+
+                </label>
+
+                <input
+                    type="text"
+                    id="stopName"
+                    placeholder="e.g. Bus Stand"
+                    required>
+
+            </div>
+
+            <div class="form-group">
+
+                <label>
+
+                    Stop Order
+
+                </label>
+
+                <input
+                    type="number"
+                    id="stopOrder"
+                    placeholder="1"
+                    required>
+
+            </div>
+
+            <div class="form-group">
+
+                <label>
+
+                    Pickup Time
+
+                </label>
+
+                <input
+                    type="time"
+                    id="pickupTime">
+
+            </div>
+
+            <div class="form-group">
+
+                <label>
+
+                    Distance (KM)
+
+                </label>
+
+                <input
+                    type="number"
+                    id="distance"
+                    placeholder="0">
+
+            </div>
+
+            <div class="form-group">
+
+                <label>
+
+                    Monthly Fee
+
+                </label>
+
+                <input
+                    type="number"
+                    id="monthlyFee"
+                    placeholder="0">
+
+            </div>
+
+            <div class="form-group">
+
+                <label>
+
+                    Status
+
+                </label>
+
+                <select id="stopStatus">
+
+                    <option value="active">
+
+                        Active
+
+                    </option>
+
+                    <option value="inactive">
+
+                        Inactive
+
+                    </option>
+
+                </select>
+
+            </div>
+
+            <div class="modal-footer">
+
+                <button
+                    type="button"
+                    id="cancelBtn">
+
+                    Cancel
+
+                </button>
+
+                <button
+                    type="submit"
+                    class="primary-btn">
+
+                    💾 Save Stop
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+<!-- ======================================================
+LOADER
+====================================================== -->
+
+<div class="loader" id="loader">
+
+    Loading...
+
+</div>
+
+<!-- ======================================================
+TOAST
+====================================================== -->
+
+<div class="toast" id="toast">
+
+    <span>
+
+        Success
+
+    </span>
+
+</div>
+
+<!-- ======================================================
+SCRIPTS
+====================================================== -->
+
+<script src="../../../js/config.js"></script>
+
+<script src="../../../js/api.js"></script>
+
+<script src="stops.js"></script>
+
+</body>
+
+</html>

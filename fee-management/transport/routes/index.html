@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>AcademiaX | Transport Routes</title>
+
+    <link rel="stylesheet"
+          href="routes.css">
+
+</head>
+
+<body>
+
+<!-- ================= HEADER ================= -->
+
+<header class="page-header">
+
+    <div class="header-left">
+
+        <button
+            id="backBtn"
+            class="back-btn">
+
+            ←
+
+        </button>
+
+        <div>
+
+            <h1>
+
+                🛣️ Transport Routes
+
+            </h1>
+
+            <p>
+
+                Create and manage all transport routes.
+
+            </p>
+
+        </div>
+
+    </div>
+
+    <button
+        id="addRouteBtn"
+        class="primary-btn">
+
+        + Add Route
+
+    </button>
+
+</header>
+
+<!-- ================= SUMMARY ================= -->
+
+<section class="summary-grid">
+
+    <div class="summary-card">
+
+        <h3>Total Routes</h3>
+
+        <h2 id="totalRoutes">
+
+            0
+
+        </h2>
+
+    </div>
+
+    <div class="summary-card">
+
+        <h3>Active Routes</h3>
+
+        <h2 id="activeRoutes">
+
+            0
+
+        </h2>
+
+    </div>
+
+    <div class="summary-card">
+
+        <h3>Total Students</h3>
+
+        <h2>
+
+            0
+
+        </h2>
+
+    </div>
+
+    <div class="summary-card">
+
+        <h3>Total Vehicles</h3>
+
+        <h2>
+
+            0
+
+        </h2>
+
+    </div>
+
+</section>
+
+<!-- ================= TOOLBAR ================= -->
+
+<section class="toolbar">
+
+    <input
+        type="text"
+        id="searchRoute"
+        placeholder="Search Route...">
+
+    <select id="filterStatus">
+
+        <option value="">
+
+            All Status
+
+        </option>
+
+        <option value="active">
+
+            Active
+
+        </option>
+
+        <option value="inactive">
+
+            Inactive
+
+        </option>
+
+    </select>
+
+</section>
+<!-- ================= ROUTES CONTAINER ================= -->
+
+<section class="routes-container" id="routesContainer">
+
+    <div class="empty-state">
+
+        <div class="empty-icon">
+
+            🛣️
+
+        </div>
+
+        <h2>
+
+            No Routes Found
+
+        </h2>
+
+        <p>
+
+            Click <strong>Add Route</strong> to create your first transport route.
+
+        </p>
+
+        <button
+            id="createFirstRoute"
+            class="primary-btn">
+
+            + Create Route
+
+        </button>
+
+    </div>
+
+</section>
+
+<!-- ================= ADD ROUTE MODAL ================= -->
+
+<div class="modal" id="routeModal">
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+
+            <h2>
+
+                Add Transport Route
+
+            </h2>
+
+            <button id="closeModal">
+
+                ✕
+
+            </button>
+
+        </div>
+
+        <form id="routeForm">
+
+            <div class="form-group">
+
+                <label>
+
+                    Route Name
+
+                </label>
+
+                <input
+                    type="text"
+                    id="routeName"
+                    placeholder="Enter Route Name">
+
+            </div>
+
+            <div class="form-group">
+
+                <label>
+
+                    Vehicle Number
+
+                </label>
+
+                <input
+                    type="text"
+                    id="vehicleNumber"
+                    placeholder="UK04 AB 1234">
+
+            </div>
+
+            <div class="form-group">
+
+                <label>
+
+                    Driver Name
+
+                </label>
+
+                <input
+                    type="text"
+                    id="driverName"
+                    placeholder="Driver Name">
+
+            </div>
+
+            <div class="form-group">
+
+                <label>
+
+                    Monthly Fee
+
+                </label>
+
+                <input
+                    type="number"
+                    id="monthlyFee"
+                    placeholder="1200">
+
+            </div>
+
+            <div class="form-group">
+
+                <label>
+
+                    Status
+
+                </label>
+
+                <select id="routeStatus">
+
+                    <option value="active">
+
+                        Active
+
+                    </option>
+
+                    <option value="inactive">
+
+                        Inactive
+
+                    </option>
+
+                </select>
+
+            </div>
+
+            <div class="modal-footer">
+
+                <button
+                    type="button"
+                    id="cancelBtn">
+
+                    Cancel
+
+                </button>
+
+                <button
+                    type="submit"
+                    class="primary-btn">
+
+                    Save Route
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+<!-- ================= LOADER ================= -->
+
+<div
+    class="loader"
+    id="loader">
+
+    Loading...
+
+</div>
+
+<!-- ================= TOAST ================= -->
+
+<div
+    class="toast"
+    id="toast">
+
+    <span>
+
+        Success
+
+    </span>
+
+</div>
+
+<script src="../../../js/config.js"></script>
+<script src="../../../js/api.js"></script>
+<script src="routes.js"></script>
+
+</body>
+
+</html>

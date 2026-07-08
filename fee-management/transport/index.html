@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>AcademiaX | Transport Management</title>
+
+    <link rel="stylesheet"
+          href="transport.css">
+
+</head>
+
+<body>
+
+<header class="transport-header">
+
+    <div class="header-left">
+
+        <button id="backBtn">
+
+            ← Back
+
+        </button>
+
+        <div>
+
+            <h1>
+
+                🚌 Transport Management
+
+            </h1>
+
+            <p>
+
+                Manage routes, stops, vehicles, drivers, students and reports.
+
+            </p>
+
+        </div>
+
+    </div>
+
+</header>
+
+<!-- ================= MODULES ================= -->
+
+<section class="transport-grid">
+
+    <div class="module-card"
+
+         onclick="location.href='routes/index.html'">
+
+        <div class="icon">
+
+            🛣️
+
+        </div>
+
+        <h2>
+
+            Routes
+
+        </h2>
+
+        <p>
+
+            Create and manage transport routes.
+
+        </p>
+
+    </div>
+
+    <div class="module-card"
+
+         onclick="location.href='stops/index.html'">
+
+        <div class="icon">
+
+            📍
+
+        </div>
+
+        <h2>
+
+            Stops
+
+        </h2>
+
+        <p>
+
+            Manage route stops and pickup points.
+
+        </p>
+
+    </div>
+
+    <div class="module-card"
+
+         onclick="location.href='vehicles/index.html'">
+
+        <div class="icon">
+
+            🚐
+
+        </div>
+
+        <h2>
+
+            Vehicles
+
+        </h2>
+
+        <p>
+
+            Add buses and transport vehicles.
+
+        </p>
+
+    </div>
+        <div class="module-card"
+         onclick="location.href='drivers/index.html'">
+
+        <div class="icon">
+
+            👨‍✈️
+
+        </div>
+
+        <h2>
+
+            Drivers
+
+        </h2>
+
+        <p>
+
+            Manage drivers and assign them to vehicles.
+
+        </p>
+
+    </div>
+
+    <div class="module-card"
+         onclick="location.href='students/index.html'">
+
+        <div class="icon">
+
+            🎓
+
+        </div>
+
+        <h2>
+
+            Student Mapping
+
+        </h2>
+
+        <p>
+
+            Assign students to routes, stops and vehicles.
+
+        </p>
+
+    </div>
+
+    <div class="module-card"
+         onclick="location.href='reports/index.html'">
+
+        <div class="icon">
+
+            📊
+
+        </div>
+
+        <h2>
+
+            Reports
+
+        </h2>
+
+        <p>
+
+            View transport reports and analytics.
+
+        </p>
+
+    </div>
+
+</section>
+<script src="js/config.js"></script>
+<script src="js/api.js"></script>
+<script src="transport.js"></script>
+
+</body>
+
+</html>

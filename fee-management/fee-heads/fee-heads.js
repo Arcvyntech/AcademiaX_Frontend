@@ -513,6 +513,6 @@ console.log("===================================");
 
 console.log("AcademiaX Fee Heads Module Loaded");
 
-console.log("Backend Connected Successfully");
+console.log("Backend Conncected Successfully");
 
 console.log("===================================");
