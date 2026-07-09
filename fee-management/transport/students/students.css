@@ -1,0 +1,1458 @@
+/* ==========================================================
+   AcademiaX ERP
+   Transport Students
+   Version : 1.0
+========================================================== */
+
+:root{
+
+    --primary:#6366F1;
+    --primary-dark:#4F46E5;
+    --secondary:#8B5CF6;
+
+    --success:#10B981;
+    --danger:#EF4444;
+    --warning:#F59E0B;
+    --info:#3B82F6;
+
+    --background:#F5F7FF;
+    --card:#FFFFFF;
+
+    --text:#1E293B;
+    --muted:#64748B;
+
+    --border:#E5E7EB;
+
+    --shadow:
+    0 10px 25px rgba(15,23,42,.06);
+
+}
+
+/* ==========================================================
+RESET
+========================================================== */
+
+*{
+
+    margin:0;
+
+    padding:0;
+
+    box-sizing:border-box;
+
+    font-family:"Inter",sans-serif;
+
+}
+
+body{
+
+    background:var(--background);
+
+    color:var(--text);
+
+    padding:28px;
+
+}
+
+/* ==========================================================
+HEADER
+========================================================== */
+
+.page-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:28px;
+
+}
+
+.header-left{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:18px;
+
+}
+
+.back-btn{
+
+    width:56px;
+
+    height:56px;
+
+    border:none;
+
+    border-radius:16px;
+
+    background:#fff;
+
+    font-size:22px;
+
+    cursor:pointer;
+
+    box-shadow:var(--shadow);
+
+    transition:.30s;
+
+}
+
+.back-btn:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:
+
+    0 18px 40px rgba(99,102,241,.18);
+
+}
+
+.header-left h1{
+
+    font-size:40px;
+
+    font-weight:800;
+
+    line-height:1.1;
+
+}
+
+.header-left p{
+
+    margin-top:6px;
+
+    font-size:16px;
+
+    color:var(--muted);
+
+}
+
+.primary-btn{
+
+    height:52px;
+
+    padding:0 26px;
+
+    border:none;
+
+    border-radius:14px;
+
+    background:
+
+    linear-gradient(
+
+    135deg,
+
+    var(--primary),
+
+    var(--secondary)
+
+    );
+
+    color:#fff;
+
+    font-size:15px;
+
+    font-weight:700;
+
+    cursor:pointer;
+
+    transition:.30s;
+
+    box-shadow:
+
+    0 12px 30px rgba(99,102,241,.22);
+
+}
+
+.primary-btn:hover{
+
+    transform:translateY(-3px);
+
+}
+
+/* ==========================================================
+SUMMARY GRID
+========================================================== */
+
+.summary-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+
+    gap:18px;
+
+    margin-bottom:24px;
+
+}
+
+.summary-card{
+
+    position:relative;
+
+    overflow:hidden;
+
+    background:#fff;
+
+    border-radius:22px;
+
+    padding:22px;
+
+    border-top:5px solid var(--primary);
+
+    box-shadow:var(--shadow);
+
+    transition:.30s;
+
+}
+
+.summary-card:nth-child(2){
+
+    border-top-color:var(--success);
+
+}
+
+.summary-card:nth-child(3){
+
+    border-top-color:var(--info);
+
+}
+
+.summary-card:nth-child(4){
+
+    border-top-color:var(--warning);
+
+}
+
+.summary-card::after{
+
+    content:"";
+
+    position:absolute;
+
+    top:-30px;
+
+    right:-30px;
+
+    width:90px;
+
+    height:90px;
+
+    border-radius:50%;
+
+    background:rgba(99,102,241,.05);
+
+}
+
+.summary-card:hover{
+
+    transform:translateY(-5px);
+
+    box-shadow:
+
+    0 20px 45px rgba(99,102,241,.15);
+
+}
+
+.summary-card h3{
+
+    font-size:14px;
+
+    color:var(--muted);
+
+    margin-bottom:12px;
+
+}
+
+.summary-card h2{
+
+    font-size:34px;
+
+    font-weight:800;
+
+    margin-bottom:8px;
+
+}
+
+.summary-card small{
+
+    color:#94A3B8;
+
+    font-size:13px;
+
+}
+/* ==========================================================
+   TOOLBAR
+========================================================== */
+
+.toolbar{
+
+    display:grid;
+
+    grid-template-columns:1fr 180px 220px 180px 160px;
+
+    gap:16px;
+
+    margin-bottom:24px;
+
+}
+
+.toolbar input,
+.toolbar select{
+
+    width:100%;
+
+    height:52px;
+
+    border:1.5px solid #E2E8F0;
+
+    border-radius:14px;
+
+    padding:0 16px;
+
+    background:#fff;
+
+    font-size:15px;
+
+    transition:.30s;
+
+}
+
+.toolbar input:focus,
+.toolbar select:focus{
+
+    outline:none;
+
+    border-color:var(--primary);
+
+    box-shadow:
+
+    0 0 0 4px rgba(99,102,241,.10);
+
+}
+
+.secondary-btn{
+
+    height:52px;
+
+    border:none;
+
+    border-radius:14px;
+
+    background:#EEF2FF;
+
+    color:var(--primary);
+
+    font-size:15px;
+
+    font-weight:700;
+
+    cursor:pointer;
+
+    transition:.30s;
+
+}
+
+.secondary-btn:hover{
+
+    background:var(--primary);
+
+    color:#fff;
+
+}
+
+/* ==========================================================
+SECTION TITLE
+========================================================== */
+
+.section-title{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:22px;
+
+}
+
+.section-title h2{
+
+    font-size:28px;
+
+    font-weight:700;
+
+}
+
+.section-title span{
+
+    padding:8px 18px;
+
+    border-radius:30px;
+
+    background:#EEF2FF;
+
+    color:var(--primary);
+
+    font-size:13px;
+
+    font-weight:700;
+
+}
+
+/* ==========================================================
+STUDENT GRID
+========================================================== */
+
+.students-container{
+
+    display:grid;
+
+    grid-template-columns:
+
+    repeat(auto-fill,minmax(380px,1fr));
+
+    gap:22px;
+
+}
+
+/* ==========================================================
+STUDENT CARD
+========================================================== */
+
+.student-card{
+
+    position:relative;
+
+    overflow:hidden;
+
+    background:#fff;
+
+    border-radius:22px;
+
+    padding:22px;
+
+    border:1px solid #EEF2FF;
+
+    box-shadow:var(--shadow);
+
+    transition:.30s;
+
+}
+
+.student-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    left:0;
+
+    top:0;
+
+    width:100%;
+
+    height:5px;
+
+    background:
+
+    linear-gradient(
+
+    90deg,
+
+    var(--primary),
+
+    var(--secondary)
+
+    );
+
+}
+
+.student-card:hover{
+
+    transform:translateY(-6px);
+
+    box-shadow:
+
+    0 20px 45px rgba(99,102,241,.16);
+
+}
+
+/* ==========================================================
+CARD HEADER
+========================================================== */
+
+.student-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:20px;
+
+}
+
+.student-profile{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:14px;
+
+}
+
+.student-avatar{
+
+    width:60px;
+
+    height:60px;
+
+    border-radius:50%;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    background:
+
+    linear-gradient(
+
+    135deg,
+
+    var(--primary),
+
+    var(--secondary)
+
+    );
+
+    color:#fff;
+
+    font-size:22px;
+
+    font-weight:700;
+
+}
+
+.student-name{
+
+    font-size:20px;
+
+    font-weight:700;
+
+}
+
+.student-admission{
+
+    margin-top:5px;
+
+    color:var(--muted);
+
+    font-size:14px;
+
+}
+
+/* ==========================================================
+STATUS BADGE
+========================================================== */
+
+.status-badge{
+
+    padding:7px 14px;
+
+    border-radius:30px;
+
+    font-size:12px;
+
+    font-weight:700;
+
+}
+
+.status-badge.active{
+
+    background:#DCFCE7;
+
+    color:#15803D;
+
+}
+
+.status-badge.inactive{
+
+    background:#FEE2E2;
+
+    color:#DC2626;
+
+}
+
+/* ==========================================================
+INFO GRID
+========================================================== */
+
+.student-info{
+
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:14px;
+
+    margin-bottom:20px;
+
+}
+
+.info-item{
+
+    padding:14px;
+
+    background:#F8FAFC;
+
+    border:1px solid #EEF2FF;
+
+    border-radius:14px;
+
+}
+
+.info-item label{
+
+    display:block;
+
+    margin-bottom:6px;
+
+    color:#64748B;
+
+    font-size:12px;
+
+}
+
+.info-item span{
+
+    font-size:15px;
+
+    font-weight:700;
+
+    color:#1E293B;
+
+}
+
+/* ==========================================================
+BADGES
+========================================================== */
+
+.route-badge{
+
+    display:inline-block;
+
+    padding:6px 12px;
+
+    border-radius:30px;
+
+    background:#DBEAFE;
+
+    color:#1D4ED8;
+
+    font-size:12px;
+
+    font-weight:700;
+
+}
+
+.stop-badge{
+
+    display:inline-block;
+
+    padding:6px 12px;
+
+    border-radius:30px;
+
+    background:#F3E8FF;
+
+    color:#7E22CE;
+
+    font-size:12px;
+
+    font-weight:700;
+
+}
+
+.vehicle-badge{
+
+    display:inline-block;
+
+    padding:6px 12px;
+
+    border-radius:30px;
+
+    background:#DCFCE7;
+
+    color:#15803D;
+
+    font-size:12px;
+
+    font-weight:700;
+
+}
+
+.driver-badge{
+
+    display:inline-block;
+
+    padding:6px 12px;
+
+    border-radius:30px;
+
+    background:#FEF3C7;
+
+    color:#B45309;
+
+    font-size:12px;
+
+    font-weight:700;
+
+}
+
+.fee-badge{
+
+    display:inline-block;
+
+    padding:6px 12px;
+
+    border-radius:30px;
+
+    background:#ECFDF5;
+
+    color:#047857;
+
+    font-size:12px;
+
+    font-weight:700;
+
+}
+
+/* ==========================================================
+ACTION BUTTONS
+========================================================== */
+
+.student-actions{
+
+    display:flex;
+
+    gap:10px;
+
+}
+
+.student-actions button{
+
+    flex:1;
+
+    height:44px;
+
+    border:none;
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+    font-size:14px;
+
+    font-weight:700;
+
+    transition:.30s;
+
+}
+
+.edit-btn{
+
+    background:#FEF3C7;
+
+    color:#B45309;
+
+}
+
+.edit-btn:hover{
+
+    background:#F59E0B;
+
+    color:#fff;
+
+}
+
+.delete-btn{
+
+    background:#FEE2E2;
+
+    color:#DC2626;
+
+}
+
+.delete-btn:hover{
+
+    background:#DC2626;
+
+    color:#fff;
+
+}
+/* ==========================================================
+   MODAL
+========================================================== */
+
+.modal{
+
+    position:fixed;
+
+    inset:0;
+
+    display:none;
+
+    justify-content:center;
+
+    align-items:center;
+
+    background:rgba(15,23,42,.45);
+
+    backdrop-filter:blur(8px);
+
+    z-index:9999;
+
+}
+
+.modal.active{
+
+    display:flex;
+
+}
+
+.modal-content{
+
+    width:900px;
+
+    max-width:95%;
+
+    background:#fff;
+
+    border-radius:24px;
+
+    overflow:hidden;
+
+    box-shadow:
+
+    0 35px 80px rgba(15,23,42,.22);
+
+    animation:popup .30s ease;
+
+}
+
+@keyframes popup{
+
+    from{
+
+        opacity:0;
+
+        transform:
+
+        translateY(35px)
+
+        scale(.96);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:none;
+
+    }
+
+}
+
+/* ==========================================================
+MODAL HEADER
+========================================================== */
+
+.modal-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:22px 28px;
+
+    background:
+
+    linear-gradient(
+
+    135deg,
+
+    var(--primary),
+
+    var(--secondary)
+
+    );
+
+    color:#fff;
+
+}
+
+.modal-header h2{
+
+    font-size:22px;
+
+    font-weight:700;
+
+}
+
+.modal-header button{
+
+    width:42px;
+
+    height:42px;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:rgba(255,255,255,.18);
+
+    color:#fff;
+
+    font-size:18px;
+
+    cursor:pointer;
+
+    transition:.30s;
+
+}
+
+.modal-header button:hover{
+
+    background:#fff;
+
+    color:var(--primary);
+
+}
+
+/* ==========================================================
+FORM
+========================================================== */
+
+#studentForm{
+
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:18px;
+
+    padding:28px;
+
+}
+
+.form-group{
+
+    display:flex;
+
+    flex-direction:column;
+
+}
+
+.form-group label{
+
+    margin-bottom:8px;
+
+    color:#334155;
+
+    font-size:14px;
+
+    font-weight:600;
+
+}
+
+.form-group input,
+.form-group select{
+
+    height:50px;
+
+    padding:0 15px;
+
+    border:1.5px solid #E2E8F0;
+
+    border-radius:12px;
+
+    background:#fff;
+
+    font-size:15px;
+
+    transition:.30s;
+
+}
+
+.form-group input:focus,
+.form-group select:focus{
+
+    outline:none;
+
+    border-color:var(--primary);
+
+    box-shadow:
+
+    0 0 0 4px rgba(99,102,241,.10);
+
+}
+
+/* ==========================================================
+FULL WIDTH
+========================================================== */
+
+.form-group.full-width{
+
+    grid-column:1/-1;
+
+}
+
+/* ==========================================================
+MODAL FOOTER
+========================================================== */
+
+.modal-footer{
+
+    grid-column:1/-1;
+
+    display:flex;
+
+    justify-content:flex-end;
+
+    gap:12px;
+
+    margin-top:10px;
+
+}
+
+.modal-footer button{
+
+    height:48px;
+
+    padding:0 24px;
+
+    border:none;
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+    font-size:14px;
+
+    font-weight:700;
+
+    transition:.30s;
+
+}
+
+#cancelBtn{
+
+    background:#F1F5F9;
+
+    color:#334155;
+
+}
+
+#cancelBtn:hover{
+
+    background:#E2E8F0;
+
+}
+
+.modal-footer .primary-btn{
+
+    min-width:180px;
+
+}
+
+.modal-footer .primary-btn:hover{
+
+    transform:translateY(-2px);
+
+}
+/* ==========================================================
+   EMPTY STATE
+========================================================== */
+
+.empty-state{
+
+    grid-column:1/-1;
+
+    background:#fff;
+
+    border:2px dashed #D8DDFC;
+
+    border-radius:24px;
+
+    padding:70px 40px;
+
+    text-align:center;
+
+    box-shadow:var(--shadow);
+
+}
+
+.empty-icon{
+
+    width:90px;
+
+    height:90px;
+
+    margin:auto auto 20px;
+
+    border-radius:22px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:42px;
+
+    background:
+
+    linear-gradient(
+
+    135deg,
+
+    #EEF2FF,
+
+    #F5F3FF
+
+    );
+
+}
+
+.empty-state h2{
+
+    font-size:28px;
+
+    color:#1E293B;
+
+    margin-bottom:12px;
+
+}
+
+.empty-state p{
+
+    max-width:520px;
+
+    margin:0 auto 28px;
+
+    color:#64748B;
+
+    line-height:1.7;
+
+    font-size:15px;
+
+}
+
+/* ==========================================================
+LOADER
+========================================================== */
+
+.loader{
+
+    position:fixed;
+
+    inset:0;
+
+    display:none;
+
+    justify-content:center;
+
+    align-items:center;
+
+    background:rgba(255,255,255,.75);
+
+    backdrop-filter:blur(6px);
+
+    z-index:99999;
+
+}
+
+.loader.show{
+
+    display:flex;
+
+}
+
+.loader::before{
+
+    content:"";
+
+    width:60px;
+
+    height:60px;
+
+    border-radius:50%;
+
+    border:5px solid #E5E7EB;
+
+    border-top-color:var(--primary);
+
+    animation:spin .9s linear infinite;
+
+}
+
+@keyframes spin{
+
+    to{
+
+        transform:rotate(360deg);
+
+    }
+
+}
+
+/* ==========================================================
+TOAST
+========================================================== */
+
+.toast{
+
+    position:fixed;
+
+    right:25px;
+
+    bottom:25px;
+
+    padding:15px 22px;
+
+    background:
+
+    linear-gradient(
+
+    135deg,
+
+    #10B981,
+
+    #059669
+
+    );
+
+    color:#fff;
+
+    border-radius:14px;
+
+    font-size:14px;
+
+    font-weight:600;
+
+    box-shadow:
+
+    0 15px 35px rgba(16,185,129,.25);
+
+    transform:translateY(120px);
+
+    transition:.30s;
+
+    z-index:100000;
+
+}
+
+.toast.show{
+
+    transform:translateY(0);
+
+}
+
+/* ==========================================================
+RESPONSIVE
+========================================================== */
+
+@media(max-width:1100px){
+
+.summary-grid{
+
+grid-template-columns:repeat(2,1fr);
+
+}
+
+.toolbar{
+
+grid-template-columns:1fr 1fr;
+
+}
+
+}
+
+@media(max-width:768px){
+
+body{
+
+padding:18px;
+
+}
+
+.page-header{
+
+flex-direction:column;
+
+align-items:flex-start;
+
+gap:18px;
+
+}
+
+.summary-grid{
+
+grid-template-columns:1fr;
+
+}
+
+.toolbar{
+
+grid-template-columns:1fr;
+
+}
+
+.students-container{
+
+grid-template-columns:1fr;
+
+}
+
+.student-info{
+
+grid-template-columns:1fr;
+
+}
+
+.student-actions{
+
+flex-direction:column;
+
+}
+
+#studentForm{
+
+grid-template-columns:1fr;
+
+}
+
+.modal-footer{
+
+flex-direction:column;
+
+}
+
+.primary-btn{
+
+width:100%;
+
+}
+
+}
+
+@media(max-width:480px){
+
+.header-left h1{
+
+font-size:28px;
+
+}
+
+.summary-card h2{
+
+font-size:28px;
+
+}
+
+.student-name{
+
+font-size:18px;
+
+}
+
+.modal-content{
+
+width:100%;
+
+border-radius:18px;
+
+}
+
+.empty-state{
+
+padding:45px 20px;
+
+}
+
+}
+
+/* ==========================================================
+SCROLLBAR
+========================================================== */
+
+::-webkit-scrollbar{
+
+width:8px;
+
+}
+
+::-webkit-scrollbar-track{
+
+background:#EEF2FF;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+background:#C7D2FE;
+
+border-radius:10px;
+
+}
+
+::-webkit-scrollbar-thumb:hover{
+
+background:#818CF8;
+
+}
+
+/* ==========================================================
+CARD ANIMATION
+========================================================== */
+
+.student-card{
+
+animation:fadeUp .35s ease;
+
+}
+
+@keyframes fadeUp{
+
+from{
+
+opacity:0;
+
+transform:translateY(20px);
+
+}
+
+to{
+
+opacity:1;
+
+transform:translateY(0);
+
+}
+
+}

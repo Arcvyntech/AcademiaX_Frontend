@@ -1,0 +1,1087 @@
+/* ==========================================================
+   AcademiaX ERP
+   Transport Vehicles
+   Version : 1.0
+   Part 1
+========================================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:"Inter",sans-serif;
+}
+
+body{
+
+    padding:24px 30px;
+
+    background:#F5F7FF;
+
+    color:#1E293B;
+
+}
+
+/* ==========================================================
+   HEADER
+========================================================== */
+
+.page-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:22px;
+
+}
+
+.header-left{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:18px;
+
+}
+
+.back-btn{
+
+    width:56px;
+
+    height:56px;
+
+    border:none;
+
+    border-radius:16px;
+
+    background:#fff;
+
+    font-size:22px;
+
+    cursor:pointer;
+
+    box-shadow:
+
+    0 8px 20px rgba(15,23,42,.08);
+
+    transition:.30s;
+
+}
+
+.back-btn:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:
+
+    0 14px 30px rgba(99,102,241,.18);
+
+}
+
+.header-left h1{
+
+    font-size:42px;
+
+    font-weight:800;
+
+    color:#1E293B;
+
+    line-height:1.1;
+
+}
+
+.header-left p{
+
+    margin-top:6px;
+
+    font-size:17px;
+
+    color:#64748B;
+
+}
+
+.primary-btn{
+
+    height:52px;
+
+    padding:0 26px;
+
+    border:none;
+
+    border-radius:14px;
+
+    background:
+
+    linear-gradient(
+        135deg,
+        #6366F1,
+        #8B5CF6
+    );
+
+    color:#fff;
+
+    font-size:15px;
+
+    font-weight:700;
+
+    cursor:pointer;
+
+    transition:.30s;
+
+}
+
+.primary-btn:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:
+
+    0 16px 35px rgba(99,102,241,.25);
+
+}
+
+/* ==========================================================
+   SUMMARY CARDS
+========================================================== */
+
+.summary-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+
+    gap:18px;
+
+    margin-bottom:22px;
+
+}
+
+.summary-card{
+
+    position:relative;
+
+    overflow:hidden;
+
+    background:#fff;
+
+    border-radius:20px;
+
+    padding:22px;
+
+    min-height:135px;
+
+    border:1px solid #EEF2FF;
+
+    box-shadow:
+
+    0 10px 25px rgba(15,23,42,.05);
+
+    transition:.35s;
+
+}
+
+.summary-card:hover{
+
+    transform:translateY(-6px);
+
+    box-shadow:
+
+    0 22px 45px rgba(99,102,241,.14);
+
+}
+
+.summary-card::after{
+
+    content:"";
+
+    position:absolute;
+
+    top:-40px;
+
+    right:-40px;
+
+    width:95px;
+
+    height:95px;
+
+    border-radius:50%;
+
+    background:rgba(99,102,241,.05);
+
+}
+
+.summary-card:nth-child(1){
+
+    border-top:5px solid #6366F1;
+
+}
+
+.summary-card:nth-child(2){
+
+    border-top:5px solid #10B981;
+
+}
+
+.summary-card:nth-child(3){
+
+    border-top:5px solid #3B82F6;
+
+}
+
+.summary-card:nth-child(4){
+
+    border-top:5px solid #F59E0B;
+
+}
+
+.summary-card h3{
+
+    font-size:14px;
+
+    font-weight:600;
+
+    color:#64748B;
+
+    margin-bottom:14px;
+
+}
+
+.summary-card h2{
+
+    font-size:34px;
+
+    font-weight:800;
+
+    color:#1E293B;
+
+    margin-bottom:10px;
+
+}
+
+.summary-card small{
+
+    display:block;
+
+    color:#94A3B8;
+
+    font-size:13px;
+
+}
+
+/* ==========================================================
+   INFO BANNER
+========================================================== */
+
+.info-banner{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:20px;
+
+    padding:20px 24px;
+
+    margin-bottom:22px;
+
+    border-radius:20px;
+
+    background:
+
+    linear-gradient(
+        135deg,
+        #F8F7FF,
+        #F4F7FF
+    );
+
+    border:1px solid #ECECFF;
+
+}
+
+.info-banner-left{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:16px;
+
+}
+
+.info-icon{
+
+    width:58px;
+
+    height:58px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    border-radius:16px;
+
+    background:
+
+    linear-gradient(
+        135deg,
+        #6366F1,
+        #8B5CF6
+    );
+
+    color:#fff;
+
+    font-size:24px;
+
+}
+
+.info-banner h3{
+
+    font-size:20px;
+
+    margin-bottom:4px;
+
+}
+
+.info-banner p{
+
+    font-size:14px;
+
+    color:#64748B;
+
+}
+
+/* ==========================================================
+   SECTION TITLE
+========================================================== */
+
+.section-title{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:18px;
+
+}
+
+.section-title h2{
+
+    font-size:26px;
+
+    font-weight:700;
+
+    color:#1E293B;
+
+}
+
+.section-title span{
+
+    padding:8px 16px;
+
+    border-radius:30px;
+
+    background:#EEF2FF;
+
+    color:#4F46E5;
+
+    font-size:13px;
+
+    font-weight:600;
+
+}
+
+/* ==========================================================
+   TOOLBAR
+========================================================== */
+
+.toolbar{
+
+    display:grid;
+
+    grid-template-columns:1fr 220px 220px 170px;
+
+    gap:16px;
+
+    align-items:center;
+
+    margin-bottom:22px;
+
+}
+
+.toolbar input,
+.toolbar select{
+
+    width:100%;
+
+    height:52px;
+
+    padding:0 18px;
+
+    border:1.5px solid #E2E8F0;
+
+    border-radius:14px;
+
+    background:#fff;
+
+    font-size:15px;
+
+    color:#334155;
+
+    transition:.30s;
+
+}
+
+.toolbar input::placeholder{
+
+    color:#94A3B8;
+
+}
+
+.toolbar input:hover,
+.toolbar select:hover{
+
+    border-color:#6366F1;
+
+}
+
+.toolbar input:focus,
+.toolbar select:focus{
+
+    outline:none;
+
+    border-color:#6366F1;
+
+    box-shadow:
+
+    0 0 0 4px rgba(99,102,241,.12);
+
+}
+/* ==========================================================
+   VEHICLES TABLE
+========================================================== */
+
+.table-section{
+
+    background:#fff;
+
+    border-radius:22px;
+
+    border:1px solid #EEF2FF;
+
+    overflow:hidden;
+
+    box-shadow:
+    0 10px 25px rgba(15,23,42,.05);
+
+}
+
+.vehicles-table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+}
+
+.vehicles-table thead{
+
+    background:#F8FAFC;
+
+}
+
+.vehicles-table th{
+
+    padding:18px;
+
+    text-align:left;
+
+    font-size:14px;
+
+    font-weight:700;
+
+    color:#475569;
+
+    border-bottom:1px solid #E2E8F0;
+
+}
+
+.vehicles-table td{
+
+    padding:18px;
+
+    font-size:15px;
+
+    border-bottom:1px solid #F1F5F9;
+
+    color:#1E293B;
+
+    vertical-align:middle;
+
+}
+
+.vehicles-table tbody tr{
+
+    transition:.25s;
+
+}
+
+.vehicles-table tbody tr:hover{
+
+    background:#F8FAFF;
+
+}
+
+.empty-table{
+
+    text-align:center;
+
+    padding:50px 20px;
+
+    color:#94A3B8;
+
+    font-size:16px;
+
+    font-weight:600;
+
+}
+
+/* ==========================================================
+   STATUS BADGES
+========================================================== */
+
+.status-badge{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    min-width:110px;
+
+    padding:8px 14px;
+
+    border-radius:30px;
+
+    font-size:12px;
+
+    font-weight:700;
+
+    letter-spacing:.3px;
+
+}
+
+.status-badge.active{
+
+    background:#DCFCE7;
+
+    color:#15803D;
+
+}
+
+.status-badge.inactive{
+
+    background:#FEE2E2;
+
+    color:#DC2626;
+
+}
+
+.status-badge.maintenance{
+
+    background:#FEF3C7;
+
+    color:#B45309;
+
+}
+
+/* ==========================================================
+   ACTION BUTTONS
+========================================================== */
+
+.table-actions{
+
+    display:flex;
+
+    gap:10px;
+
+}
+
+.table-actions button{
+
+    height:40px;
+
+    padding:0 16px;
+
+    border:none;
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+    font-size:13px;
+
+    font-weight:700;
+
+    transition:.25s;
+
+}
+
+.edit-btn{
+
+    background:#FEF3C7;
+
+    color:#B45309;
+
+}
+
+.edit-btn:hover{
+
+    background:#F59E0B;
+
+    color:#fff;
+
+}
+
+.delete-btn{
+
+    background:#FEE2E2;
+
+    color:#DC2626;
+
+}
+
+.delete-btn:hover{
+
+    background:#DC2626;
+
+    color:#fff;
+
+}
+
+/* ==========================================================
+   MODAL
+========================================================== */
+
+.modal{
+
+    position:fixed;
+
+    inset:0;
+
+    display:none;
+
+    justify-content:center;
+
+    align-items:center;
+
+    background:rgba(15,23,42,.45);
+
+    backdrop-filter:blur(8px);
+
+    z-index:9999;
+
+}
+
+.modal.active{
+
+    display:flex;
+
+}
+
+.modal-content{
+
+    width:900px;
+
+    max-width:95%;
+
+    background:#fff;
+
+    border-radius:24px;
+
+    overflow:hidden;
+
+    box-shadow:
+    0 35px 80px rgba(15,23,42,.20);
+
+    animation:popup .3s ease;
+
+}
+
+@keyframes popup{
+
+from{
+
+opacity:0;
+
+transform:translateY(30px) scale(.96);
+
+}
+
+to{
+
+opacity:1;
+
+transform:none;
+
+}
+
+}
+
+.modal-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:22px 28px;
+
+    background:
+    linear-gradient(
+    135deg,
+    #6366F1,
+    #8B5CF6);
+
+    color:#fff;
+
+}
+
+.modal-header h2{
+
+    font-size:22px;
+
+}
+
+.modal-header button{
+
+    width:42px;
+
+    height:42px;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:rgba(255,255,255,.15);
+
+    color:#fff;
+
+    cursor:pointer;
+
+}
+
+.modal-header button:hover{
+
+    background:#fff;
+
+    color:#6366F1;
+
+}
+
+form{
+
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    gap:18px;
+
+    padding:28px;
+
+}
+
+.form-group{
+
+    display:flex;
+
+    flex-direction:column;
+
+}
+
+.form-group label{
+
+    margin-bottom:8px;
+
+    font-size:14px;
+
+    font-weight:600;
+
+    color:#334155;
+
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea{
+
+    width:100%;
+
+    border:1.5px solid #E2E8F0;
+
+    border-radius:12px;
+
+    padding:14px;
+
+    font-size:14px;
+
+    resize:vertical;
+
+    transition:.25s;
+
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus{
+
+    outline:none;
+
+    border-color:#6366F1;
+
+    box-shadow:
+    0 0 0 4px rgba(99,102,241,.10);
+
+}
+
+.modal-footer{
+
+    grid-column:1/-1;
+
+    display:flex;
+
+    justify-content:flex-end;
+
+    gap:12px;
+
+}
+
+.modal-footer button{
+
+    height:48px;
+
+    padding:0 22px;
+
+    border:none;
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+    font-weight:700;
+
+}
+
+#cancelBtn{
+
+    background:#F1F5F9;
+
+    color:#334155;
+
+}
+
+/* ==========================================================
+   LOADER
+========================================================== */
+
+.loader{
+
+    position:fixed;
+
+    inset:0;
+
+    display:none;
+
+    justify-content:center;
+
+    align-items:center;
+
+    background:rgba(255,255,255,.70);
+
+    backdrop-filter:blur(5px);
+
+    z-index:10000;
+
+}
+
+.loader.show{
+
+    display:flex;
+
+}
+
+.loader::before{
+
+    content:"";
+
+    width:60px;
+
+    height:60px;
+
+    border:5px solid #E5E7FF;
+
+    border-top-color:#6366F1;
+
+    border-radius:50%;
+
+    animation:spin .8s linear infinite;
+
+}
+
+@keyframes spin{
+
+to{
+
+transform:rotate(360deg);
+
+}
+
+}
+
+/* ==========================================================
+   TOAST
+========================================================== */
+
+.toast{
+
+    position:fixed;
+
+    right:25px;
+
+    bottom:25px;
+
+    padding:15px 22px;
+
+    border-radius:14px;
+
+    background:
+    linear-gradient(
+    135deg,
+    #10B981,
+    #059669);
+
+    color:#fff;
+
+    font-size:14px;
+
+    font-weight:600;
+
+    transform:translateY(120px);
+
+    transition:.30s;
+
+    box-shadow:
+    0 15px 35px rgba(16,185,129,.25);
+
+    z-index:10001;
+
+}
+
+.toast.show{
+
+    transform:translateY(0);
+
+}
+
+/* ==========================================================
+   RESPONSIVE
+========================================================== */
+
+@media(max-width:1100px){
+
+.toolbar{
+
+grid-template-columns:1fr 1fr;
+
+}
+
+form{
+
+grid-template-columns:repeat(2,1fr);
+
+}
+
+}
+
+@media(max-width:768px){
+
+body{
+
+padding:18px;
+
+}
+
+.page-header{
+
+flex-direction:column;
+
+align-items:flex-start;
+
+gap:16px;
+
+}
+
+.summary-grid{
+
+grid-template-columns:1fr;
+
+}
+
+.toolbar{
+
+grid-template-columns:1fr;
+
+}
+
+.table-section{
+
+overflow-x:auto;
+
+}
+
+.vehicles-table{
+
+min-width:900px;
+
+}
+
+form{
+
+grid-template-columns:1fr;
+
+}
+
+.primary-btn{
+
+width:100%;
+
+}
+
+}
+
+@media(max-width:480px){
+
+.header-left h1{
+
+font-size:28px;
+
+}
+
+.summary-card h2{
+
+font-size:28px;
+
+}
+
+}

@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>
+
+AcademiaX | Transport Drivers
+
+</title>
+
+<link
+rel="stylesheet"
+href="drivers.css">
+
+<link
+rel="preconnect"
+href="https://fonts.googleapis.com">
+
+<link
+rel="preconnect"
+href="https://fonts.gstatic.com"
+crossorigin>
+
+<link
+href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+rel="stylesheet">
+
+</head>
+
+<body>
+
+<!-- ======================================================
+HEADER
+====================================================== -->
+
+<header class="page-header">
+
+<div class="header-left">
+
+<button
+id="backBtn"
+class="back-btn">
+
+←
+
+</button>
+
+<div>
+
+<h1>
+
+Transport Drivers
+
+</h1>
+
+<p>
+
+Manage all transport drivers, license details and assignments.
+
+</p>
+
+</div>
+
+</div>
+
+<button
+id="addDriverBtn"
+class="primary-btn">
+
++ Add Driver
+
+</button>
+
+</header>
+
+<!-- ======================================================
+SUMMARY
+====================================================== -->
+
+<section class="summary-grid">
+
+<div class="summary-card">
+
+<h3>
+
+Total Drivers
+
+</h3>
+
+<h2 id="totalDrivers">
+
+0
+
+</h2>
+
+<small>
+
+Registered Drivers
+
+</small>
+
+</div>
+
+<div class="summary-card">
+
+<h3>
+
+Active Drivers
+
+</h3>
+
+<h2 id="activeDrivers">
+
+0
+
+</h2>
+
+<small>
+
+Currently Working
+
+</small>
+
+</div>
+
+<div class="summary-card">
+
+<h3>
+
+Assigned Vehicles
+
+</h3>
+
+<h2 id="assignedVehicles">
+
+0
+
+</h2>
+
+<small>
+
+Vehicle Allocated
+
+</small>
+
+</div>
+
+<div class="summary-card">
+
+<h3>
+
+License Expiring
+
+</h3>
+
+<h2 id="licenseExpiry">
+
+0
+
+</h2>
+
+<small>
+
+Needs Renewal
+
+</small>
+
+</div>
+
+</section>
+<!-- ======================================================
+SEARCH & FILTER
+====================================================== -->
+
+<section class="toolbar">
+
+<input
+type="text"
+id="searchDriver"
+placeholder="🔍 Search driver by name, mobile or license...">
+
+<select id="statusFilter">
+
+<option value="">
+
+All Status
+
+</option>
+
+<option value="active">
+
+🟢 Active
+
+</option>
+
+<option value="inactive">
+
+🔴 Inactive
+
+</option>
+
+</select>
+
+<select id="vehicleFilter">
+
+<option value="">
+
+All Vehicles
+
+</option>
+
+</select>
+
+<button
+id="refreshBtn"
+class="secondary-btn">
+
+🔄 Refresh
+
+</button>
+
+</section>
+
+<!-- ======================================================
+SECTION TITLE
+====================================================== -->
+
+<div class="section-title">
+
+<h2>
+
+All Drivers
+
+</h2>
+
+<span id="driverCountLabel">
+
+0 Drivers
+
+</span>
+
+</div>
+
+<!-- ======================================================
+DRIVER LIST
+====================================================== -->
+
+<section
+class="drivers-container"
+id="driversContainer">
+
+<div class="empty-state">
+
+<div class="empty-icon">
+
+👨‍✈️
+
+</div>
+
+<h2>
+
+No Drivers Found
+
+</h2>
+
+<p>
+
+No transport drivers have been added yet.
+
+Click the button below to add your first driver.
+
+</p>
+
+<button
+id="createFirstDriver"
+class="primary-btn">
+
++ Add First Driver
+
+</button>
+
+</div>
+
+</section>
+
+<!-- ======================================================
+ADD / EDIT DRIVER MODAL
+====================================================== -->
+
+<div
+class="modal"
+id="driverModal">
+
+<div class="modal-content">
+
+<div class="modal-header">
+
+<h2>
+
+👨‍✈️ Add Driver
+
+</h2>
+
+<button id="closeModal">
+
+✕
+
+</button>
+
+</div>
+
+<form id="driverForm">
+
+<div class="form-group">
+
+<label>
+
+Driver Name
+
+</label>
+
+<input
+type="text"
+id="driverName"
+placeholder="Enter Driver Name"
+required>
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+Mobile Number
+
+</label>
+
+<input
+type="tel"
+id="mobileNumber"
+placeholder="10 Digit Mobile"
+required>
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+License Number
+
+</label>
+
+<input
+type="text"
+id="licenseNumber"
+placeholder="Driving License Number"
+required>
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+License Expiry
+
+</label>
+
+<input
+type="date"
+id="licenseExpiryDate"
+required>
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+Assigned Vehicle
+
+</label>
+
+<select id="assignedVehicle">
+
+<option value="">
+
+Select Vehicle
+
+</option>
+
+</select>
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+Assigned Route
+
+</label>
+
+<select id="assignedRoute">
+
+<option value="">
+
+Select Route
+
+</option>
+
+</select>
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+Experience (Years)
+
+</label>
+
+<input
+type="number"
+id="experience"
+min="0"
+placeholder="0">
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+Status
+
+</label>
+
+<select id="driverStatus">
+
+<option value="active">
+
+Active
+
+</option>
+
+<option value="inactive">
+
+Inactive
+
+</option>
+
+</select>
+
+</div>
+
+<div class="modal-footer">
+
+<button
+type="button"
+id="cancelBtn">
+
+Cancel
+
+</button>
+
+<button
+type="submit"
+class="primary-btn">
+
+💾 Save Driver
+
+</button>
+
+</div>
+
+</form>
+
+</div>
+
+</div>
+
+<!-- ======================================================
+LOADER
+====================================================== -->
+
+<div
+class="loader"
+id="loader">
+
+Loading...
+
+</div>
+
+<!-- ======================================================
+TOAST
+====================================================== -->
+
+<div
+class="toast"
+id="toast">
+
+<span>
+
+Success
+
+</span>
+
+</div>
+<!-- ======================================================
+SCRIPTS
+====================================================== -->
+
+<script src="../../../js/config.js"></script>
+
+<script src="../../../js/api.js"></script>
+
+<script src="drivers.js"></script>
+
+</body>
+
+</html>

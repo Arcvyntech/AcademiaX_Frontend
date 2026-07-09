@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>
+
+AcademiaX | Transport Vehicles
+
+</title>
+
+<link
+rel="stylesheet"
+href="vehicles.css">
+
+<link
+rel="preconnect"
+href="https://fonts.googleapis.com">
+
+<link
+rel="preconnect"
+href="https://fonts.gstatic.com"
+crossorigin>
+
+<link
+href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+rel="stylesheet">
+
+</head>
+
+<body>
+
+<!-- ======================================================
+HEADER
+====================================================== -->
+
+<header class="page-header">
+
+<div class="header-left">
+
+<button
+id="backBtn"
+class="back-btn">
+
+←
+
+</button>
+
+<div>
+
+<h1>
+
+Transport Vehicles
+
+</h1>
+
+<p>
+
+Manage school buses, vans and transport fleet from one place.
+
+</p>
+
+</div>
+
+</div>
+
+<button
+id="addVehicleBtn"
+class="primary-btn">
+
++ Add Vehicle
+
+</button>
+
+</header>
+
+<!-- ======================================================
+SUMMARY
+====================================================== -->
+
+<section class="summary-grid">
+
+<div class="summary-card">
+
+<h3>
+
+Total Vehicles
+
+</h3>
+
+<h2 id="totalVehicles">
+
+0
+
+</h2>
+
+<small>
+
+Registered Vehicles
+
+</small>
+
+</div>
+
+<div class="summary-card">
+
+<h3>
+
+Active Vehicles
+
+</h3>
+
+<h2 id="activeVehicles">
+
+0
+
+</h2>
+
+<small>
+
+Currently Running
+
+</small>
+
+</div>
+
+<div class="summary-card">
+
+<h3>
+
+Assigned Students
+
+</h3>
+
+<h2 id="assignedStudents">
+
+0
+
+</h2>
+
+<small>
+
+Transport Students
+
+</small>
+
+</div>
+
+<div class="summary-card">
+
+<h3>
+
+Total Capacity
+
+</h3>
+
+<h2 id="totalCapacity">
+
+0
+
+</h2>
+
+<small>
+
+Available Seats
+
+</small>
+
+</div>
+
+</section>
+
+<!-- ======================================================
+INFO BANNER
+====================================================== -->
+
+<section class="info-banner">
+
+<div class="info-banner-left">
+
+<div class="info-icon">
+
+🚌
+
+</div>
+
+<div>
+
+<h3>
+
+Transport Fleet Overview
+
+</h3>
+
+<p>
+
+Manage vehicles, routes, capacity and transport operations efficiently.
+
+</p>
+
+</div>
+
+</div>
+
+<button
+id="refreshBtn"
+class="primary-btn">
+
+🔄 Refresh
+
+</button>
+
+</section>
+
+<!-- ======================================================
+SECTION TITLE
+====================================================== -->
+
+<div class="section-title">
+
+<h2>
+
+All Vehicles
+
+</h2>
+
+<span id="vehicleCountLabel">
+
+0 Vehicles
+
+</span>
+
+</div>
+
+<!-- ======================================================
+SEARCH TOOLBAR
+====================================================== -->
+
+<section class="toolbar">
+
+<input
+type="text"
+id="searchVehicle"
+placeholder="🔍 Search by vehicle number or name...">
+
+<select
+id="filterStatus">
+
+<option value="">
+
+All Status
+
+</option>
+
+<option value="active">
+
+🟢 Active
+
+</option>
+
+<option value="inactive">
+
+🔴 Inactive
+
+</option>
+
+<option value="maintenance">
+
+🟡 Maintenance
+
+</option>
+
+</select>
+
+<select
+id="filterType">
+
+<option value="">
+
+All Types
+
+</option>
+
+<option value="Bus">
+
+Bus
+
+</option>
+
+<option value="Mini Bus">
+
+Mini Bus
+
+</option>
+
+<option value="Van">
+
+Van
+
+</option>
+
+<option value="Tempo Traveller">
+
+Tempo Traveller
+
+</option>
+
+<option value="Other">
+
+Other
+
+</option>
+
+</select>
+
+<button
+id="addVehicleToolbar"
+class="primary-btn">
+
++ Add Vehicle
+
+</button>
+
+</section>
+
+<!-- ======================================================
+VEHICLES TABLE
+====================================================== -->
+
+<section class="table-section">
+
+<table class="vehicles-table">
+
+<thead>
+
+<tr>
+
+<th>
+
+Vehicle No.
+
+</th>
+
+<th>
+
+Vehicle
+
+</th>
+
+<th>
+
+Type
+
+</th>
+
+<th>
+
+Route
+
+</th>
+
+<th>
+
+Capacity
+
+</th>
+
+<th>
+
+Students
+
+</th>
+
+<th>
+
+Status
+
+</th>
+
+<th>
+
+Actions
+
+</th>
+
+</tr>
+
+</thead>
+
+<tbody id="vehiclesTableBody">
+
+<tr>
+
+<td colspan="8">
+
+<div class="empty-table">
+
+No Vehicles Found
+
+</div>
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</section>
+<!-- ======================================================
+ADD / EDIT VEHICLE MODAL
+====================================================== -->
+
+<div class="modal" id="vehicleModal">
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+
+            <h2>
+
+                🚌 Add Transport Vehicle
+
+            </h2>
+
+            <button id="closeModal">
+
+                ✕
+
+            </button>
+
+        </div>
+
+        <form id="vehicleForm">
+
+            <div class="form-group">
+
+                <label>
+
+                    Vehicle Number *
+
+                </label>
+
+                <input
+                    type="text"
+                    id="vehicleNumber"
+                    placeholder="UK04 AB 1234"
+                    required>
+
+            </div>
+
+            <div class="form-group">
+
+                <label>
+
+                    Vehicle Name
+
+                </label>
+
+                <input
+                    type="text"
+                    id="vehicleName"
+                    placeholder="School Bus 1">
+
+            </div>
+
+            <div class="form-group">
+
+                <label>
+
+                    Registration Number
+
+                </label>
+
+                <input
+                    type="text"
+                    id="registrationNumber"
+                    placeholder="Registration Number">
+
+            </div>
+
+            <div class="form-group">
+
+                <label>
+
+                    Vehicle Type
+
+                </label>
+
+                <select id="vehicleType">
+
+                    <option value="Bus">
+
+                        Bus
+
+                    </option>
+
+                    <option value="Mini Bus">
+
+                        Mini Bus
+
+                    </option>
+
+                    <option value="Van">
+
+                        Van
+
+                    </option>
+
+                    <option value="Tempo Traveller">
+
+                        Tempo Traveller
+
+                    </option>
+
+                    <option value="Other">
+
+                        Other
+
+                    </option>
+
+                </select>
+
+            </div>
+
+            <div class="form-group">
+
+                <label>
+
+                    Capacity *
+
+                </label>
+
+                <input
+                    type="number"
+                    id="capacity"
+                    min="1"
+                    placeholder="50"
+                    required>
+
+            </div>
+
+            <div class="form-group">
+
+                <label>
+
+                    Transport Route
+
+                </label>
+
+                <select id="routeId">
+
+                    <option value="">
+
+                        Select Route
+
+                    </option>
+
+                </select>
+
+            </div>
+
+            <div class="form-group">
+
+                <label>
+
+                    Manufacturer
+
+                </label>
+
+                <input
+                    type="text"
+                    id="manufacturer"
+                    placeholder="Tata">
+
+            </div>
+
+            <div class="form-group">
+
+                <label>
+
+                    Model
+
+                </label>
+
+                <input
+                    type="text"
+                    id="model"
+                    placeholder="Starbus">
+
+            </div>
+
+            <div class="form-group">
+
+                <label>
+
+                    Insurance Expiry
+
+                </label>
+
+                <input
+                    type="date"
+                    id="insuranceExpiry">
+
+            </div>
+
+            <div class="form-group">
+
+                <label>
+
+                    Fitness Expiry
+
+                </label>
+
+                <input
+                    type="date"
+                    id="fitnessExpiry">
+
+            </div>
+
+            <div class="form-group">
+
+                <label>
+
+                    Pollution Expiry
+
+                </label>
+
+                <input
+                    type="date"
+                    id="pollutionExpiry">
+
+            </div>
+
+            <div class="form-group">
+
+                <label>
+
+                    Status
+
+                </label>
+
+                <select id="vehicleStatus">
+
+                    <option value="active">
+
+                        Active
+
+                    </option>
+
+                    <option value="inactive">
+
+                        Inactive
+
+                    </option>
+
+                    <option value="maintenance">
+
+                        Maintenance
+
+                    </option>
+
+                </select>
+
+            </div>
+
+            <div
+                class="form-group"
+                style="grid-column:1/-1;">
+
+                <label>
+
+                    Notes
+
+                </label>
+
+                <textarea
+                    id="notes"
+                    rows="4"
+                    placeholder="Additional notes about this vehicle..."></textarea>
+
+            </div>
+
+            <div class="modal-footer">
+
+                <button
+                    type="button"
+                    id="cancelBtn">
+
+                    Cancel
+
+                </button>
+
+                <button
+                    type="submit"
+                    class="primary-btn">
+
+                    💾 Save Vehicle
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+<!-- ======================================================
+LOADER
+====================================================== -->
+
+<div
+class="loader"
+id="loader">
+
+</div>
+
+<!-- ======================================================
+TOAST
+====================================================== -->
+
+<div
+class="toast"
+id="toast">
+
+<span>
+
+Success
+
+</span>
+
+</div>
+
+<!-- ======================================================
+SCRIPTS
+====================================================== -->
+
+<script src="../../../js/config.js"></script>
+
+<script src="../../../js/api.js"></script>
+
+<script src="vehicles.js"></script>
+
+</body>
+
+</html>

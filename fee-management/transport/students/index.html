@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>
+
+AcademiaX | Transport Students
+
+</title>
+
+<link
+rel="stylesheet"
+href="students.css">
+
+<link
+rel="preconnect"
+href="https://fonts.googleapis.com">
+
+<link
+rel="preconnect"
+href="https://fonts.gstatic.com"
+crossorigin>
+
+<link
+href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+rel="stylesheet">
+
+</head>
+
+<body>
+
+<!-- ======================================================
+HEADER
+====================================================== -->
+
+<header class="page-header">
+
+<div class="header-left">
+
+<button
+id="backBtn"
+class="back-btn">
+
+←
+
+</button>
+
+<div>
+
+<h1>
+
+Transport Students
+
+</h1>
+
+<p>
+
+Assign transport routes, stops, vehicles and drivers to students.
+
+</p>
+
+</div>
+
+</div>
+
+<button
+id="assignStudentBtn"
+class="primary-btn">
+
++ Assign Student
+
+</button>
+
+</header>
+
+<!-- ======================================================
+SUMMARY
+====================================================== -->
+
+<section class="summary-grid">
+
+<div class="summary-card">
+
+<h3>
+
+Total Students
+
+</h3>
+
+<h2 id="totalStudents">
+
+0
+
+</h2>
+
+<small>
+
+Registered Students
+
+</small>
+
+</div>
+
+<div class="summary-card">
+
+<h3>
+
+Transport Students
+
+</h3>
+
+<h2 id="transportStudents">
+
+0
+
+</h2>
+
+<small>
+
+Assigned to Transport
+
+</small>
+
+</div>
+
+<div class="summary-card">
+
+<h3>
+
+Active Routes
+
+</h3>
+
+<h2 id="activeRoutes">
+
+0
+
+</h2>
+
+<small>
+
+Routes in Use
+
+</small>
+
+</div>
+
+<div class="summary-card">
+
+<h3>
+
+Monthly Collection
+
+</h3>
+
+<h2 id="monthlyCollection">
+
+₹0
+
+</h2>
+
+<small>
+
+Transport Fee
+
+</small>
+
+</div>
+
+</section>
+<!-- ======================================================
+SEARCH & FILTER
+====================================================== -->
+
+<section class="toolbar">
+
+<input
+type="text"
+id="searchStudent"
+placeholder="🔍 Search by Student Name or Admission No...">
+
+<select id="classFilter">
+
+<option value="">
+
+All Classes
+
+</option>
+
+</select>
+
+<select id="routeFilter">
+
+<option value="">
+
+All Routes
+
+</option>
+
+</select>
+
+<select id="statusFilter">
+
+<option value="">
+
+All Status
+
+</option>
+
+<option value="active">
+
+🟢 Active
+
+</option>
+
+<option value="inactive">
+
+🔴 Inactive
+
+</option>
+
+</select>
+
+<button
+id="refreshBtn"
+class="secondary-btn">
+
+🔄 Refresh
+
+</button>
+
+</section>
+
+<!-- ======================================================
+SECTION TITLE
+====================================================== -->
+
+<div class="section-title">
+
+<h2>
+
+Transport Student List
+
+</h2>
+
+<span id="studentCountLabel">
+
+0 Students
+
+</span>
+
+</div>
+
+<!-- ======================================================
+STUDENT LIST
+====================================================== -->
+
+<section
+id="studentsContainer"
+class="students-container">
+
+<div class="empty-state">
+
+<div class="empty-icon">
+
+🎓
+
+</div>
+
+<h2>
+
+No Student Assigned
+
+</h2>
+
+<p>
+
+No students have been assigned to transport yet.
+
+Click the button below to assign your first student.
+
+</p>
+
+<button
+id="createFirstStudent"
+class="primary-btn">
+
++ Assign First Student
+
+</button>
+
+</div>
+
+</section>
+
+<!-- ======================================================
+ASSIGN STUDENT MODAL
+====================================================== -->
+
+<div
+class="modal"
+id="studentModal">
+
+<div class="modal-content">
+
+<div class="modal-header">
+
+<h2>
+
+🎓 Assign Transport
+
+</h2>
+
+<button id="closeModal">
+
+✕
+
+</button>
+
+</div>
+
+<form id="studentForm">
+
+<div class="form-group">
+
+<label>
+
+Student
+
+</label>
+
+<select
+id="studentId"
+required>
+
+<option value="">
+
+Select Student
+
+</option>
+
+</select>
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+Route
+
+</label>
+
+<select
+id="assignedRoute"
+required>
+
+<option value="">
+
+Select Route
+
+</option>
+
+</select>
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+Stop
+
+</label>
+
+<select
+id="assignedStop"
+required>
+
+<option value="">
+
+Select Stop
+
+</option>
+
+</select>
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+Vehicle
+
+</label>
+
+<select
+id="assignedVehicle"
+required>
+
+<option value="">
+
+Select Vehicle
+
+</option>
+
+</select>
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+Driver
+
+</label>
+
+<select
+id="assignedDriver"
+required>
+
+<option value="">
+
+Select Driver
+
+</option>
+
+</select>
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+Monthly Fee
+
+</label>
+
+<input
+type="number"
+id="monthlyFee"
+placeholder="Enter Monthly Fee"
+required>
+
+</div>
+
+<div class="form-group">
+
+<label>
+
+Status
+
+</label>
+
+<select id="mappingStatus">
+
+<option value="active">
+
+Active
+
+</option>
+
+<option value="inactive">
+
+Inactive
+
+</option>
+
+</select>
+
+</div>
+
+<div class="modal-footer">
+
+<button
+type="button"
+id="cancelBtn">
+
+Cancel
+
+</button>
+
+<button
+type="submit"
+class="primary-btn">
+
+💾 Save Assignment
+
+</button>
+
+</div>
+
+</form>
+
+</div>
+
+</div>
+
+<!-- ======================================================
+LOADER
+====================================================== -->
+
+<div
+id="loader"
+class="loader">
+
+Loading...
+
+</div>
+
+<!-- ======================================================
+TOAST
+====================================================== -->
+
+<div
+id="toast"
+class="toast">
+
+<span>
+
+Success
+
+</span>
+
+</div>
+<!-- ======================================================
+SCRIPTS
+====================================================== -->
+
+<script src="../../../js/config.js"></script>
+
+<script src="../../../js/api.js"></script>
+
+<script src="students.js"></script>
+
+</body>
+
+</html>
