@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>AcademiaX | Transport Reports</title>
+
+<link rel="stylesheet" href="reports.css">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+<!-- ======================================================
+HEADER
+====================================================== -->
+
+<header class="page-header">
+
+<div class="header-left">
+
+<button
+id="backBtn"
+class="back-btn">
+
+←
+
+</button>
+
+<div>
+
+<h1>
+
+Transport Reports
+
+</h1>
+
+<p>
+
+Monitor transport performance, collections and student activity.
+
+</p>
+
+</div>
+
+</div>
+
+<div class="header-actions">
+
+<button
+id="exportPdfBtn"
+class="secondary-btn">
+
+📄 Export PDF
+
+</button>
+
+<button
+id="exportExcelBtn"
+class="secondary-btn">
+
+📊 Export Excel
+
+</button>
+
+<button
+id="printBtn"
+class="primary-btn">
+
+🖨 Print Report
+
+</button>
+
+</div>
+
+</header>
+
+<!-- ======================================================
+SUMMARY CARDS
+====================================================== -->
+
+<section class="summary-grid">
+
+<div class="summary-card">
+
+<h3>Total Routes</h3>
+
+<h2 id="totalRoutes">
+
+0
+
+</h2>
+
+<small>Configured Routes</small>
+
+</div>
+
+<div class="summary-card">
+
+<h3>Total Students</h3>
+
+<h2 id="totalStudents">
+
+0
+
+</h2>
+
+<small>Transport Students</small>
+
+</div>
+
+<div class="summary-card">
+
+<h3>Monthly Collection</h3>
+
+<h2 id="monthlyCollection">
+
+₹0
+
+</h2>
+
+<small>Transport Fees</small>
+
+</div>
+
+<div class="summary-card">
+
+<h3>Active Vehicles</h3>
+
+<h2 id="activeVehicles">
+
+0
+
+</h2>
+
+<small>Running Vehicles</small>
+
+</div>
+
+</section>
+<!-- ======================================================
+FILTERS
+====================================================== -->
+
+<section class="filter-section">
+
+<div class="filter-grid">
+
+<div class="form-group">
+
+<label>From Date</label>
+
+<input
+type="date"
+id="fromDate">
+
+</div>
+
+<div class="form-group">
+
+<label>To Date</label>
+
+<input
+type="date"
+id="toDate">
+
+</div>
+
+<div class="form-group">
+
+<label>Route</label>
+
+<select id="routeFilter">
+
+<option value="">
+
+All Routes
+
+</option>
+
+</select>
+
+</div>
+
+<div class="form-group">
+
+<label>Vehicle</label>
+
+<select id="vehicleFilter">
+
+<option value="">
+
+All Vehicles
+
+</option>
+
+</select>
+
+</div>
+
+<div class="form-group">
+
+<label>Driver</label>
+
+<select id="driverFilter">
+
+<option value="">
+
+All Drivers
+
+</option>
+
+</select>
+
+</div>
+
+<div class="form-group">
+
+<label>Status</label>
+
+<select id="statusFilter">
+
+<option value="">
+
+All Status
+
+</option>
+
+<option value="active">
+
+🟢 Active
+
+</option>
+
+<option value="inactive">
+
+🔴 Inactive
+
+</option>
+
+</select>
+
+</div>
+
+</div>
+
+<div class="filter-actions">
+
+<button
+id="applyFilterBtn"
+class="primary-btn">
+
+🔍 Apply Filters
+
+</button>
+
+<button
+id="resetFilterBtn"
+class="secondary-btn">
+
+♻ Reset
+
+</button>
+
+</div>
+
+</section>
+
+<!-- ======================================================
+REPORT TABLE
+====================================================== -->
+
+<section class="report-section">
+
+<div class="section-header">
+
+<h2>
+
+Transport Report
+
+</h2>
+
+<span id="reportCount">
+
+0 Records
+
+</span>
+
+</div>
+
+<div class="table-wrapper">
+
+<table class="report-table">
+
+<thead>
+
+<tr>
+
+<th>Student</th>
+
+<th>Mobile No.</th>
+
+<th>Route</th>
+
+<th>Stop</th>
+
+<th>Vehicle</th>
+
+<th>Driver</th>
+
+<th>Monthly Fee</th>
+
+<th>Status</th>
+
+</tr>
+
+</thead>
+
+<tbody id="reportTableBody">
+
+<tr>
+
+<td colspan="8" class="empty-row">
+
+No report data available.
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</section>
+
+<!-- ======================================================
+CHART SECTION
+====================================================== -->
+
+<section class="chart-grid">
+
+<div class="chart-card">
+
+<h3>
+
+Monthly Collection
+
+</h3>
+
+<canvas id="collectionChart">
+
+</canvas>
+
+</div>
+
+<div class="chart-card">
+
+<h3>
+
+Route Distribution
+
+</h3>
+
+<canvas id="routeChart">
+
+</canvas>
+
+</div>
+
+</section>
+<!-- ======================================================
+EMPTY STATE
+====================================================== -->
+
+<section
+id="emptyState"
+class="empty-state"
+style="display:none;">
+
+<div class="empty-icon">
+
+📊
+
+</div>
+
+<h2>
+
+No Reports Found
+
+</h2>
+
+<p>
+
+No transport records match your selected filters.
+
+Try changing the filters or add transport data.
+
+</p>
+
+<button
+id="reloadBtn"
+class="primary-btn">
+
+🔄 Reload Reports
+
+</button>
+
+</section>
+
+<!-- ======================================================
+LOADER
+====================================================== -->
+
+<div
+id="loader"
+class="loader">
+
+<div class="spinner"></div>
+
+<p>
+
+Loading Transport Reports...
+
+</p>
+
+</div>
+
+<!-- ======================================================
+TOAST
+====================================================== -->
+
+<div
+id="toast"
+class="toast">
+
+<span>
+
+Success
+
+</span>
+
+</div>
+
+<!-- ======================================================
+CHART.JS
+====================================================== -->
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- ======================================================
+COMMON SCRIPTS
+====================================================== -->
+
+
+<!-- ======================================================
+PDF EXPORT
+====================================================== -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+
+<!-- ======================================================
+EXCEL EXPORT
+====================================================== -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+<!-- ======================================================
+CHART.JS
+====================================================== -->
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- ======================================================
+COMMON SCRIPTS
+====================================================== -->
+
+<script src="../../../js/config.js"></script>
+
+<script src="../../../js/api.js"></script>
+
+<!-- ======================================================
+REPORT SCRIPT
+====================================================== -->
+
+<script src="reports.js"></script>
+
+</body>
+
+</html>
