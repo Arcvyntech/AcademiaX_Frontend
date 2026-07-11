@@ -57,28 +57,124 @@
       </div>
     </section>
 
-    <!-- Classes -->
-    <section class="panel" id="p-classes">
-      <div class="panel-head">
-        <h2>Classes <span class="count-chip" id="c-count"></span></h2>
-        <p class="sub">Create classes and assign the subjects taught in each.</p>
-      </div>
-      <div class="add-card">
-        <label class="add-card-label">Add a new class</label>
-        <div class="row" style="margin-bottom:0">
-          <div class="field field-icon"><i class="ti ti-school"></i><input id="c-name" placeholder="e.g. Class 5" /></div>
-          <div class="field"><input id="c-nick" placeholder="Nickname, e.g. 5A" /></div>
-          <button class="btn btn-accent" id="c-add"><i class="ti ti-plus"></i>Add</button>
-        </div>
-      </div>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>Class</th><th>Students</th><th>Subjects</th><th class="th-right">Actions</th></tr></thead>
-          <tbody id="c-body"></tbody>
-        </table>
-      </div>
-    </section>
+   <!-- Classes -->
+<section class="panel" id="p-classes">
 
+    <div class="panel-head">
+
+        <h2>
+
+            Classes
+
+            <span class="count-chip" id="c-count"></span>
+
+        </h2>
+
+        <p class="sub">
+
+            Create classes, sections and assign subjects.
+
+        </p>
+
+    </div>
+
+    <div class="add-card">
+
+        <label class="add-card-label">
+
+            Add New Class
+
+        </label>
+
+        <div class="row" style="margin-bottom:0">
+
+            <div class="field field-icon">
+
+                <i class="ti ti-school"></i>
+
+                <input
+
+                    id="c-name"
+
+                    placeholder="Class Name (Example : Class 10)"
+
+                />
+
+            </div>
+
+            <div class="field field-icon">
+
+                <i class="ti ti-building-community"></i>
+
+                <input
+
+                    id="c-nick"
+
+                    placeholder="Section (Example : A)"
+
+                />
+
+            </div>
+
+            <button
+
+                class="btn btn-accent"
+
+                id="c-add">
+
+                <i class="ti ti-plus"></i>
+
+                Add Class
+
+            </button>
+
+        </div>
+
+    </div>
+
+    <div class="table-wrap">
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>
+
+                        Class / Section
+
+                    </th>
+
+                    <th>
+
+                        Students
+
+                    </th>
+
+                    <th>
+
+                        Subjects
+
+                    </th>
+
+                    <th class="th-right">
+
+                        Actions
+
+                    </th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="c-body"></tbody>
+
+        </table>
+
+    </div>
+
+</section>
     <!-- Staff -->
     <section class="panel" id="p-staff">
       <div class="panel-head">
