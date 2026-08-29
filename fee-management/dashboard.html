@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AcademiaX | Fee Management</title>
+
+    <link rel="stylesheet" href="dashboard.css">
+
+    <link rel="stylesheet" href="assets/css/common.css">
+    <link rel="stylesheet" href="assets/css/sidebar.css">
+    <link rel="stylesheet" href="assets/css/header.css">
+    <link rel="stylesheet" href="assets/css/cards.css">
+</head>
+
+<body>
+
+<div class="layout">
+
+    <!-- ================= SIDEBAR ================= -->
+
+    <aside class="sidebar">
+
+        <div class="sidebar-top">
+
+            <div class="logo">
+
+                <div class="logo-icon">A</div>
+
+                <div class="logo-text">
+                    <h2>AcademiaX</h2>
+                    <span>Fee Management</span>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <nav class="sidebar-menu">
+
+            <a href="#" class="menu-item active">
+                <span>🏠</span>
+                Dashboard
+            </a>
+
+            <a href="fee-heads/index.html" class="menu-item">
+                <span>💳</span>
+                Fee Heads
+            </a>
+
+            <a href="transport/index.html" class="menu-item">
+                <span>🚌</span>
+                Transport
+            </a>
+
+            <a href="fee-management/index.html#tab-fee-setup" class="menu-item">
+                <span>⚙</span>
+                Fee Setup
+            </a>
+
+            <a href="fee-management/index.html#tab-fee-status" class="menu-item">
+                <span>📋</span>
+                Fee Status
+            </a>
+
+            <a href="fee-management/index.html#tab-collection" class="menu-item">
+                <span>💰</span>
+                Collection
+            </a>
+
+            <a href="fee-management/index.html#tab-dues" class="menu-item">
+                <span>⏳</span>
+                Due
+            </a>
+
+            <div style="margin:14px 16px 8px;border-top:1px solid rgba(255,255,255,.12);padding-top:12px;">
+                <a href="fee-management/index.html" class="menu-item" style="background:rgba(255,122,0,.15);border:1px solid rgba(255,122,0,.3);border-radius:10px;">
+                    <span>&#9733;</span>
+                    All-in-One Fee Manager
+                </a>
+            </div>
+
+        </nav>
+
+
+        <div class="sidebar-footer">
+
+            <a href="#">
+                ⚙ Settings
+            </a>
+
+            <a href="#">
+                🚪 Logout
+            </a>
+
+        </div>
+
+    </aside>
+
+    <!-- ================= END SIDEBAR ================= -->
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="main-content">
+
+
+        <!-- Header -->
+
+        <header class="top-header">
+
+            <div>
+
+                <h1>Fee Management Dashboard</h1>
+
+                <p>
+                    Welcome to AcademiaX Fee Management System
+                </p>
+
+            </div>
+
+        </header>
+
+
+        <!-- Welcome Card -->
+
+        <section class="welcome-card">
+
+            <h2>Welcome Back 👋</h2>
+
+            <p>
+                Manage Fee Heads, Transport, Collection, Due Reports
+                and complete Fee Administration from one place.
+            </p>
+
+        </section>
+
+
+        <!-- Statistics -->
+
+        <section class="stats-grid">
+
+            <div class="stat-card">
+
+                <h3>Total Fee Heads</h3>
+
+                <h2>0</h2>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <h3>Total Students</h3>
+
+                <h2>0</h2>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <h3>Today's Collection</h3>
+
+                <h2>₹0</h2>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <h3>Pending Due</h3>
+
+                <h2>₹0</h2>
+
+            </div>
+
+        </section>
+
+
+        <!-- Recent Collection -->
+
+        <section class="dashboard-section">
+
+            <div class="section-header">
+
+                <h2>Recent Collection</h2>
+
+            </div>
+
+            <div class="section-body">
+
+                Data will appear here...
+
+            </div>
+
+        </section>
+
+
+        <!-- Pending Due -->
+
+        <section class="dashboard-section">
+
+            <div class="section-header">
+
+                <h2>Pending Due</h2>
+
+            </div>
+
+            <div class="section-body">
+
+                Data will appear here...
+
+            </div>
+
+        </section>
+
+
+        <!-- Quick Actions -->
+
+        <section class="dashboard-section">
+
+            <div class="section-header">
+
+                <h2>Quick Actions</h2>
+
+            </div>
+
+           <div class="quick-actions">
+
+    <button id="btnFeeHead">Add Fee Head</button>
+
+    <button id="btnTransport">Add Transport</button>
+
+    <button id="btnFeeSetup">Setup Fee</button>
+
+    <button id="btnCollection">Collect Fee</button>
+
+    <button id="btnReports">View Reports</button>
+
+</div>
+
+        </section>
+
+
+        <!-- Footer -->
+
+        <footer class="dashboard-footer">
+
+            © 2026 AcademiaX ERP | Fee Management Module
+
+        </footer>
+
+
+    </main>
+
+    <!-- ================= END MAIN ================= -->
+
+</div>
+
+<script src="dashboard.js"></script>
+
+</body>
+</html>

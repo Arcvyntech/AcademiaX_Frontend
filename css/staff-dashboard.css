@@ -1,0 +1,835 @@
+/* ===========================
+   AcademiaX Staff Dashboard
+=========================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+
+    font-family:Arial, Helvetica, sans-serif;
+
+    background:#f5f7fb;
+
+    color:#17233c;
+
+}
+
+.dashboard{
+
+    display:flex;
+
+    min-height:100vh;
+
+}
+
+/* ================= Sidebar ================= */
+
+.sidebar{
+
+    width:260px;
+
+    background:#17233c;
+
+    color:white;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:space-between;
+
+    padding:25px 0;
+
+    position:fixed;
+
+    left:0;
+
+    top:0;
+
+    bottom:0;
+
+}
+
+.logo{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    padding:0 25px;
+
+    margin-bottom:30px;
+
+}
+
+.mark{
+
+    width:45px;
+
+    height:45px;
+
+    border-radius:12px;
+
+    background:#f4b400;
+
+    color:#17233c;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-weight:bold;
+
+    font-size:22px;
+
+}
+
+.logo h2{
+
+    font-size:24px;
+
+    color:white;
+
+}
+
+/* ================= Menu ================= */
+
+.sidebar ul{
+
+    list-style:none;
+
+    padding:0;
+
+}
+
+.sidebar ul li{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+    padding:16px 25px;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+    font-size:15px;
+
+}
+
+.sidebar ul li:hover{
+
+    background:rgba(255,255,255,.08);
+
+}
+
+.sidebar ul li.active{
+
+    background:#f4b400;
+
+    color:#17233c;
+
+    font-weight:bold;
+
+}
+
+.sidebar ul li span{
+
+    font-size:22px;
+
+}
+
+/* ================= Logout ================= */
+
+#logoutBtn{
+
+    margin:20px;
+
+    border:none;
+
+    background:#f4b400;
+
+    color:#17233c;
+
+    font-weight:bold;
+
+    padding:14px;
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:10px;
+
+    transition:.3s;
+
+}
+
+#logoutBtn:hover{
+
+    background:#ffca28;
+
+}
+
+/* ================= Main ================= */
+
+.main{
+
+    margin-left:260px;
+
+    flex:1;
+
+}
+
+/* ================= Topbar ================= */
+
+.topbar{
+
+    background:white;
+
+    padding:25px 35px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    border-bottom:1px solid #eee;
+
+    position:sticky;
+
+    top:0;
+
+    z-index:50;
+
+}
+
+.topbar h1{
+
+    font-size:28px;
+
+}
+
+.topbar p{
+
+    color:#777;
+
+    margin-top:6px;
+
+}
+
+.top-right{
+
+    display:flex;
+
+    gap:15px;
+
+}
+
+.top-right button{
+
+    width:48px;
+
+    height:48px;
+
+    border-radius:50%;
+
+    border:none;
+
+    background:#f3f5f9;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.top-right button:hover{
+
+    background:#f4b400;
+
+    color:#17233c;
+
+}
+/* ===========================
+   Dashboard Cards
+=========================== */
+
+.cards{
+
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+
+    gap:25px;
+
+    padding:30px;
+
+}
+
+.card{
+
+    background:#fff;
+
+    border-radius:18px;
+
+    padding:25px;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.06);
+
+    transition:.3s;
+
+    cursor:pointer;
+
+}
+
+.card:hover{
+
+    transform:translateY(-8px);
+
+    box-shadow:0 15px 35px rgba(0,0,0,.12);
+
+}
+
+.card span{
+
+    font-size:40px;
+
+    color:#F4B400;
+
+}
+
+.card h2{
+
+    margin:20px 0 10px;
+
+    font-size:34px;
+
+    color:#17233c;
+
+}
+
+.card p{
+
+    color:#888;
+
+    font-size:15px;
+
+}
+
+/* ===========================
+   Dashboard Grid
+=========================== */
+
+.dashboard-grid{
+
+    display:grid;
+
+    grid-template-columns:2fr 1fr;
+
+    gap:30px;
+
+    padding:0 30px 30px;
+
+}
+
+.left-column{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:30px;
+
+}
+
+.right-column{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:30px;
+
+}
+
+/* ===========================
+   Panels
+=========================== */
+
+.panel{
+
+    background:white;
+
+    border-radius:18px;
+
+    padding:25px;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.06);
+
+}
+
+.panel-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:25px;
+
+}
+
+.panel-header h2{
+
+    font-size:22px;
+
+    color:#17233c;
+
+}
+
+.panel-header span{
+
+    color:#888;
+
+    font-size:14px;
+
+}
+
+/* ===========================
+   Timetable
+=========================== */
+
+.schedule{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:18px;
+
+}
+
+.schedule-item{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    padding:18px;
+
+    border-radius:14px;
+
+    background:#f8f9fc;
+
+    transition:.3s;
+
+}
+
+.schedule-item:hover{
+
+    background:#FFF6DD;
+
+}
+
+.time{
+
+    font-weight:bold;
+
+    color:#17233c;
+
+    min-width:110px;
+
+}
+
+.subject h4{
+
+    color:#17233c;
+
+    margin-bottom:5px;
+
+}
+
+.subject p{
+
+    color:#777;
+
+    font-size:14px;
+
+}
+
+/* ===========================
+   Notices
+=========================== */
+
+.notice{
+
+    padding:18px;
+
+    border-left:5px solid #F4B400;
+
+    background:#fafafa;
+
+    border-radius:10px;
+
+    margin-bottom:18px;
+
+}
+
+.notice h4{
+
+    color:#17233c;
+
+    margin-bottom:8px;
+
+}
+
+.notice p{
+
+    color:#777;
+
+    line-height:1.6;
+
+    font-size:15px;
+
+}
+/* ===========================
+   Quick Actions
+=========================== */
+
+.actions{
+
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:15px;
+
+}
+
+.actions button{
+
+    padding:15px;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:#17233c;
+
+    color:#fff;
+
+    font-size:15px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.actions button:hover{
+
+    background:#F4B400;
+
+    color:#17233c;
+
+    transform:translateY(-3px);
+
+}
+
+/* ===========================
+   Summary
+=========================== */
+
+.summary{
+
+    list-style:none;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:15px;
+
+}
+
+.summary li{
+
+    background:#F8F9FC;
+
+    padding:15px;
+
+    border-radius:10px;
+
+    font-size:15px;
+
+    color:#555;
+
+    transition:.3s;
+
+}
+
+.summary li:hover{
+
+    background:#FFF6DD;
+
+}
+
+/* ===========================
+   Footer
+=========================== */
+
+.footer{
+
+    padding:25px;
+
+    text-align:center;
+
+    color:#777;
+
+    font-size:14px;
+
+}
+
+/* ===========================
+   Scrollbar
+=========================== */
+
+::-webkit-scrollbar{
+
+    width:10px;
+
+}
+
+::-webkit-scrollbar-track{
+
+    background:#ECECEC;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:#F4B400;
+
+    border-radius:20px;
+
+}
+
+::-webkit-scrollbar-thumb:hover{
+
+    background:#E3A700;
+
+}
+
+/* ===========================
+   Animations
+=========================== */
+
+@keyframes fadeUp{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(30px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+.card{
+
+    animation:fadeUp .5s ease;
+
+}
+
+.panel{
+
+    animation:fadeUp .6s ease;
+
+}
+
+/* ===========================
+   Responsive
+=========================== */
+
+@media(max-width:1200px){
+
+.cards{
+
+grid-template-columns:repeat(2,1fr);
+
+}
+
+.dashboard-grid{
+
+grid-template-columns:1fr;
+
+}
+
+}
+
+@media(max-width:900px){
+
+.sidebar{
+
+width:90px;
+
+}
+
+.logo h2{
+
+display:none;
+
+}
+
+.sidebar ul li{
+
+justify-content:center;
+
+padding:18px 10px;
+
+}
+
+.sidebar ul li span{
+
+margin:0;
+
+}
+
+.sidebar ul li{
+
+font-size:0;
+
+}
+
+#logoutBtn{
+
+font-size:0;
+
+padding:15px;
+
+}
+
+#logoutBtn span{
+
+font-size:22px;
+
+}
+
+.main{
+
+margin-left:90px;
+
+}
+
+}
+
+@media(max-width:768px){
+
+.cards{
+
+grid-template-columns:1fr;
+
+}
+
+.topbar{
+
+padding:20px;
+
+flex-direction:column;
+
+align-items:flex-start;
+
+gap:20px;
+
+}
+
+.dashboard-grid{
+
+padding:20px;
+
+}
+
+.actions{
+
+grid-template-columns:1fr;
+
+}
+
+}
+
+@media(max-width:500px){
+
+.sidebar{
+
+display:none;
+
+}
+
+.main{
+
+margin-left:0;
+
+}
+
+.topbar h1{
+
+font-size:22px;
+
+}
+
+.card h2{
+
+font-size:28px;
+
+}
+
+.panel{
+
+padding:20px;
+
+}
+
+.schedule-item{
+
+flex-direction:column;
+
+align-items:flex-start;
+
+gap:10px;
+
+}
+
+}

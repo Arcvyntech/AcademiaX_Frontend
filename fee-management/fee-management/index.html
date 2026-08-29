@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AcademiaX | Fee Management</title>
+    <link rel="stylesheet" href="../fee-management.css">
+</head>
+<body>
+
+<div class="fee-management-page">
+
+    <!-- PAGE HEADER -->
+    <header class="page-header">
+        <div class="page-header-left">
+            <span class="page-tag">Fee Management</span>
+            <h1>Fee Management System</h1>
+            <p>Manage fee heads, structure, payments, collections and dues from one place.</p>
+        </div>
+    </header>
+
+    <!-- TAB NAVIGATION -->
+    <nav class="fm-tab-nav">
+        <button class="fm-tab-btn active" data-tab="tab-fee-heads">Fee Heads</button>
+        <button class="fm-tab-btn" data-tab="tab-transport">Transport</button>
+        <button class="fm-tab-btn" data-tab="tab-fee-setup">Fee Setup</button>
+        <button class="fm-tab-btn" data-tab="tab-fee-status">Fee Status</button>
+        <button class="fm-tab-btn" data-tab="tab-collection">Collection Report</button>
+        <button class="fm-tab-btn" data-tab="tab-dues">Dues Report</button>
+        <button class="fm-tab-btn" data-tab="tab-other-dues">Other Dues</button>
+    </nav>
+
+    <!-- TAB 1: FEE HEADS -->
+    <div id="tab-fee-heads" class="fm-tab-content tab-active">
+        <div class="fm-fee-heads-wrapper">
+            <aside class="fm-card fm-fee-heads-form">
+                <div class="fm-section-title">
+                    <h2>Add New Fee Head</h2>
+                    <p>Create a new fee category</p>
+                </div>
+                <div class="fm-form-group">
+                    <label for="fhName">Fee Head Name</label>
+                    <input type="text" id="fhName" class="fm-input" placeholder="e.g. Tuition Fee">
+                </div>
+                <div class="fm-form-group">
+                    <label for="fhDesc">Description</label>
+                    <textarea id="fhDesc" class="fm-textarea" rows="3" placeholder="Optional description..."></textarea>
+                </div>
+                <div class="fm-form-group">
+                    <label for="fhColor">Color Tag</label>
+                    <div class="fm-color-picker">
+                        <input type="color" id="fhColor" value="#ff7a00">
+                        <span>Select Card Color</span>
+                    </div>
+                </div>
+                <button id="btnAddFH" class="fm-btn fm-btn-primary fm-btn-block">+ Add Fee Head</button>
+            </aside>
+            <section class="fm-card">
+                <div class="fm-card-header">
+                    <div>
+                        <h2>Existing Fee Heads</h2>
+                        <p>Manage, edit or deactivate fee heads</p>
+                    </div>
+                    <input type="text" id="searchFH" placeholder="Search fee heads..." class="fm-input" style="width:220px;">
+                </div>
+                <div id="fhContainer" class="fm-fee-head-list">
+                    <!-- Rendered by JS -->
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- TAB 2: TRANSPORT -->
+    <div id="tab-transport" class="fm-tab-content">
+        <div class="fm-section-title" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+            <div>
+                <h2>🚌 Transport Overview</h2>
+                <p>View transport routes, buses and student assignments</p>
+            </div>
+            <a href="../transport/index.html" class="fm-btn fm-btn-primary" style="text-decoration:none;">
+                ⚙ Manage Routes, Buses & Drivers
+            </a>
+        </div>
+        <div id="transportStats" class="fm-transport-stats">
+            <!-- Stats cards rendered by JS -->
+        </div>
+        <div id="transportContainer" class="fm-route-cards">
+            <!-- Route cards rendered by JS -->
+        </div>
+    </div>
+
+    <!-- TAB 3: FEE SETUP -->
+    <div id="tab-fee-setup" class="fm-tab-content">
+        <div class="fm-section-title">
+            <h2>Fee Structure Setup</h2>
+            <p>Define fee heads, amounts and due months for each class</p>
+        </div>
+        <div class="fm-setup-toolbar">
+            <div class="fm-form-group fm-inline">
+                <label for="setupSession">Academic Session</label>
+                <select id="setupSession" class="fm-select">
+                    <option value="2025-26">2025-26</option>
+                    <option value="2026-27" selected>2026-27</option>
+                    <option value="2027-28">2027-28</option>
+                </select>
+            </div>
+            <div class="fm-form-group fm-inline">
+                <label for="setupStartMonth">Start Month</label>
+                <select id="setupStartMonth" class="fm-select">
+                    <option value="0">January</option>
+                    <option value="1">February</option>
+                    <option value="2">March</option>
+                    <option value="3" selected>April</option>
+                    <option value="4">May</option>
+                    <option value="5">June</option>
+                    <option value="6">July</option>
+                    <option value="7">August</option>
+                    <option value="8">September</option>
+                    <option value="9">October</option>
+                    <option value="10">November</option>
+                    <option value="11">December</option>
+                </select>
+            </div>
+            <button id="btnLoadStructure" class="fm-btn fm-btn-secondary">Load Structure</button>
+        </div>
+
+        <!-- Regular Fee Entries -->
+        <div class="fm-setup-section">
+            <div class="fm-card-header">
+                <h3>Regular Fee Entries</h3>
+                <button id="btnAddEntry" class="fm-btn fm-btn-sm fm-btn-primary">+ Add Entry</button>
+            </div>
+            <div id="feeEntriesContainer">
+                <!-- Fee entry rows rendered by JS -->
+            </div>
+        </div>
+
+        <!-- Transport Fee Entries -->
+        <div class="fm-setup-section">
+            <div class="fm-card-header">
+                <h3>Transport Fee Schedule</h3>
+                <button id="btnAddTransportEntry" class="fm-btn fm-btn-sm fm-btn-primary">+ Add Transport Entry</button>
+            </div>
+            <div id="transportEntriesContainer">
+                <!-- Transport entry rows rendered by JS -->
+            </div>
+        </div>
+
+        <div class="fm-setup-save">
+            <button id="btnSaveStructure" class="fm-btn fm-btn-primary fm-btn-lg">Save Fee Structure</button>
+        </div>
+    </div>
+
+    <!-- TAB 4: FEE STATUS -->
+    <div id="tab-fee-status" class="fm-tab-content">
+        <div class="fm-section-title">
+            <h2>Fee Status</h2>
+            <p>View and manage student fee payment status</p>
+        </div>
+        <div class="fm-filter-bar">
+            <div class="fm-form-group fm-inline">
+                <label for="statusSession">Session</label>
+                <select id="statusSession" class="fm-select">
+                    <option value="2025-26">2025-26</option>
+                    <option value="2026-27" selected>2026-27</option>
+                </select>
+            </div>
+            <div class="fm-form-group fm-inline">
+                <label for="statusClass">Class</label>
+                <select id="statusClass" class="fm-select">
+                    <option value="">All Classes</option>
+                </select>
+            </div>
+            <input type="text" id="statusSearch" placeholder="Search student..." class="fm-input">
+            <button id="btnLoadStatus" class="fm-btn fm-btn-primary">Load Status</button>
+        </div>
+        <div id="feeStatusContainer">
+            <!-- Student fee cards rendered by JS -->
+        </div>
+    </div>
+
+    <!-- TAB 5: COLLECTION REPORT -->
+    <div id="tab-collection" class="fm-tab-content">
+        <div class="fm-section-title">
+            <h2>Collection Report</h2>
+            <p>View fee collection details with date range filters</p>
+        </div>
+        <div id="collectionKPI" class="fm-kpi-row">
+            <!-- KPI cards rendered by JS -->
+        </div>
+        <div class="fm-filter-bar">
+            <div class="fm-form-group fm-inline">
+                <label for="collFrom">From</label>
+                <input type="date" id="collFrom" class="fm-date-input">
+            </div>
+            <div class="fm-form-group fm-inline">
+                <label for="collTo">To</label>
+                <input type="date" id="collTo" class="fm-date-input">
+            </div>
+            <div class="fm-form-group fm-inline">
+                <label for="collType">Type</label>
+                <select id="collType" class="fm-select">
+                    <option value="all">All</option>
+                    <option value="regular">Regular</option>
+                    <option value="transport">Transport</option>
+                </select>
+            </div>
+            <div class="fm-form-group fm-inline">
+                <label for="collClass">Class</label>
+                <select id="collClass" class="fm-select">
+                    <option value="">All Classes</option>
+                </select>
+            </div>
+            <div class="fm-form-group fm-inline">
+                <label for="collMode">Mode</label>
+                <select id="collMode" class="fm-select">
+                    <option value="all">All</option>
+                    <option value="cash">Cash</option>
+                    <option value="online">Online</option>
+                </select>
+            </div>
+            <button id="btnLoadCollection" class="fm-btn fm-btn-primary">Load Report</button>
+        </div>
+        <div id="collectionTableContainer">
+            <!-- Table rendered by JS -->
+        </div>
+    </div>
+
+    <!-- TAB 6: DUES REPORT -->
+    <div id="tab-dues" class="fm-tab-content">
+        <div class="fm-section-title">
+            <h2>Dues Report</h2>
+            <p>View students with pending fee dues</p>
+        </div>
+        <div class="fm-filter-bar">
+            <div class="fm-form-group fm-inline">
+                <label for="duesSession">Session</label>
+                <select id="duesSession" class="fm-select">
+                    <option value="2025-26">2025-26</option>
+                    <option value="2026-27" selected>2026-27</option>
+                </select>
+            </div>
+            <div class="fm-form-group fm-inline">
+                <label for="duesClass">Class</label>
+                <select id="duesClass" class="fm-select">
+                    <option value="">All Classes</option>
+                </select>
+            </div>
+            <input type="text" id="duesSearch" placeholder="Search student..." class="fm-input">
+            <button id="btnLoadDues" class="fm-btn fm-btn-primary">Load Dues</button>
+            <button id="btnWhatsAppAll" class="fm-btn" style="background:#25D366;color:#fff;">💬 WhatsApp Reminder (All)</button>
+            <button id="btnAttendanceFlags" class="fm-btn" style="background:#f59e0b;color:#fff;">⚠ Attendance Flags</button>
+        </div>
+        <div id="duesSummary" class="fm-dues-summary">
+            <!-- Summary stats rendered by JS -->
+        </div>
+        <div id="attendanceFlagsPanel" style="display:none;margin:16px 0;padding:16px;background:#fff7ed;border:1px solid #f59e0b;border-radius:12px;">
+            <h3 style="margin:0 0 12px;color:#92400e;">⚠ Students Flagged for Long Absences (Fee Concession Review)</h3>
+            <div id="attendanceFlagsList"></div>
+        </div>
+        <div id="whatsappPanel" style="display:none;margin:16px 0;padding:16px;background:#f0fdf4;border:1px solid #16a34a;border-radius:12px;">
+            <h3 style="margin:0 0 12px;color:#166534;">💬 WhatsApp Fee Reminders — click a link to open WhatsApp with pre-filled message</h3>
+            <div id="whatsappList"></div>
+        </div>
+        <div id="duesTableContainer">
+            <!-- Dues table rendered by JS -->
+        </div>
+    </div>
+
+    <!-- TAB 7: OTHER DUES -->
+    <div id="tab-other-dues" class="fm-tab-content">
+        <div class="fm-other-dues-layout">
+            <aside class="fm-card fm-assign-form">
+                <div class="fm-section-title">
+                    <h2>Assign Extra Fees</h2>
+                    <p>Create additional fee charges for students</p>
+                </div>
+                <div class="fm-form-group">
+                    <label for="edTitle">Title</label>
+                    <input type="text" id="edTitle" class="fm-input" placeholder="e.g. Lab Fee">
+                </div>
+                <div class="fm-form-group">
+                    <label for="edAmount">Amount</label>
+                    <input type="number" id="edAmount" class="fm-input" placeholder="500" min="1">
+                </div>
+                <div class="fm-form-group">
+                    <label for="edDueDate">Due Date</label>
+                    <input type="date" id="edDueDate" class="fm-date-input">
+                </div>
+                <div class="fm-form-group">
+                    <label for="edClass">Class</label>
+                    <select id="edClass" class="fm-select">
+                        <option value="">Select Class</option>
+                    </select>
+                </div>
+                <div class="fm-form-group">
+                    <label>Students</label>
+                    <div id="edStudentList" class="fm-student-select">
+                        <p class="fm-hint">Select a class first</p>
+                    </div>
+                    <label class="fm-checkbox-label">
+                        <input type="checkbox" id="edSelectAll"> Select All Students
+                    </label>
+                </div>
+                <div class="fm-form-group">
+                    <label for="edDesc">Description</label>
+                    <textarea id="edDesc" class="fm-textarea" rows="2" placeholder="Optional description..."></textarea>
+                </div>
+                <button id="btnAssignExtra" class="fm-btn fm-btn-primary fm-btn-block">Assign Extra Fees</button>
+            </aside>
+            <section class="fm-card">
+                <div class="fm-card-header">
+                    <div>
+                        <h2>Extra Dues History</h2>
+                        <p>Previously assigned extra fees</p>
+                    </div>
+                </div>
+                <div id="extraDuesContainer">
+                    <!-- History rendered by JS -->
+                </div>
+            </section>
+        </div>
+    </div>
+
+</div>
+
+<!-- PAYMENT MODAL -->
+<div id="paymentModal" class="fm-modal-overlay" style="display:none">
+    <div class="fm-modal fm-modal-lg">
+        <div class="fm-modal-header">
+            <h3 id="modalTitle">Record Payment</h3>
+            <button class="fm-modal-close" onclick="FeeManagement.closeModal()">&times;</button>
+        </div>
+        <div class="fm-modal-body" id="modalBody">
+            <!-- Rendered by JS -->
+        </div>
+        <div class="fm-modal-footer">
+            <button class="fm-btn fm-btn-secondary" onclick="FeeManagement.closeModal()">Cancel</button>
+            <button id="btnModalSave" class="fm-btn fm-btn-primary">Save Payment</button>
+        </div>
+    </div>
+</div>
+
+<!-- TOAST CONTAINER -->
+<div id="toastContainer" class="fm-toast-container"></div>
+
+<!-- LOADING OVERLAY -->
+<div id="loadingOverlay" class="fm-loader-overlay" style="display:none">
+    <div class="fm-loader-box">
+        <div class="fm-spinner"></div>
+        <p>Loading...</p>
+    </div>
+</div>
+
+<!-- SCRIPTS -->
+<script src="../../js/config.js"></script>
+<script src="../../js/api.js"></script>
+<script src="../assets/js/common.js"></script>
+<script src="fee-management.js"></script>
+
+</body>
+</html>

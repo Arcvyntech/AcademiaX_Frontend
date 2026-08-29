@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>
+
+        AcademiaX | Transport Management
+
+    </title>
+
+    <!-- Page CSS -->
+
+    <link
+        rel="stylesheet"
+        href="transport.css">
+
+    <!-- Shared CSS -->
+
+    <link
+        rel="stylesheet"
+        href="../assets/css/common.css">
+
+    <link
+        rel="stylesheet"
+        href="../assets/css/header.css">
+
+    <link
+        rel="stylesheet"
+        href="../assets/css/cards.css">
+
+</head>
+
+<body>
+
+    <!-- ==========================================
+        PAGE CONTENT
+    =========================================== -->
+
+    <main class="page-content">
+
+        <!-- ==========================================
+            PAGE HEADER
+        =========================================== -->
+
+        <header class="top-header">
+
+            <div class="header-content">
+
+                <h1>
+
+                    🚌 Transport Management
+
+                </h1>
+
+                <p>
+
+                    Manage transport routes, buses, drivers and student transport from one place.
+
+                </p>
+
+            </div>
+
+        </header>
+
+        <!-- ==========================================
+            WELCOME CARD
+        =========================================== -->
+
+        <section class="welcome-card">
+
+            <div class="welcome-content">
+
+                <h2>
+
+                    🚍 Transport Module
+
+                </h2>
+
+                <p>
+
+                    Create transport routes, assign buses, manage transport fee and allocate students using a single workflow.
+
+                </p>
+
+            </div>
+
+        </section>
+
+        <!-- ==========================================
+            ADD ROUTE
+        =========================================== -->
+
+        <section class="dashboard-section">
+
+            <div class="section-header">
+
+                <h2>
+
+                    ➕ Add New Route
+
+                </h2>
+
+            </div>
+
+            <div class="section-body">
+
+                <form id="routeForm">
+
+                    <div class="form-grid">
+
+                        <!-- Route Name -->
+
+                        <div class="form-group">
+
+                            <label>
+
+                                Route Name
+
+                            </label>
+
+                            <input
+                                type="text"
+                                id="routeName"
+                                placeholder="Enter Route Name">
+
+                        </div>
+
+                        <!-- Monthly Fee -->
+
+                        <div class="form-group">
+
+                            <label>
+
+                                Monthly Fee
+
+                            </label>
+
+                            <input
+                                type="number"
+                                id="monthlyFee"
+                                placeholder="Enter Monthly Fee">
+
+                        </div>
+
+                    </div>
+
+                    <!-- Route Stops -->
+
+                    <div class="stops-wrapper">
+
+                        <h3>
+
+                            Route Stops
+
+                        </h3>
+
+                        <div class="form-grid">
+
+                            <input
+                                type="text"
+                                id="fromStop"
+                                placeholder="From Stop">
+
+                            <input
+                                type="text"
+                                id="toStop"
+                                placeholder="To Stop">
+
+                        </div>
+
+                        <button
+                            type="button"
+                            id="addStopBtn"
+                            class="secondary-btn">
+
+                            + Add Stop
+
+                        </button>
+
+                    </div>
+
+                    <!-- Stops Preview -->
+
+                    <div class="route-preview">
+
+                        <h3>
+
+                            Stops Preview
+
+                        </h3>
+
+                        <ul id="stopsPreview">
+
+                            <li>
+
+                                No Stops Added
+
+                            </li>
+
+                        </ul>
+
+                    </div>
+
+                    <!-- Save -->
+
+                    <div class="action-buttons">
+
+                        <button
+                            type="submit"
+                            class="primary-btn">
+
+                            💾 Save Route
+
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </section>
+                <!-- ==========================================
+            SAVED ROUTES
+        =========================================== -->
+
+        <section class="dashboard-section saved-routes-section">
+
+            <div class="section-header">
+
+                <div>
+
+                    <h2>
+
+                        🚌 Saved Routes
+
+                    </h2>
+
+                    <p>
+
+                        View, edit and manage all transport routes.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="section-body">
+
+                <!-- Dynamic Routes -->
+                <div
+                    id="routesContainer"
+                    class="route-cards">
+
+                    <!-- Empty State -->
+
+                    <div class="empty-route">
+
+                        <div class="empty-icon">
+
+                            🚌
+
+                        </div>
+
+                        <h3>
+
+                            No Routes Found
+
+                        </h3>
+
+                        <p>
+
+                            Create your first transport route using the form above.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- ==========================================
+            ROUTE DETAILS
+            (Dynamic Accordion)
+        =========================================== -->
+
+        <section
+            id="routeDetailsSection"
+            class="dashboard-section hidden">
+
+            <div class="section-header">
+
+                <div>
+
+                    <h2>
+
+                        🛣 Route Details
+
+                    </h2>
+
+                    <p>
+
+                        Manage buses and assigned students for the selected route.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="section-body">
+
+                <!-- Selected Route -->
+
+                <div class="route-info-card">
+
+                    <div>
+
+                        <h3 id="selectedRouteName">
+
+                            Route Name
+
+                        </h3>
+
+                        <p id="selectedRouteCode">
+
+                            Route ID
+
+                        </p>
+
+                    </div>
+
+                    <div class="route-badge">
+
+                        Active
+
+                    </div>
+
+                </div>
+
+                <!-- ==========================================
+                    ADD BUS
+                =========================================== -->
+
+                <section class="transport-sub-section">
+
+                    <div class="sub-section-header">
+
+                        <div>
+
+                            <h3>
+
+                                🚌 Add Bus
+
+                            </h3>
+
+                            <p>
+
+                                Add buses to the selected transport route.
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    <div class="sub-section-body">
+
+                        <form id="busForm">
+
+                            <div class="form-grid">
+
+                                <div class="form-group">
+
+                                    <label>
+
+                                        Bus Number
+
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        id="busNumber"
+                                        placeholder="Enter Bus Number">
+
+                                </div>
+
+                                <div class="form-group">
+
+                                    <label>
+
+                                        Seating Capacity
+
+                                    </label>
+
+                                    <input
+                                        type="number"
+                                        id="busCapacity"
+                                        placeholder="Enter Capacity">
+
+                                </div>
+
+                                <div class="form-group">
+
+                                    <label>
+
+                                        Driver Name
+
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        id="driverName"
+                                        placeholder="Enter Driver Name">
+
+                                </div>
+
+                                <div class="form-group">
+
+                                    <label>
+
+                                        Driver Mobile
+
+                                    </label>
+
+                                    <input
+                                        type="tel"
+                                        id="driverMobile"
+                                        placeholder="Enter Driver Mobile">
+
+                                </div>
+                                <div class="form-group">
+
+    <label>
+
+        Vehicle Type
+
+    </label>
+
+    <input
+        type="text"
+        id="vehicleType"
+        placeholder="Enter Vehicle Type">
+
+</div>
+
+<div class="form-group">
+
+    <label>
+
+        Registration Number
+
+    </label>
+
+    <input
+        type="text"
+        id="registrationNumber"
+        placeholder="Enter Registration Number">
+
+</div>
+
+                            </div>
+
+                            <div class="action-buttons">
+
+                                <button
+                                    type="submit"
+                                    class="primary-btn">
+
+                                    💾 Save Bus
+
+                                </button>
+
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                </section>
+
+                <!-- ==========================================
+                    BUS HISTORY
+                =========================================== -->
+
+                <section class="transport-sub-section">
+
+                    <div class="sub-section-header">
+
+                        <div>
+
+                            <h3>
+
+                                🚍 Bus History
+
+                            </h3>
+
+                            <p>
+
+                                View all buses assigned to this route.
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    <div class="sub-section-body">
+
+                        <div id="busHistoryContainer">
+
+                            <div class="empty-bus">
+
+                                <h4>
+
+                                    No Bus Added
+
+                                </h4>
+
+                                <p>
+
+                                    Added buses will appear here.
+
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+            </div>
+
+        </section>
+                        <!-- ==========================================
+                    ASSIGN STUDENTS
+                =========================================== -->
+
+                <section class="transport-sub-section">
+
+                    <div class="sub-section-header">
+
+                        <div>
+
+                            <h3>
+
+                                👨‍🎓 Assign Students
+
+                            </h3>
+
+                            <p>
+
+                                Assign students to the selected transport route and bus.
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    <div class="sub-section-body">
+
+                        <form id="assignStudentForm">
+
+                            <!-- Class & Section -->
+
+                            <div class="form-grid">
+
+                                <div class="form-group">
+
+                                    <label>
+
+                                        Select Class
+
+                                    </label>
+
+                                    <select id="classSelect">
+
+                                        <option value="">Select Class</option>
+
+                                        <option>Nursery</option>
+                                        <option>LKG</option>
+                                        <option>UKG</option>
+
+                                        <option>Class 1</option>
+                                        <option>Class 2</option>
+                                        <option>Class 3</option>
+                                        <option>Class 4</option>
+                                        <option>Class 5</option>
+                                        <option>Class 6</option>
+                                        <option>Class 7</option>
+                                        <option>Class 8</option>
+                                        <option>Class 9</option>
+                                        <option>Class 10</option>
+                                        <option>Class 11</option>
+                                        <option>Class 12</option>
+
+                                    </select>
+
+                                </div>
+
+                                <div class="form-group">
+
+                                    <label>
+
+                                        Select Section
+
+                                    </label>
+
+                                    <select id="sectionSelect">
+
+                                        <option value="">Select Section</option>
+
+                                        <option>A</option>
+                                        <option>B</option>
+                                        <option>C</option>
+                                        <option>D</option>
+
+                                    </select>
+
+                                </div>
+
+                            </div>
+                            <!-- Bus Selection -->
+
+<div class="form-group">
+
+    <label>
+
+        Select Bus
+
+    </label>
+
+    <select id="assignBus">
+
+        <option value="">
+
+            Select Bus
+
+        </option>
+
+    </select>
+
+</div>
+
+                            <!-- Search -->
+
+                            <div class="form-group">
+
+                                <label>
+
+                                    Search Student
+
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="studentSearch"
+                                    placeholder="Search by Student Name or Admission Number">
+
+                            </div>
+
+                            <!-- Student List -->
+
+                            <div class="student-selection">
+
+                                <div class="student-selection-header">
+
+                                    <label>
+
+                                        <input
+                                            type="checkbox"
+                                            id="selectAllStudents">
+
+                                        Select All Students
+
+                                    </label>
+
+                                </div>
+
+                                <div
+                                    id="studentList"
+                                    class="student-list">
+
+                                    <div class="empty-table">
+
+                                        No Students Found
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <!-- Months -->
+
+                            <div class="months-wrapper">
+
+                                <h4>
+
+                                    Applicable Months
+
+                                </h4>
+
+                                <div class="months-grid">
+
+                                    <label><input type="checkbox" class="month-checkbox" value="April"> April</label>
+                                    <label><input type="checkbox" class="month-checkbox" value="May"> May</label>
+                                    <label><input type="checkbox" class="month-checkbox" value="June"> June</label>
+                                    <label><input type="checkbox" class="month-checkbox" value="July"> July</label>
+                                    <label><input type="checkbox" class="month-checkbox" value="August"> August</label>
+                                    <label><input type="checkbox" class="month-checkbox" value="September"> September</label>
+                                    <label><input type="checkbox" class="month-checkbox" value="October"> October</label>
+                                    <label><input type="checkbox" class="month-checkbox" value="November"> November</label>
+                                    <label><input type="checkbox" class="month-checkbox" value="December"> December</label>
+                                    <label><input type="checkbox" class="month-checkbox" value="January"> January</label>
+                                    <label><input type="checkbox" class="month-checkbox" value="February"> February</label>
+                                    <label><input type="checkbox" class="month-checkbox" value="March"> March</label>
+
+                                </div>
+
+                            </div>
+
+                            <!-- Button -->
+
+                            <div class="action-buttons">
+
+                                <button
+                                    type="submit"
+                                    class="primary-btn">
+
+                                    👨‍🎓 Assign Selected Students
+
+                                </button>
+
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                </section>
+
+                <!-- ==========================================
+                    ASSIGNED STUDENTS
+                =========================================== -->
+
+                <section class="transport-sub-section">
+
+                    <div class="sub-section-header">
+
+                        <div>
+
+                            <h3>
+
+                                📋 Assigned Students
+
+                            </h3>
+
+                            <p>
+
+                                View all students assigned to the selected route.
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    <div class="sub-section-body">
+
+                        <div class="table-responsive">
+
+                            <table class="transport-table">
+
+                                <thead>
+
+                                    <tr>
+
+                                        
+
+                                        
+
+                                        <th>Class</th>
+
+                                        <th>Student Name</th>
+
+                                        <th>Bus</th>
+
+                                        <th>Monthly Fee</th>
+
+                                        <th>Months</th>
+
+                                        <th>Action</th>
+
+                                    </tr>
+
+                                </thead>
+
+                                <tbody id="assignedStudentTable">
+
+                                    <tr>
+
+                                        <td
+                                            colspan="7"
+                                            class="empty-table">
+
+                                            No Students Assigned
+
+                                        </td>
+
+                                    </tr>
+
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+            </div>
+
+        </section>
+                <!-- ==========================================
+            TRANSPORT SUMMARY
+        =========================================== -->
+
+        <section class="dashboard-section transport-summary">
+
+            <div class="section-header">
+
+                <h2>
+
+                    📊 Transport Summary
+
+                </h2>
+
+            </div>
+
+            <div class="section-body">
+
+                <div class="stats-grid">
+
+                    <div class="stat-card">
+
+                        <h3>
+
+                            Total Routes
+
+                        </h3>
+
+                        <h2 id="totalRoutes">
+
+                            0
+
+                        </h2>
+
+                    </div>
+
+                    <div class="stat-card">
+
+                        <h3>
+
+                            Total Buses
+
+                        </h3>
+
+                        <h2 id="totalBuses">
+
+                            0
+
+                        </h2>
+
+                    </div>
+
+                    <div class="stat-card">
+
+                        <h3>
+
+                            Assigned Students
+
+                        </h3>
+
+                        <h2 id="totalStudents">
+
+                            0
+
+                        </h2>
+
+                    </div>
+
+                    <div class="stat-card">
+
+                        <h3>
+
+                            Monthly Collection
+
+                        </h3>
+
+                        <h2 id="monthlyCollection">
+
+                            ₹0
+
+                        </h2>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- ==========================================
+            HIDDEN VALUES
+        =========================================== -->
+
+        <input
+            type="hidden"
+            id="selectedRouteId">
+
+        <input
+            type="hidden"
+            id="selectedBusId">
+
+        <input
+            type="hidden"
+            id="selectedStudentId">
+
+        <!-- ==========================================
+            TOAST MESSAGE
+        =========================================== -->
+
+        <div
+            id="toast"
+            class="toast-message">
+
+        </div>
+
+        <!-- ==========================================
+            PAGE LOADER
+        =========================================== -->
+
+        <div
+            id="loader"
+            class="page-loader">
+
+            <div class="loader-box">
+
+                <div class="loader-spinner"></div>
+
+                <h3>
+
+                    Please Wait...
+
+                </h3>
+
+                <p>
+
+                    Processing your request...
+
+                </p>
+
+            </div>
+
+        </div>
+
+        <!-- ==========================================
+            FOOTER
+        =========================================== -->
+
+        <footer class="dashboard-footer">
+
+            <p>
+
+                © 2026 AcademiaX ERP • Transport Management Module
+
+            </p>
+
+        </footer>
+
+    </main>
+
+    <!-- ==========================================
+        JAVASCRIPT
+    =========================================== -->
+    <script src="../../js/config.js"></script>
+<script src="../../js/api.js"></script>
+<script src="../assets/js/common.js"></script>
+   
+    <script src="transport.js"></script>
+
+</body>
+
+</html>
