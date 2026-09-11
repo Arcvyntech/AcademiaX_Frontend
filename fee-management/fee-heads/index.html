@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AcademiaX | Fee Heads</title>
+
+    <link rel="stylesheet" href="../dashboard.css">
+    <link rel="stylesheet" href="fee-heads.css">
+
+</head>
+
+<body>
+
+<div class="fee-heads-page">
+
+    <!-- ================= HEADER ================= -->
+
+    <header class="page-header">
+
+        <div class="page-header-left">
+
+            <span class="page-tag">
+                💰 Fee Management
+            </span>
+
+            <h1>Fee Heads Management</h1>
+
+            <p>
+                Create, organize and manage all fee heads for your institution.
+            </p>
+
+        </div>
+
+        <div class="page-header-right">
+
+            <input
+                type="text"
+                id="searchFeeHead"
+                placeholder="Search Fee Head...">
+
+        </div>
+
+    </header>
+
+    <!-- ================= MAIN ================= -->
+
+    <div class="fee-heads-wrapper">
+
+        <!-- LEFT PANEL -->
+
+        <aside class="add-fee-card">
+
+            <div class="section-title">
+
+                <h2>Add New Fee Head</h2>
+
+                <p>Create a new fee category.</p>
+
+            </div>
+
+            <div class="form-group">
+
+                <label for="feeHeadName">
+
+                    Fee Head Name
+
+                </label>
+
+                <input
+                    type="text"
+                    id="feeHeadName"
+                    placeholder="Admission Fee">
+
+            </div>
+
+            <div class="form-group">
+
+                <label for="feeHeadDescription">
+
+                    Description
+
+                </label>
+
+                <textarea
+                    id="feeHeadDescription"
+                    rows="4"
+                    placeholder="Enter description..."></textarea>
+
+            </div>
+
+            <div class="form-group">
+
+                <label for="feeHeadColor">
+
+                    Color Tag
+
+                </label>
+
+                <div class="color-picker">
+
+                    <input
+                        type="color"
+                        id="feeHeadColor"
+                        value="#ff7a00">
+
+                    <span>Select Card Color</span>
+
+                </div>
+
+            </div>
+
+            <button id="btnAddFeeHead">
+
+                + Add Fee Head
+
+            </button>
+
+        </aside>
+
+        <!-- RIGHT PANEL -->
+
+        <section class="existing-fee-card">
+
+            <div class="card-header">
+
+                <div>
+
+                    <h2>Existing Fee Heads</h2>
+
+                    <p>
+
+                        Manage, edit or deactivate fee heads.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+            <!-- JS CARDS -->
+
+            <div
+                id="feeHeadsContainer"
+                class="fee-head-list">
+
+            </div>
+
+        </section>
+
+    </div>
+
+</div>
+
+<script src="../../js/config.js"></script>
+<script src="../../js/api.js"></script>
+<script src="../assets/js/common.js"></script>
+<script src="fee-heads.js"></script>
+
+</body>
+</html>

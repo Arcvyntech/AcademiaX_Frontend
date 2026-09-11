@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>AcademiaX Dashboard</title>
+
+    <link rel="stylesheet" href="css/base.css" />
+
+    <link rel="stylesheet" href="css/dashboard.css" />
+
+</head>
+
+<body>
+
+<div class="dash">
+
+    <!-- ================= SIDEBAR ================= -->
+
+    <aside class="side">
+
+        <a class="brand" href="dashboard.html">
+
+            <span class="mark">A</span>
+
+            AcademiaX
+
+        </a>
+
+        <nav>
+
+            <a class="active" href="dashboard.html">🏠 Dashboard</a>
+
+            <a href="admin.html#designations">Designation</a>
+
+            <a href="admin.html#classes">Classes</a>
+
+            <a href="admin.html#staff">Staff</a>
+
+            <a href="admin.html#subjects">Subjects</a>
+
+            <a href="admin.html#students">Students</a>
+
+            <a href="admin.html#hierarchy">Hierarchy</a>
+
+            <a href="admin.html#credentials">Credentials</a>
+
+        </nav>
+
+        <button
+            class="btn btn-ghost"
+            id="logout"
+            style="color:#fff;border-color:rgba(255,255,255,.25)">
+
+            Logout
+
+        </button>
+
+    </aside>
+
+
+    <!-- ================= MAIN ================= -->
+
+    <div class="dash-main">
+
+        <!-- ================= TOPBAR ================= -->
+
+        <header class="topbar">
+
+            <div class="inst">
+
+                <h2 id="instName">
+
+                    Loading...
+
+                </h2>
+
+                <p>
+
+                    Institution Code :
+
+                    <strong id="instCode">
+
+                        ----
+
+                    </strong>
+
+                </p>
+
+            </div>
+
+            <div class="top-actions">
+
+                <a
+                    href="subscription.html"
+                    class="btn btn-primary">
+
+                    👑 Subscription
+
+                </a>
+
+                <a
+                    href="admin.html"
+                    class="btn btn-accent">
+
+                    Manage Institution
+
+                </a>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- ================= BODY ================= -->
+
+        <div class="dash-body">
+
+            <!-- Welcome -->
+
+            <div class="welcome">
+
+                <h1>
+
+                    Welcome,
+
+                    <span id="welcomeName">
+
+                        Loading...
+
+                    </span>
+
+                    👋
+
+                </h1>
+
+                <p>
+
+                    Here's a quick overview of your institution.
+
+                </p>
+
+            </div>
+
+
+
+            <!-- Statistics -->
+
+            <div class="tiles">
+
+                <div class="tile card">
+
+                    <div class="ic">
+
+                        ST
+
+                    </div>
+
+                    <h3 id="stStaff">
+
+                        --
+
+                    </h3>
+
+                    <p>
+
+                        Staff Members
+
+                    </p>
+
+                </div>
+
+                <div class="tile card">
+
+                    <div class="ic">
+
+                        CL
+
+                    </div>
+
+                    <h3 id="stClasses">
+
+                        --
+
+                    </h3>
+
+                    <p>
+
+                        Classes
+
+                    </p>
+
+                </div>
+
+                <div class="tile card">
+
+                    <div class="ic">
+
+                        SU
+
+                    </div>
+
+                    <h3 id="stSubjects">
+
+                        --
+
+                    </h3>
+
+                    <p>
+
+                        Subjects
+
+                    </p>
+
+                </div>
+
+                <div class="tile card">
+
+                    <div class="ic">
+
+                        SD
+
+                    </div>
+
+                    <h3 id="stStudents">
+
+                        --
+
+                    </h3>
+
+                    <p>
+
+                        Students
+
+                    </p>
+
+                </div>
+
+            </div>
+                        <!-- ================= CURRENT SUBSCRIPTION ================= -->
+
+            <div class="card subscription-card">
+
+                <div class="subscription-top">
+
+                    <div>
+
+                        <h2>👑 Current Subscription</h2>
+
+                        <p>Your active AcademiaX subscription.</p>
+
+                    </div>
+
+                    <span id="subscriptionStatus" class="subscription-status">
+                        Loading...
+                    </span>
+
+                </div>
+
+                <div class="subscription-grid">
+
+                    <div class="subscription-item">
+
+                        <small>Plan</small>
+
+                        <h3 id="subscriptionPlan">--</h3>
+
+                    </div>
+
+                    <div class="subscription-item">
+
+                        <small>Billing</small>
+
+                        <h3 id="subscriptionBilling">--</h3>
+
+                    </div>
+
+                    <div class="subscription-item">
+
+                        <small>Amount</small>
+
+                        <h3 id="subscriptionAmount">--</h3>
+
+                    </div>
+
+                    <div class="subscription-item">
+
+                        <small>Expiry</small>
+
+                        <h3 id="subscriptionExpiry">--</h3>
+
+                    </div>
+
+                </div>
+
+            </div>
+         <!-- ================= MODULES ================= -->
+
+<div class="modules-section">
+
+    <h2 class="modules-title">
+
+        📦 Available Modules
+
+    </h2>
+
+    <div class="module-card">
+
+        <div class="module-left">
+
+            <div class="module-icon">
+
+                💰
+
+            </div>
+
+            <div>
+
+                <h3>
+
+                    Fee Management
+
+                </h3>
+
+                <p>
+
+                    Manage student fees, receipts & reports.
+
+                </p>
+
+            </div>
+
+        </div>
+
+        <div class="module-right">
+
+            <span id="feeModuleStatus">
+
+                Loading...
+
+            </span>
+
+            <button id="feeModuleBtn">
+
+                Loading...
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+            <!-- ================= QUICK ACTION ================= -->
+
+            <div style="margin-top:30px;">
+
+                <a class="btn btn-accent" href="admin.html">
+
+                    Manage Institution →
+
+                </a>
+
+                <a class="btn btn-primary" href="subscription.html">
+
+                    Manage Subscription →
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="js/config.js"></script>
+<script src="js/api.js"></script>
+<script src="js/moduleAccess.js"></script>
+<script src="js/dashboard.js"></script>
+
+</body>
+
+</html>

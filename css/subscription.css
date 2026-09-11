@@ -1,0 +1,1032 @@
+/* =====================================================
+   AcademiaX Subscription Center
+   Part 2A - Base Layout
+===================================================== */
+
+:root{
+
+    --primary:#16233F;
+    --primary-light:#22345d;
+
+    --secondary:#F4A51C;
+
+    --secondary-dark:#d98f10;
+
+    --white:#ffffff;
+
+    --bg:#F7F8FC;
+
+    --text:#222;
+
+    --text-light:#777;
+
+    --border:#E6EAF0;
+
+    --shadow:0 10px 30px rgba(0,0,0,.08);
+
+    --radius:18px;
+
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+
+    scroll-behavior:smooth;
+
+}
+
+body{
+
+    background:var(--bg);
+
+    font-family:'Segoe UI',sans-serif;
+
+    color:var(--text);
+
+}
+
+/* ================= HEADER ================= */
+
+.top-header{
+
+    width:100%;
+
+    height:90px;
+
+    background:white;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:0 60px;
+
+    box-shadow:0 3px 15px rgba(0,0,0,.05);
+
+    position:sticky;
+
+    top:0;
+
+    z-index:100;
+
+}
+
+.logo{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:18px;
+
+}
+
+.logo-box{
+
+    width:58px;
+
+    height:58px;
+
+    border-radius:15px;
+
+    background:var(--secondary);
+
+    color:var(--primary);
+
+    font-size:28px;
+
+    font-weight:bold;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+}
+
+.logo h2{
+
+    color:var(--primary);
+
+    font-size:28px;
+
+}
+
+.logo p{
+
+    color:gray;
+
+    font-size:14px;
+
+}
+
+.header-actions{
+
+    display:flex;
+
+    gap:15px;
+
+}
+
+.dashboard-btn{
+
+    border:none;
+
+    background:var(--primary);
+
+    color:white;
+
+    padding:14px 28px;
+
+    border-radius:50px;
+
+    font-size:15px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.dashboard-btn:hover{
+
+    background:var(--secondary);
+
+    color:var(--primary);
+
+}
+
+/* ================= HERO ================= */
+
+.hero{
+
+    background:linear-gradient(135deg,#16233F,#21365F);
+
+    padding:80px 60px;
+
+    color:white;
+
+    position:relative;
+
+    overflow:hidden;
+
+}
+
+.hero::before{
+
+    content:"";
+
+    width:420px;
+
+    height:420px;
+
+    border-radius:50%;
+
+    position:absolute;
+
+    right:-120px;
+
+    top:-120px;
+
+    background:rgba(255,255,255,.05);
+
+}
+
+.hero::after{
+
+    content:"";
+
+    width:280px;
+
+    height:280px;
+
+    border-radius:50%;
+
+    position:absolute;
+
+    left:-80px;
+
+    bottom:-80px;
+
+    background:rgba(244,165,28,.15);
+
+}
+
+.hero-content{
+
+    position:relative;
+
+    z-index:10;
+
+}
+
+.hero h1{
+
+    font-size:52px;
+
+    margin-bottom:18px;
+
+}
+
+.hero p{
+
+    width:650px;
+
+    max-width:100%;
+
+    font-size:18px;
+
+    line-height:1.8;
+
+    color:#d5d5d5;
+
+}
+
+/* ================= BILLING ================= */
+
+.billing{
+
+    margin-top:-35px;
+
+    display:flex;
+
+    justify-content:center;
+
+    position:relative;
+
+    z-index:50;
+
+}
+
+.billing-box{
+
+    background:white;
+
+    border-radius:50px;
+
+    padding:8px;
+
+    display:flex;
+
+    box-shadow:var(--shadow);
+
+}
+
+.billing-btn{
+
+    border:none;
+
+    background:transparent;
+
+    padding:15px 35px;
+
+    border-radius:40px;
+
+    font-size:15px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.billing-btn span{
+
+    font-size:12px;
+
+    margin-left:8px;
+
+    color:green;
+
+}
+
+.billing-btn.active{
+
+    background:var(--secondary);
+
+    color:var(--primary);
+
+}
+
+/* ================= SECTION ================= */
+
+.plans{
+
+    width:100%;
+
+    padding:70px 60px;
+
+}
+
+.title{
+
+    text-align:center;
+
+    margin-bottom:45px;
+
+}
+
+.title h2{
+
+    font-size:40px;
+
+    color:var(--primary);
+
+    margin-bottom:10px;
+
+}
+
+.title p{
+
+    color:gray;
+
+    font-size:17px;
+
+}
+
+/* ================= GRID ================= */
+
+.plans-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+
+    gap:30px;
+
+}
+
+/* Placeholder cards until JS renders */
+
+.plan-card{
+
+    background:white;
+
+    border-radius:20px;
+
+    min-height:300px;
+
+    box-shadow:var(--shadow);
+
+}
+/* =====================================================
+   PART 2B - Cards, Premium, FAQ, Modal, Responsive
+===================================================== */
+
+/* ================= PLAN CARD ================= */
+
+.plan-card{
+
+    background:#fff;
+
+    border-radius:20px;
+
+    padding:28px;
+
+    box-shadow:0 12px 30px rgba(0,0,0,.08);
+
+    transition:.35s;
+
+    position:relative;
+
+    overflow:hidden;
+
+    border:2px solid transparent;
+
+}
+
+.plan-card:hover{
+
+    transform:translateY(-8px);
+
+    border-color:var(--secondary);
+
+    box-shadow:0 20px 45px rgba(0,0,0,.12);
+
+}
+
+.plan-icon{
+
+    width:70px;
+
+    height:70px;
+
+    border-radius:18px;
+
+    background:#FFF4DD;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:34px;
+
+    margin-bottom:20px;
+
+}
+
+.plan-card h3{
+
+    font-size:24px;
+
+    color:var(--primary);
+
+    margin-bottom:12px;
+
+}
+
+.plan-description{
+
+    color:#666;
+
+    line-height:1.7;
+
+    margin-bottom:20px;
+
+    min-height:70px;
+
+}
+
+.price{
+
+    font-size:42px;
+
+    font-weight:bold;
+
+    color:var(--primary);
+
+}
+
+.price span{
+
+    font-size:16px;
+
+    color:#777;
+
+}
+
+.features{
+
+    list-style:none;
+
+    margin:25px 0;
+
+}
+
+.features li{
+
+    margin-bottom:12px;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    color:#444;
+
+}
+
+.features li i{
+
+    color:green;
+
+}
+
+.subscribe-btn{
+
+    width:100%;
+
+    padding:15px;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:var(--secondary);
+
+    color:var(--primary);
+
+    font-size:16px;
+
+    font-weight:700;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.subscribe-btn:hover{
+
+    background:var(--primary);
+
+    color:#fff;
+
+}
+
+/* ================= BADGE ================= */
+
+.badge{
+
+    position:absolute;
+
+    top:18px;
+
+    right:-35px;
+
+    background:var(--secondary);
+
+    color:var(--primary);
+
+    font-weight:700;
+
+    padding:8px 40px;
+
+    transform:rotate(45deg);
+
+    font-size:13px;
+
+}
+
+/* ================= PREMIUM ================= */
+
+.premium-section{
+
+    padding:40px 60px 70px;
+
+}
+
+.premium-card{
+
+    background:linear-gradient(135deg,#16233F,#243B67);
+
+    color:white;
+
+    border-radius:24px;
+
+    padding:45px;
+
+    position:relative;
+
+    overflow:hidden;
+
+    box-shadow:0 25px 60px rgba(22,35,63,.25);
+
+}
+
+.premium-card::after{
+
+    content:"";
+
+    position:absolute;
+
+    width:280px;
+
+    height:280px;
+
+    border-radius:50%;
+
+    background:rgba(255,255,255,.05);
+
+    top:-80px;
+
+    right:-80px;
+
+}
+
+.premium-card h2{
+
+    font-size:36px;
+
+    margin-bottom:15px;
+
+}
+
+.premium-card p{
+
+    color:#ddd;
+
+    line-height:1.7;
+
+}
+
+.premium-price{
+
+    font-size:56px;
+
+    margin:25px 0;
+
+    font-weight:bold;
+
+}
+
+.premium-price span{
+
+    font-size:18px;
+
+}
+
+.premium-btn{
+
+    margin-top:30px;
+
+    padding:16px 34px;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:var(--secondary);
+
+    color:var(--primary);
+
+    font-size:17px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.premium-btn:hover{
+
+    background:white;
+
+}
+
+/* ================= ENTERPRISE ================= */
+
+.enterprise{
+
+    padding:20px 60px 70px;
+
+}
+
+.enterprise-card{
+
+    background:white;
+
+    border-radius:20px;
+
+    padding:45px;
+
+    text-align:center;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+
+}
+
+.enterprise-card h2{
+
+    color:var(--primary);
+
+    margin-bottom:15px;
+
+}
+
+.enterprise-card p{
+
+    color:#666;
+
+    margin-bottom:25px;
+
+}
+
+.enterprise-card button{
+
+    background:var(--primary);
+
+    color:white;
+
+    border:none;
+
+    padding:15px 30px;
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+    font-weight:bold;
+
+}
+
+.enterprise-card button:hover{
+
+    background:var(--secondary);
+
+    color:var(--primary);
+
+}
+
+/* ================= FAQ ================= */
+
+.faq{
+
+    padding:70px 60px;
+
+}
+
+.faq h2{
+
+    text-align:center;
+
+    color:var(--primary);
+
+    margin-bottom:40px;
+
+}
+
+.faq-box{
+
+    max-width:900px;
+
+    margin:auto;
+
+}
+
+.faq-item{
+
+    background:white;
+
+    padding:22px;
+
+    border-radius:15px;
+
+    margin-bottom:20px;
+
+    box-shadow:0 6px 18px rgba(0,0,0,.06);
+
+}
+
+.faq-item h3{
+
+    color:var(--primary);
+
+    margin-bottom:10px;
+
+}
+
+.faq-item p{
+
+    color:#666;
+
+    line-height:1.6;
+
+}
+
+/* ================= MODAL ================= */
+
+.modal{
+
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(0,0,0,.55);
+
+    display:none;
+
+    justify-content:center;
+
+    align-items:center;
+
+    z-index:999;
+
+}
+
+.modal-box{
+
+    width:420px;
+
+    background:white;
+
+    border-radius:20px;
+
+    padding:35px;
+
+    text-align:center;
+
+    animation:popup .35s ease;
+
+}
+
+.modal-box i{
+
+    font-size:60px;
+
+    color:#28a745;
+
+    margin-bottom:15px;
+
+}
+
+.modal-box h2{
+
+    color:var(--primary);
+
+    margin-bottom:10px;
+
+}
+
+.modal-box p{
+
+    color:#666;
+
+    margin-bottom:25px;
+
+}
+
+.modal-box button{
+
+    width:100%;
+
+    padding:15px;
+
+    border:none;
+
+    border-radius:10px;
+
+    background:var(--secondary);
+
+    color:var(--primary);
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+}
+
+/* ================= ANIMATION ================= */
+
+@keyframes popup{
+
+    from{
+
+        transform:scale(.8);
+
+        opacity:0;
+
+    }
+
+    to{
+
+        transform:scale(1);
+
+        opacity:1;
+
+    }
+
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:992px){
+
+    .top-header{
+
+        padding:20px;
+
+        flex-direction:column;
+
+        height:auto;
+
+        gap:20px;
+
+    }
+
+    .hero{
+
+        padding:60px 25px;
+
+    }
+
+    .hero h1{
+
+        font-size:38px;
+
+    }
+
+    .plans,
+
+    .premium-section,
+
+    .enterprise,
+
+    .faq{
+
+        padding:50px 25px;
+
+    }
+
+}
+
+@media(max-width:600px){
+
+    .hero h1{
+
+        font-size:30px;
+
+    }
+
+    .title h2{
+
+        font-size:28px;
+
+    }
+
+    .premium-card{
+
+        padding:25px;
+
+    }
+
+    .premium-price{
+
+        font-size:42px;
+
+    }
+
+    .modal-box{
+
+        width:92%;
+
+    }
+
+}
+/* =========================================
+   SUCCESS MODAL
+========================================= */
+
+.success-modal{
+    position: fixed;
+    inset: 0;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0,0,0,.55);
+    z-index: 9999;
+}
+
+.success-box{
+    width: 430px;
+    background: #fff;
+    border-radius: 22px;
+    padding: 35px;
+    text-align: center;
+    animation: popup .35s ease;
+    box-shadow: 0 20px 50px rgba(0,0,0,.18);
+}
+
+.success-icon{
+    font-size: 70px;
+    color: #22c55e;
+    margin-bottom: 18px;
+}
+
+.success-box h2{
+    color: var(--primary);
+    margin-bottom: 15px;
+    font-size: 32px;
+}
+
+.success-box p{
+    color: #666;
+    font-size: 17px;
+    margin: 10px 0;
+}
+
+.success-box button{
+    width: 100%;
+    margin-top: 25px;
+    padding: 15px;
+    border: none;
+    border-radius: 12px;
+    background: var(--secondary);
+    color: var(--primary);
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.success-box button:hover{
+    background: var(--primary);
+    color: #fff;
+}

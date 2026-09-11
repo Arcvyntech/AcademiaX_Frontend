@@ -1,0 +1,40 @@
+.hero{padding:64px 0 36px}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center}
+.hero h1{margin:.7rem 0 1rem}
+.hero .lead{font-size:1.15rem;color:var(--slate);max-width:36ch;margin-bottom:1.8rem}
+.hero-cta{display:flex;gap:.8rem;flex-wrap:wrap}
+.hero-note{margin-top:1.3rem;font-size:.82rem;color:var(--slate-2)}
+
+/* timetable signature */
+.timetable{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);box-shadow:var(--shadow);padding:18px}
+.tt-head{display:flex;justify-content:space-between;align-items:center;margin:2px 4px 14px}
+.tt-head .mono{font-size:.68rem;color:var(--slate-2);letter-spacing:.14em;text-transform:uppercase}
+.tt-dot{width:9px;height:9px;border-radius:50%;background:var(--marigold);display:inline-block;margin-left:6px}
+.tt{display:grid;grid-template-columns:46px repeat(5,1fr);gap:6px}
+.tt .h{font-family:var(--f-mono);font-size:.66rem;color:var(--slate-2);text-align:center;padding-bottom:2px}
+.tt .time{font-family:var(--f-mono);font-size:.62rem;color:var(--slate-2);display:grid;place-items:center}
+.tt .cell{height:44px;border-radius:8px;background:#F4F1E8;border:1px solid var(--line)}
+.tt .blk{height:44px;border-radius:8px;display:flex;align-items:center;padding:0 9px;font-size:.72rem;font-weight:600;animation:pop .5s ease both}
+.blk.ink{background:var(--ink);color:#fff}
+.blk.gold{background:var(--marigold);color:var(--ink)}
+.blk.teal{background:var(--teal);color:#fff}
+.blk.soft{background:#EAE3D2;color:var(--ink-2)}
+@keyframes pop{from{opacity:0;transform:scale(.92)}to{opacity:1;transform:scale(1)}}
+
+/* features */
+.section{padding:58px 0}
+.section-head{max-width:48ch;margin-bottom:2rem}
+.section-head h2{margin:.5rem 0 .6rem}
+.features{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.feature{padding:22px}
+.feature .ic{width:40px;height:40px;border-radius:10px;background:#F4F1E8;display:grid;place-items:center;margin-bottom:14px;font-family:var(--f-mono);font-weight:700;color:var(--marigold-2)}
+.feature h3{font-size:1.08rem;margin-bottom:.35rem}
+.feature p{font-size:.9rem;color:var(--slate)}
+
+/* cta band */
+.band{background:var(--ink);color:#fff;border-radius:var(--radius-lg);padding:46px;display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap}
+.band h2{color:#fff;max-width:20ch;margin:.5rem 0 0}
+.band .eyebrow{color:var(--marigold)}
+
+@media (max-width:880px){.hero-grid{grid-template-columns:1fr;gap:30px}.features{grid-template-columns:1fr 1fr}}
+@media (max-width:560px){.features{grid-template-columns:1fr}.band{padding:30px}}

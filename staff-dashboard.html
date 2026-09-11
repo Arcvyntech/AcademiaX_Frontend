@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Staff Dashboard - AcademiaX</title>
+
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/staff-dashboard.css">
+
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+
+<body>
+
+<div class="dashboard">
+
+    <!-- Sidebar -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+
+            <span class="mark">A</span>
+
+            <h2>AcademiaX</h2>
+
+        </div>
+
+        <ul>
+
+            <li class="active">
+                <span class="material-icons">dashboard</span>
+                Dashboard
+            </li>
+
+            <li>
+                <span class="material-icons">person</span>
+                My Profile
+            </li>
+
+            <li>
+                <span class="material-icons">fact_check</span>
+                Attendance
+            </li>
+
+            <li>
+                <span class="material-icons">groups</span>
+                My Classes
+            </li>
+
+            <li>
+                <span class="material-icons">school</span>
+                Students
+            </li>
+
+            <li>
+                <span class="material-icons">menu_book</span>
+                Homework
+            </li>
+
+            <li>
+                <span class="material-icons">campaign</span>
+                Notices
+            </li>
+
+            <li>
+                <span class="material-icons">calendar_month</span>
+                Timetable
+            </li>
+
+            <li>
+                <span class="material-icons">event_available</span>
+                Leave Requests
+            </li>
+
+            <li>
+                <span class="material-icons">settings</span>
+                Settings
+            </li>
+
+        </ul>
+
+        <button id="logoutBtn">
+
+            <span class="material-icons">
+                logout
+            </span>
+
+            Logout
+
+        </button>
+
+    </aside>
+
+    <!-- Main -->
+
+    <main class="main">
+
+        <!-- Topbar -->
+
+        <header class="topbar">
+
+            <div>
+
+                <h1>
+
+                    Welcome,
+                    <span id="staffName">
+                        Staff
+                    </span>
+                    👋
+
+                </h1>
+
+                <p id="staffDesignation">
+
+                    Loading...             </p>
+
+            </div>
+
+            <div class="top-right">
+
+                <button>
+
+                    <span class="material-icons">
+                        notifications
+                    </span>
+
+                </button>
+
+                <button>
+
+                    <span class="material-icons">
+                        account_circle
+                    </span>
+
+                </button>
+
+            </div>
+
+        </header>
+
+        <!-- Cards -->
+
+        <section class="cards">
+
+            <div class="card">
+
+                <span class="material-icons">
+
+                    groups
+
+                </span>
+
+                <h2 id="todayClasses">0</h2>
+
+                <p>Today's Classes</p>
+
+            </div>
+
+            <div class="card">
+
+                <span class="material-icons">
+
+                    task_alt
+
+                </span>
+
+             <h2 id="attendanceCount">
+    0
+</h2>
+                <p>Attendance</p>
+
+            </div>
+
+            <div class="card">
+
+                <span class="material-icons">
+
+                    assignment
+
+                </span>
+
+                <h2 id="homeworkCount">0</h2>
+
+                <p>Homework</p>
+
+            </div>
+
+            <div class="card">
+
+                <span class="material-icons">
+
+                    campaign
+
+                </span>
+
+               <h2 id="noticeCount">0</h2>
+
+                <p>Notices</p>
+
+            </div>
+
+        </section>
+        <!-- Dashboard Content -->
+
+        <div class="dashboard-grid">
+
+            <!-- Left Side -->
+
+            <div class="left-column">
+
+                <!-- Today's Timetable -->
+
+                <div class="panel">
+
+                    <div class="panel-header">
+
+                        <h2>Today's Timetable</h2>
+
+                        <span>Monday</span>
+
+                    </div>
+
+                    <div class="schedule">
+
+                        <div class="schedule-item">
+
+                            <div class="time">
+
+                                09:00 AM
+
+                            </div>
+
+                            <div class="subject">
+
+                                <h4>Mathematics</h4>
+
+                                <p>Class 6A</p>
+
+                            </div>
+
+                        </div>
+
+                        <div class="schedule-item">
+
+                            <div class="time">
+
+                                10:00 AM
+
+                            </div>
+
+                            <div class="subject">
+
+                                <h4>Science</h4>
+
+                                <p>Class 7B</p>
+
+                            </div>
+
+                        </div>
+
+                        <div class="schedule-item">
+
+                            <div class="time">
+
+                                11:00 AM
+
+                            </div>
+
+                            <div class="subject">
+
+                                <h4>English</h4>
+
+                                <p>Class 5A</p>
+
+                            </div>
+
+                        </div>
+
+                        <div class="schedule-item">
+
+                            <div class="time">
+
+                                12:00 PM
+
+                            </div>
+
+                            <div class="subject">
+
+                                <h4>Computer</h4>
+
+                                <p>Class 8A</p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- Recent Notices -->
+
+                <div class="panel">
+
+                    <div class="panel-header">
+
+                        <h2>Recent Notices</h2>
+
+                    </div>
+
+                    <div class="notice">
+
+                        <h4>Monthly Test</h4>
+
+                        <p>
+
+                            Monthly Test will start from
+
+                            15 July 2026.
+
+                        </p>
+
+                    </div>
+
+                    <div class="notice">
+
+                        <h4>Parent Meeting</h4>
+
+                        <p>
+
+                            Parent Teacher Meeting
+
+                            on Saturday.
+
+                        </p>
+
+                    </div>
+
+                    <div class="notice">
+
+                        <h4>Holiday Notice</h4>
+
+                        <p>
+
+                            School will remain closed
+
+                            on Sunday.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Right Side -->
+
+            <div class="right-column">
+
+                <div class="panel">
+
+                    <div class="panel-header">
+
+                        <h2>Quick Actions</h2>
+
+                    </div>
+
+                    <div class="actions">
+
+                        <button>
+
+                            Mark Attendance
+
+                        </button>
+
+                        <button>
+
+                            Add Homework
+
+                        </button>
+
+                        <button>
+
+                            View Students
+
+                        </button>
+
+                        <button>
+
+                            Timetable
+
+                        </button>
+
+                        <button>
+
+                            Send Notice
+
+                        </button>
+
+                        <button>
+
+                            Apply Leave
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <div class="panel">
+
+                    <div class="panel-header">
+
+                        <h2>Today's Summary</h2>
+
+                    </div>
+
+                    <ul class="summary">
+
+                        <li>
+
+                            ✅ 5 Classes Scheduled
+
+                        </li>
+
+                        <li>
+
+                            ✅ 120 Students
+
+                        </li>
+
+                        <li>
+
+                            ✅ 3 Homework Pending
+
+                        </li>
+
+                        <li>
+
+                            ✅ 2 New Notices
+
+                        </li>
+
+                        <li>
+
+                            ✅ 1 Leave Request
+
+                        </li>
+
+                    </ul>
+
+                </div>
+
+            </div>
+
+        </div>
+        <!-- Footer -->
+
+        <footer class="footer">
+
+            <p>
+
+                © 2026 AcademiaX • Staff Portal
+
+            </p>
+
+        </footer>
+
+    </main>
+
+</div>
+
+<script src="js/config.js"></script>
+<script src="js/api.js"></script>
+<script src="js/staff-dashboard.js"></script>
+
+</body>
+</html>

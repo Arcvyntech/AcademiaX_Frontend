@@ -1,0 +1,817 @@
+/* ==========================================================
+   AcademiaX Fee Management Dashboard
+   Part 2.1
+   Root + Reset + Layout + Sidebar
+========================================================== */
+
+/* =========================
+   ROOT VARIABLES
+========================= */
+
+:root {
+
+    --primary-color: #ff7a00;
+    --primary-hover: #ff8f24;
+
+    --sidebar-bg: #0f172a;
+    --sidebar-hover: #1e293b;
+    --sidebar-active: #ff7a00;
+
+    --page-bg: #f4f7fb;
+
+    --white: #ffffff;
+
+    --text-dark: #1e293b;
+    --text-light: #64748b;
+
+    --border-color: #e2e8f0;
+
+    --success: #10b981;
+    --danger: #ef4444;
+    --warning: #f59e0b;
+
+    --shadow:
+        0 10px 25px rgba(0,0,0,.08);
+
+    --radius:16px;
+
+    --transition:.3s ease;
+
+}
+
+/* =========================
+   RESET
+========================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+
+    font-family:
+    "Segoe UI",
+    Tahoma,
+    Geneva,
+    Verdana,
+    sans-serif;
+
+    background:var(--page-bg);
+
+    color:var(--text-dark);
+
+}
+
+/* =========================
+   LINKS
+========================= */
+
+a{
+
+    text-decoration:none;
+
+    color:inherit;
+
+}
+
+/* =========================
+   BUTTONS
+========================= */
+
+button{
+
+    font-family:inherit;
+
+    cursor:pointer;
+
+    border:none;
+
+}
+
+/* =========================
+   LAYOUT
+========================= */
+
+.layout{
+
+    display:flex;
+
+    min-height:100vh;
+
+}
+
+/* ==========================================================
+                    SIDEBAR
+========================================================== */
+
+.sidebar{
+
+    width:270px;
+
+    background:var(--sidebar-bg);
+
+    color:var(--white);
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:space-between;
+
+    position:fixed;
+
+    top:0;
+
+    left:0;
+
+    height:100vh;
+
+    overflow-y:auto;
+
+}
+
+/* =========================
+      LOGO
+========================= */
+
+.sidebar-top{
+
+    padding:28px 22px;
+
+}
+
+.logo{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+}
+
+.logo-icon{
+
+    width:52px;
+
+    height:52px;
+
+    border-radius:14px;
+
+    background:var(--primary-color);
+
+    color:white;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:24px;
+
+    font-weight:700;
+
+}
+
+.logo-text h2{
+
+    font-size:22px;
+
+    font-weight:700;
+
+}
+
+.logo-text span{
+
+    display:block;
+
+    margin-top:4px;
+
+    color:#cbd5e1;
+
+    font-size:14px;
+
+}
+
+/* =========================
+      MENU
+========================= */
+
+.sidebar-menu{
+
+    display:flex;
+
+    flex-direction:column;
+
+    padding:10px 18px;
+
+    gap:10px;
+
+}
+
+.menu-item{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:14px;
+
+    padding:14px 18px;
+
+    border-radius:12px;
+
+    font-size:15px;
+
+    font-weight:600;
+
+    transition:var(--transition);
+
+}
+
+.menu-item:hover{
+
+    background:var(--sidebar-hover);
+
+}
+
+.menu-item.active{
+
+    background:var(--sidebar-active);
+
+    color:white;
+
+}
+
+/* =========================
+      FOOTER
+========================= */
+
+.sidebar-footer{
+
+    padding:20px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:10px;
+
+    border-top:1px solid rgba(255,255,255,.08);
+
+}
+
+.sidebar-footer a{
+
+    padding:12px 14px;
+
+    border-radius:10px;
+
+    transition:var(--transition);
+
+}
+
+.sidebar-footer a:hover{
+
+    background:var(--sidebar-hover);
+
+}
+
+/* ==========================================================
+            MAIN CONTENT
+========================================================== */
+
+.main-content{
+
+    flex:1;
+
+    margin-left:270px;
+
+    min-height:100vh;
+
+    padding:30px;
+
+}
+/* ==========================================================
+                    HEADER
+========================================================== */
+
+.top-header{
+
+    background:var(--white);
+
+    border-radius:var(--radius);
+
+    padding:25px 30px;
+
+    box-shadow:var(--shadow);
+
+    margin-bottom:25px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+}
+
+.top-header h1{
+
+    font-size:30px;
+
+    color:var(--text-dark);
+
+    margin-bottom:8px;
+
+}
+
+.top-header p{
+
+    color:var(--text-light);
+
+    font-size:15px;
+
+}
+
+
+/* ==========================================================
+                WELCOME CARD
+========================================================== */
+
+.welcome-card{
+
+    background:linear-gradient(135deg,#ff7a00,#ff9d2f);
+
+    color:#fff;
+
+    border-radius:var(--radius);
+
+    padding:35px;
+
+    margin-bottom:30px;
+
+    box-shadow:var(--shadow);
+
+}
+
+.welcome-card h2{
+
+    font-size:30px;
+
+    margin-bottom:12px;
+
+}
+
+.welcome-card p{
+
+    font-size:16px;
+
+    opacity:.95;
+
+    line-height:1.7;
+
+}
+
+
+/* ==========================================================
+                    STATS GRID
+========================================================== */
+
+.stats-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+
+    gap:25px;
+
+    margin-bottom:30px;
+
+}
+
+
+/* ==========================================================
+                    STAT CARD
+========================================================== */
+
+.stat-card{
+
+    background:var(--white);
+
+    border-radius:var(--radius);
+
+    padding:28px;
+
+    box-shadow:var(--shadow);
+
+    transition:var(--transition);
+
+    cursor:pointer;
+
+}
+
+.stat-card:hover{
+
+    transform:translateY(-8px);
+
+    box-shadow:0 18px 35px rgba(0,0,0,.12);
+
+}
+
+.stat-card h3{
+
+    font-size:15px;
+
+    color:var(--text-light);
+
+    margin-bottom:18px;
+
+}
+
+.stat-card h2{
+
+    font-size:34px;
+
+    color:var(--primary-color);
+
+    font-weight:700;
+
+}
+
+
+/* ==========================================================
+                CARD ICON PLACEHOLDER
+========================================================== */
+
+.stat-card::after{
+
+    content:"";
+
+    display:block;
+
+    width:55px;
+
+    height:4px;
+
+    background:var(--primary-color);
+
+    border-radius:20px;
+
+    margin-top:18px;
+
+}
+/* ==========================================================
+                DASHBOARD SECTIONS
+========================================================== */
+
+.dashboard-section{
+
+    background:var(--white);
+
+    border-radius:var(--radius);
+
+    box-shadow:var(--shadow);
+
+    margin-bottom:30px;
+
+    overflow:hidden;
+
+}
+
+.section-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:20px 25px;
+
+    border-bottom:1px solid var(--border-color);
+
+}
+
+.section-header h2{
+
+    font-size:20px;
+
+    color:var(--text-dark);
+
+}
+
+.section-body{
+
+    padding:25px;
+
+    color:var(--text-light);
+
+    min-height:140px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:15px;
+
+}
+
+
+/* ==========================================================
+                QUICK ACTIONS
+========================================================== */
+
+.quick-actions{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+
+    gap:18px;
+
+    padding:25px;
+
+}
+
+.quick-actions button{
+
+    background:var(--primary-color);
+
+    color:#fff;
+
+    padding:15px;
+
+    border-radius:12px;
+
+    font-size:15px;
+
+    font-weight:600;
+
+    transition:var(--transition);
+
+}
+
+.quick-actions button:hover{
+
+    background:var(--primary-hover);
+
+    transform:translateY(-3px);
+
+    box-shadow:0 10px 20px rgba(255,122,0,.25);
+
+}
+
+
+/* ==========================================================
+                    FOOTER
+========================================================== */
+
+.dashboard-footer{
+
+    text-align:center;
+
+    margin-top:35px;
+
+    padding:20px;
+
+    color:var(--text-light);
+
+    font-size:14px;
+
+    border-top:1px solid var(--border-color);
+
+}
+/* ==========================================================
+                RESPONSIVE DESIGN
+========================================================== */
+
+/* Large Tablets */
+
+@media (max-width: 1200px){
+
+    .stats-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+}
+
+
+/* Tablets */
+
+@media (max-width: 992px){
+
+    .sidebar{
+
+        width:220px;
+
+    }
+
+    .main-content{
+
+        margin-left:220px;
+
+        padding:20px;
+
+    }
+
+    .top-header{
+
+        flex-direction:column;
+
+        align-items:flex-start;
+
+        gap:15px;
+
+    }
+
+}
+
+
+/* Mobile */
+
+@media (max-width:768px){
+
+    .layout{
+
+        flex-direction:column;
+
+    }
+
+    .sidebar{
+
+        position:relative;
+
+        width:100%;
+
+        height:auto;
+
+    }
+
+    .main-content{
+
+        margin-left:0;
+
+        padding:20px;
+
+    }
+
+    .stats-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .quick-actions{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .welcome-card{
+
+        padding:25px;
+
+    }
+
+    .top-header{
+
+        padding:20px;
+
+    }
+
+}
+
+
+/* Small Mobile */
+
+@media (max-width:480px){
+
+    .logo{
+
+        flex-direction:column;
+
+        text-align:center;
+
+    }
+
+    .sidebar-menu{
+
+        padding:10px;
+
+    }
+
+    .menu-item{
+
+        font-size:14px;
+
+        padding:12px;
+
+    }
+
+    .welcome-card h2{
+
+        font-size:24px;
+
+    }
+
+    .top-header h1{
+
+        font-size:24px;
+
+    }
+
+    .stat-card h2{
+
+        font-size:28px;
+
+    }
+
+}
+
+
+/* ==========================================================
+                SCROLLBAR
+========================================================== */
+
+::-webkit-scrollbar{
+
+    width:8px;
+
+}
+
+::-webkit-scrollbar-track{
+
+    background:#eef2f7;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:var(--primary-color);
+
+    border-radius:20px;
+
+}
+
+::-webkit-scrollbar-thumb:hover{
+
+    background:var(--primary-hover);
+
+}
+
+
+/* ==========================================================
+                SELECTION
+========================================================== */
+
+::selection{
+
+    background:var(--primary-color);
+
+    color:#fff;
+
+}
+
+
+/* ==========================================================
+                SMOOTH ANIMATIONS
+========================================================== */
+
+.dashboard-section,
+.stat-card,
+.welcome-card,
+.top-header{
+
+    animation:fadeIn .5s ease;
+
+}
+
+@keyframes fadeIn{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(15px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
