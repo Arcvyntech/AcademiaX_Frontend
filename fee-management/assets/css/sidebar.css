@@ -1,0 +1,165 @@
+/* ==========================================================
+   AcademiaX Fee Management
+   Shared Sidebar Navigation
+   Used by any page that includes the .layout > .sidebar
+   markup (Dashboard, Transport, and future module pages).
+   Self-contained: works even if the page's own CSS uses
+   different variable names (--primary vs --primary-color etc.)
+========================================================== */
+
+.sidebar {
+  --sb-primary: var(--primary, var(--primary-color, #ff7a00));
+  --sb-bg: #0f172a;
+  --sb-hover: #1e293b;
+  --sb-transition: var(--transition, .3s ease);
+
+  width: 270px;
+  background: var(--sb-bg);
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  overflow-y: auto;
+  flex-shrink: 0;
+}
+
+/* Ensure any page using .layout as a flex wrapper lays out
+   correctly alongside a fixed-position sidebar. */
+.layout {
+  display: flex;
+  min-height: 100vh;
+}
+.layout > .sidebar + * {
+  margin-left: 270px;
+  margin-top: 0;
+  margin-bottom: 0;
+  flex: 1;
+  min-width: 0;
+}
+
+/* For pages that don't use a .layout flex wrapper, the sidebar
+   (being position:fixed) just needs its next sibling pushed over
+   so content doesn't render underneath it. The page's own CSS
+   often sets width:100% explicitly (not "auto"), so margin alone
+   isn't enough - the width itself must also be reduced, or the
+   content ends up 270px wider than the viewport. */
+body > .sidebar + * {
+  margin-left: 270px !important;
+  margin-right: 0 !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  width: auto !important;
+  max-width: calc(100% - 270px) !important;
+  box-sizing: border-box !important;
+}
+
+/* ================= LOGO ================= */
+.sidebar-top {
+  padding: 28px 22px;
+}
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+.logo-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: var(--sb-primary);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.logo-text h2 {
+  font-size: 22px;
+  font-weight: 700;
+  margin: 0;
+}
+.logo-text span {
+  display: block;
+  margin-top: 4px;
+  color: #cbd5e1;
+  font-size: 14px;
+}
+
+/* ================= MENU ================= */
+.sidebar-menu {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 18px;
+  gap: 10px;
+}
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 18px;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #e2e8f0;
+  text-decoration: none;
+  transition: var(--sb-transition);
+}
+.menu-item:hover {
+  background: var(--sb-hover);
+}
+.menu-item.active {
+  background: var(--sb-primary);
+  color: #fff;
+}
+
+/* ================= FOOTER ================= */
+.sidebar-footer {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-top: 1px solid rgba(255, 255, 255, .08);
+}
+.sidebar-footer a {
+  padding: 12px 14px;
+  border-radius: 10px;
+  color: #e2e8f0;
+  text-decoration: none;
+  transition: var(--sb-transition);
+}
+.sidebar-footer a:hover {
+  background: var(--sb-hover);
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 992px) {
+  .sidebar { width: 220px; }
+  .layout > .sidebar + * { margin-left: 220px; }
+  body > .sidebar + * { margin-left: 220px !important; }
+}
+
+@media (max-width: 768px) {
+  .layout { flex-direction: column; }
+  .sidebar {
+    position: relative;
+    width: 100%;
+    height: auto;
+  }
+  .layout > .sidebar + * { margin-left: 0; }
+  body > .sidebar + * {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .logo { flex-direction: column; text-align: center; }
+  .sidebar-menu { padding: 10px; }
+  .menu-item { font-size: 14px; padding: 12px; }
+}

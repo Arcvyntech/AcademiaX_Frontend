@@ -51,6 +51,12 @@ const FeeManagement = {
     const modal = document.getElementById("paymentModal");
     if (modal) modal.style.display = "none";
     this._modalSaveHandler = null;
+    // Restore default footer button label/style in case a confirm() reused it
+    var saveBtn = document.getElementById("btnModalSave");
+    if (saveBtn) {
+      saveBtn.textContent = "Save Payment";
+      saveBtn.className = "fm-btn fm-btn-primary";
+    }
   },
 
   openModal(title, bodyHtml, onSave) {
@@ -62,6 +68,22 @@ const FeeManagement = {
     if (bodyEl) bodyEl.innerHTML = bodyHtml || "";
     this._modalSaveHandler = onSave || null;
     modal.style.display = "flex";
+  },
+
+  // Reuses the existing modal to ask for confirmation instead of the
+  // browser's native confirm() popup, so it matches the app's look.
+  showConfirm(title, message, confirmLabel, onConfirm) {
+    var bodyHtml =
+      '<p class="fm-confirm-text">' + this.escapeHtml(message) + "</p>";
+    this.openModal(title, bodyHtml, function() {
+      FeeManagement.closeModal();
+      onConfirm();
+    });
+    var saveBtn = document.getElementById("btnModalSave");
+    if (saveBtn) {
+      saveBtn.textContent = confirmLabel || "Confirm";
+      saveBtn.className = "fm-btn fm-btn-danger";
+    }
   },
 
   formatCurrency(amount) {
@@ -260,6 +282,9 @@ const FeeManagement = {
     var btnAdd = document.getElementById("btnAddFH");
     if (btnAdd) btnAdd.addEventListener("click", function() { self.saveFeeHead(); });
 
+    var btnCancel = document.getElementById("btnCancelFHEdit");
+    if (btnCancel) btnCancel.addEventListener("click", function() { self.resetFeeHeadForm(); });
+
     var searchInput = document.getElementById("searchFH");
     if (searchInput) {
       searchInput.addEventListener("input", self.debounce(function(e) {
@@ -338,10 +363,18 @@ const FeeManagement = {
     var descInput = document.getElementById("fhDesc");
     var colorInput = document.getElementById("fhColor");
     var btnAdd = document.getElementById("btnAddFH");
+    var banner = document.getElementById("fhEditingBanner");
+    var bannerName = document.getElementById("fhEditingBannerName");
+    var btnCancel = document.getElementById("btnCancelFHEdit");
+    var formCard = document.querySelector(".fm-fee-heads-form");
     if (nameInput) nameInput.value = fh.name || "";
     if (descInput) descInput.value = fh.description || "";
     if (colorInput) colorInput.value = fh.color || "#ff7a00";
     if (btnAdd) btnAdd.textContent = "Update Fee Head";
+    if (banner) banner.style.display = "block";
+    if (bannerName) bannerName.textContent = fh.name || "";
+    if (btnCancel) btnCancel.style.display = "inline-block";
+    if (formCard) formCard.scrollIntoView({ behavior: "smooth", block: "start" });
     if (nameInput) nameInput.focus();
   },
 
@@ -351,10 +384,14 @@ const FeeManagement = {
     var descInput = document.getElementById("fhDesc");
     var colorInput = document.getElementById("fhColor");
     var btnAdd = document.getElementById("btnAddFH");
+    var banner = document.getElementById("fhEditingBanner");
+    var btnCancel = document.getElementById("btnCancelFHEdit");
     if (nameInput) nameInput.value = "";
     if (descInput) descInput.value = "";
     if (colorInput) colorInput.value = "#ff7a00";
     if (btnAdd) btnAdd.textContent = "+ Add Fee Head";
+    if (banner) banner.style.display = "none";
+    if (btnCancel) btnCancel.style.display = "none";
   },
 
   async saveFeeHead() {
@@ -394,20 +431,28 @@ const FeeManagement = {
     }
   },
 
-  async deleteFeeHead(id) {
+  deleteFeeHead(id) {
+    var self = this;
     var fh = this.feeHeads.find(function(h) { return h._id === id; });
-    if (!confirm('Delete "' + (fh ? fh.name : "this fee head") + '"? This cannot be undone.')) return;
-    this.setLoading(true);
-    try {
-      await apiFetch("/fee-heads/" + id, { method: "DELETE", auth: true });
-      this.showToast("Fee head deleted");
-      if (this.editingFeeHeadId === id) this.resetFeeHeadForm();
-      await this.loadFeeHeads();
-    } catch (err) {
-      this.showToast("Failed to delete fee head", "error");
-    } finally {
-      this.setLoading(false);
-    }
+    var name = fh ? fh.name : "this fee head";
+    this.showConfirm(
+      "Delete Fee Head?",
+      'Are you sure you want to delete "' + name + '"? This cannot be undone.',
+      "Delete",
+      async function() {
+        self.setLoading(true);
+        try {
+          await apiFetch("/fee-heads/" + id, { method: "DELETE", auth: true });
+          self.showToast("Fee head deleted");
+          if (self.editingFeeHeadId === id) self.resetFeeHeadForm();
+          await self.loadFeeHeads();
+        } catch (err) {
+          self.showToast("Failed to delete fee head", "error");
+        } finally {
+          self.setLoading(false);
+        }
+      }
+    );
   },
 
   // ══════════════════════════════════════════════════════════
@@ -1308,6 +1353,7 @@ const FeeManagement = {
     try {
       var res = await apiFetch("/fee/extra-dues", { auth: true });
       var history = res.data || [];
+      this._extraDuesHistory = history;
       this.renderExtraDuesHistory(history);
     } catch (err) {
       console.error("loadExtraDuesHistory:", err);
@@ -1367,73 +1413,117 @@ const FeeManagement = {
     }).join("");
   },
 
-  async markExtraDuePaid(id) {
-    var paymentMode = prompt("Payment mode (cash/online):", "cash");
-    if (!paymentMode) return;
-    var remark = prompt("Remark (optional):", "");
+  markExtraDuePaid(id) {
+    var self = this;
+    var bodyHtml =
+      '<div class="fm-form-group"><label>Payment Mode</label>' +
+        '<select id="modalExtraPaymentMode" class="fm-select">' +
+          '<option value="cash">Cash</option>' +
+          '<option value="online">Online</option>' +
+        "</select></div>" +
+      '<div class="fm-form-group"><label>Remark</label>' +
+        '<input type="text" id="modalExtraRemark" class="fm-input" placeholder="Optional remark..."></div>';
 
-    this.setLoading(true);
-    try {
-      await apiFetch("/fee/extra-dues/" + id + "/pay", {
-        method: "PATCH", auth: true,
-        body: { paymentMode: paymentMode, remark: remark || "" }
-      });
-      this.showToast("Extra due marked as paid");
-      await this.loadExtraDuesHistory();
-    } catch (err) {
-      this.showToast(err.message || "Failed to mark as paid", "error");
-    } finally {
-      this.setLoading(false);
-    }
+    this.openModal("Mark Extra Due as Paid", bodyHtml, async function() {
+      var paymentMode = document.getElementById("modalExtraPaymentMode")?.value || "cash";
+      var remark = document.getElementById("modalExtraRemark")?.value || "";
+
+      self.setLoading(true);
+      try {
+        await apiFetch("/fee/extra-dues/" + id + "/pay", {
+          method: "PATCH", auth: true,
+          body: { paymentMode: paymentMode, remark: remark }
+        });
+        self.showToast("Extra due marked as paid");
+        self.closeModal();
+        await self.loadExtraDuesHistory();
+      } catch (err) {
+        self.showToast(err.message || "Failed to mark as paid", "error");
+      } finally {
+        self.setLoading(false);
+      }
+    });
   },
 
-  async revertExtraDue(id) {
-    if (!confirm("Revert this payment? The due will become unpaid again.")) return;
-    this.setLoading(true);
-    try {
-      await apiFetch("/fee/extra-dues/" + id + "/revert", { method: "PATCH", auth: true });
-      this.showToast("Payment reverted");
-      await this.loadExtraDuesHistory();
-    } catch (err) {
-      this.showToast(err.message || "Failed to revert", "error");
-    } finally {
-      this.setLoading(false);
-    }
+  revertExtraDue(id) {
+    var self = this;
+    this.showConfirm(
+      "Revert Payment?",
+      "The due will become unpaid again.",
+      "Revert",
+      async function() {
+        self.setLoading(true);
+        try {
+          await apiFetch("/fee/extra-dues/" + id + "/revert", { method: "PATCH", auth: true });
+          self.showToast("Payment reverted");
+          await self.loadExtraDuesHistory();
+        } catch (err) {
+          self.showToast(err.message || "Failed to revert", "error");
+        } finally {
+          self.setLoading(false);
+        }
+      }
+    );
   },
 
-  async editExtraDue(id) {
-    var title = prompt("New title:");
-    if (!title) return;
-    var amount = prompt("New amount:");
-    if (!amount || isNaN(amount)) return;
-    var dueDate = prompt("New due date (YYYY-MM-DD):");
+  editExtraDue(id) {
+    var self = this;
+    var item = (this._extraDuesHistory || []).find(function(h) { return h._id === id; });
+    if (!item) { this.showToast("Could not find this extra due", "error"); return; }
 
-    this.setLoading(true);
-    try {
-      var body = { title: title, amount: parseFloat(amount) };
-      if (dueDate) body.dueDate = dueDate;
-      await apiFetch("/fee/extra-dues/" + id, { method: "PUT", auth: true, body: body });
-      this.showToast("Extra due updated");
-      await this.loadExtraDuesHistory();
-    } catch (err) {
-      this.showToast(err.message || "Failed to update", "error");
-    } finally {
-      this.setLoading(false);
-    }
+    var dueDateVal = item.dueDate ? new Date(item.dueDate).toISOString().split("T")[0] : "";
+
+    var bodyHtml =
+      '<div class="fm-form-group"><label>Title</label>' +
+        '<input type="text" id="modalExtraTitle" class="fm-input" value="' + this.escapeHtml(item.title || "") + '"></div>' +
+      '<div class="fm-form-group"><label>Amount (₹)</label>' +
+        '<input type="number" id="modalExtraAmount" class="fm-input" value="' + (item.amount || 0) + '" min="1"></div>' +
+      '<div class="fm-form-group"><label>Due Date</label>' +
+        '<input type="date" id="modalExtraDueDate" class="fm-date-input" value="' + dueDateVal + '"></div>';
+
+    this.openModal("Edit Extra Due", bodyHtml, async function() {
+      var title = (document.getElementById("modalExtraTitle")?.value || "").trim();
+      var amount = parseFloat(document.getElementById("modalExtraAmount")?.value);
+      var dueDate = document.getElementById("modalExtraDueDate")?.value || "";
+
+      if (!title) { self.showToast("Title is required", "error"); return; }
+      if (!amount || isNaN(amount) || amount < 1) { self.showToast("Enter a valid amount", "error"); return; }
+
+      self.setLoading(true);
+      try {
+        var body = { title: title, amount: amount };
+        if (dueDate) body.dueDate = dueDate;
+        await apiFetch("/fee/extra-dues/" + id, { method: "PUT", auth: true, body: body });
+        self.showToast("Extra due updated");
+        self.closeModal();
+        await self.loadExtraDuesHistory();
+      } catch (err) {
+        self.showToast(err.message || "Failed to update", "error");
+      } finally {
+        self.setLoading(false);
+      }
+    });
   },
 
-  async deleteExtraDue(id) {
-    if (!confirm("Delete this extra due? This cannot be undone.")) return;
-    this.setLoading(true);
-    try {
-      await apiFetch("/fee/extra-dues/" + id, { method: "DELETE", auth: true });
-      this.showToast("Extra due deleted");
-      await this.loadExtraDuesHistory();
-    } catch (err) {
-      this.showToast(err.message || "Failed to delete", "error");
-    } finally {
-      this.setLoading(false);
-    }
+  deleteExtraDue(id) {
+    var self = this;
+    this.showConfirm(
+      "Delete Extra Due?",
+      "This cannot be undone.",
+      "Delete",
+      async function() {
+        self.setLoading(true);
+        try {
+          await apiFetch("/fee/extra-dues/" + id, { method: "DELETE", auth: true });
+          self.showToast("Extra due deleted");
+          await self.loadExtraDuesHistory();
+        } catch (err) {
+          self.showToast(err.message || "Failed to delete", "error");
+        } finally {
+          self.setLoading(false);
+        }
+      }
+    );
   }
 
 };

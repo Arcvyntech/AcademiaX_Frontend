@@ -150,36 +150,40 @@
 
             <div class="stat-card">
 
+                <div class="stat-card-icon stat-icon-heads">💳</div>
                 <h3>Total Fee Heads</h3>
 
-                <h2>0</h2>
+                <h2 id="totalFeeHeads">0</h2>
 
             </div>
 
 
             <div class="stat-card">
 
+                <div class="stat-card-icon stat-icon-students">🎓</div>
                 <h3>Total Students</h3>
 
-                <h2>0</h2>
+                <h2 id="totalStudents">0</h2>
 
             </div>
 
 
             <div class="stat-card">
 
+                <div class="stat-card-icon stat-icon-collection">💰</div>
                 <h3>Today's Collection</h3>
 
-                <h2>₹0</h2>
+                <h2 id="todayCollection">₹0</h2>
 
             </div>
 
 
             <div class="stat-card">
 
+                <div class="stat-card-icon stat-icon-due">⏳</div>
                 <h3>Pending Due</h3>
 
-                <h2>₹0</h2>
+                <h2 id="pendingDue">₹0</h2>
 
             </div>
 
@@ -196,9 +200,9 @@
 
             </div>
 
-            <div class="section-body">
+            <div class="section-body" id="recentCollectionList">
 
-                Data will appear here...
+                <p class="empty-state">Loading recent collections...</p>
 
             </div>
 
@@ -215,9 +219,9 @@
 
             </div>
 
-            <div class="section-body">
+            <div class="section-body" id="pendingDueList">
 
-                Data will appear here...
+                <p class="empty-state">Loading pending dues...</p>
 
             </div>
 
@@ -266,6 +270,8 @@
 
 </div>
 
+<script src="assets/js/common.js"></script>
+<script src="assets/js/sidebar.js"></script>
 <script src="dashboard.js"></script>
 
 </body>

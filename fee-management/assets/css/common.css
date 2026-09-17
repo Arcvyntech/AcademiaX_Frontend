@@ -1,0 +1,103 @@
+/* ==========================================================
+   AcademiaX Fee Management
+   Common / Shared Component Styles
+   Used across Dashboard, Fee Heads, Transport, and any
+   other module page that includes assets/css/common.css
+========================================================== */
+
+/* ================= TOAST NOTIFICATIONS ================= */
+.app-toast-container {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 10050;
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 10px;
+  pointer-events: none;
+}
+.app-toast {
+  min-width: 280px;
+  max-width: 400px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, .15);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  pointer-events: auto;
+  transform: translateX(120%);
+  opacity: 0;
+  transition: all .35s cubic-bezier(.4, 0, .2, 1);
+}
+.app-toast.show {
+  transform: translateX(0);
+  opacity: 1;
+}
+.app-toast.hide {
+  transform: translateX(120%);
+  opacity: 0;
+}
+.app-toast-success { background: linear-gradient(135deg, #10b981, #16a34a); }
+.app-toast-error   { background: linear-gradient(135deg, #ef4444, #dc2626); }
+.app-toast-warning { background: linear-gradient(135deg, #f59e0b, #d97706); }
+.app-toast-info    { background: linear-gradient(135deg, #3b82f6, #2563eb); }
+.app-toast-icon {
+  font-size: 17px;
+  flex-shrink: 0;
+}
+.app-toast-msg {
+  flex: 1;
+  line-height: 1.4;
+}
+.app-toast-close {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, .75);
+  font-size: 18px;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+  flex-shrink: 0;
+  transition: color .15s;
+}
+.app-toast-close:hover { color: #fff; }
+
+/* ================= LOADING OVERLAY ================= */
+.app-loader-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(255, 255, 255, .75);
+  backdrop-filter: blur(3px);
+  z-index: 10040;
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+.app-loader-overlay.active { display: flex; }
+.app-spinner {
+  width: 44px;
+  height: 44px;
+  border: 4px solid #e2e8f0;
+  border-top-color: #ff7a00;
+  border-radius: 50%;
+  animation: appSpin .8s linear infinite;
+}
+@keyframes appSpin {
+  to { transform: rotate(360deg); }
+}
+
+@media (max-width: 480px) {
+  .app-toast-container {
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+  }
+  .app-toast {
+    min-width: 0;
+    width: 100%;
+  }
+}

@@ -40,11 +40,33 @@
             <input
                 type="text"
                 id="searchFeeHead"
-                placeholder="Search Fee Head...">
+                placeholder="Search Fee Head..."
+                aria-label="Search Fee Heads">
 
         </div>
 
     </header>
+
+    <!-- ================= STATS ================= -->
+
+    <div class="stats-bar">
+
+        <div class="stat-pill">
+            <span class="stat-label">Total</span>
+            <span class="stat-value" id="statTotal">0</span>
+        </div>
+
+        <div class="stat-pill stat-active">
+            <span class="stat-label">Active</span>
+            <span class="stat-value" id="statActive">0</span>
+        </div>
+
+        <div class="stat-pill stat-inactive">
+            <span class="stat-label">Inactive</span>
+            <span class="stat-value" id="statInactive">0</span>
+        </div>
+
+    </div>
 
     <!-- ================= MAIN ================= -->
 
@@ -55,50 +77,42 @@
         <aside class="add-fee-card">
 
             <div class="section-title">
-
                 <h2>Add New Fee Head</h2>
-
                 <p>Create a new fee category.</p>
-
             </div>
 
             <div class="form-group">
 
-                <label for="feeHeadName">
-
-                    Fee Head Name
-
-                </label>
+                <label for="feeHeadName">Fee Head Name</label>
 
                 <input
                     type="text"
                     id="feeHeadName"
-                    placeholder="Admission Fee">
+                    placeholder="Admission Fee"
+                    autocomplete="off">
+
+                <span class="field-error" id="feeHeadNameError" hidden></span>
 
             </div>
 
             <div class="form-group">
 
-                <label for="feeHeadDescription">
-
-                    Description
-
-                </label>
+                <div class="form-group-header">
+                    <label for="feeHeadDescription">Description</label>
+                    <span class="char-count" id="feeHeadDescCount">0/200</span>
+                </div>
 
                 <textarea
                     id="feeHeadDescription"
                     rows="4"
+                    maxlength="200"
                     placeholder="Enter description..."></textarea>
 
             </div>
 
             <div class="form-group">
 
-                <label for="feeHeadColor">
-
-                    Color Tag
-
-                </label>
+                <label for="feeHeadColor">Color Tag</label>
 
                 <div class="color-picker">
 
@@ -111,12 +125,16 @@
 
                 </div>
 
+                <div class="color-presets" id="colorPresets"></div>
+
             </div>
 
             <button id="btnAddFeeHead">
-
                 + Add Fee Head
+            </button>
 
+            <button id="btnCancelEdit" type="button" hidden>
+                Cancel Edit
             </button>
 
         </aside>
@@ -128,16 +146,16 @@
             <div class="card-header">
 
                 <div>
-
                     <h2>Existing Fee Heads</h2>
-
-                    <p>
-
-                        Manage, edit or deactivate fee heads.
-
-                    </p>
-
+                    <p>Manage, edit or deactivate fee heads.</p>
+                    <p class="card-header-meta" id="resultCount"></p>
                 </div>
+
+                <select id="statusFilter" class="status-filter" aria-label="Filter by status">
+                    <option value="all">All statuses</option>
+                    <option value="active">Active only</option>
+                    <option value="inactive">Inactive only</option>
+                </select>
 
             </div>
 
@@ -150,6 +168,30 @@
             </div>
 
         </section>
+
+    </div>
+
+</div>
+
+<!-- ================= TOASTS ================= -->
+
+<div id="toastStack" class="toast-stack" aria-live="polite"></div>
+
+<!-- ================= CONFIRM MODAL ================= -->
+
+<div id="confirmOverlay" class="modal-overlay" role="dialog" aria-modal="true" hidden>
+
+    <div class="modal-card">
+
+        <h3 id="confirmTitle">Are you sure?</h3>
+        <p id="confirmMessage">This action cannot be undone.</p>
+
+        <div class="modal-actions">
+
+            <button id="confirmCancel" class="modal-cancel-btn" type="button">Cancel</button>
+            <button id="confirmAccept" class="modal-accept-btn" type="button">Confirm</button>
+
+        </div>
 
     </div>
 

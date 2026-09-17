@@ -66,6 +66,20 @@ body {
 .page-header-left {
   flex: 1;
 }
+.fm-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--text-light);
+  text-decoration: none;
+  margin-bottom: 14px;
+  transition: color .15s;
+}
+.fm-back-link:hover {
+  color: var(--primary);
+}
 .page-tag {
   display: inline-flex;
   align-items: center;
@@ -387,6 +401,46 @@ body {
   background: transparent;
   color: var(--text-light);
   border: 1px solid var(--border);
+}
+
+/* ── Editing Banner (Fee Heads tab) ───────────────────── */
+.fm-editing-banner {
+  background: #fff7ed;
+  border: 1px solid #fdba74;
+  color: #c2410c;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 10px 12px;
+  border-radius: 10px;
+  margin-bottom: 16px;
+}
+.fm-form-actions {
+  display: flex;
+  gap: 10px;
+}
+.fm-form-actions .fm-btn-block {
+  flex: 1;
+  margin-top: 0;
+}
+.fm-btn-cancel {
+  flex: 0 0 auto;
+  padding: 0 18px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: #fff;
+  color: var(--text-dark, #1e293b);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .15s;
+}
+.fm-btn-cancel:hover {
+  background: #f1f5f9;
+}
+.fm-confirm-text {
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--text-dark, #1e293b);
 }
 .fm-btn-outline:hover {
   border-color: var(--primary);

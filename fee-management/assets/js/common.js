@@ -213,27 +213,80 @@ class ApiService {
 
 const Toast = {
 
+    _icons: {
+        success: "✓",
+        error: "✕",
+        warning: "⚠",
+        info: "ℹ"
+    },
+
+    _getContainer() {
+
+        var container = document.getElementById("appToastContainer");
+
+        if (!container) {
+
+            container = document.createElement("div");
+            container.id = "appToastContainer";
+            container.className = "app-toast-container";
+            document.body.appendChild(container);
+
+        }
+
+        return container;
+
+    },
+
+    _show(message, type) {
+
+        var container = this._getContainer();
+
+        var toast = document.createElement("div");
+        toast.className = "app-toast app-toast-" + type;
+        toast.innerHTML =
+            '<span class="app-toast-icon">' + this._icons[type] + '</span>' +
+            '<span class="app-toast-msg"></span>' +
+            '<button class="app-toast-close" aria-label="Close">&times;</button>';
+
+        toast.querySelector(".app-toast-msg").textContent = message;
+
+        var remove = function() {
+            toast.classList.remove("show");
+            toast.classList.add("hide");
+            setTimeout(function() { toast.remove(); }, 350);
+        };
+
+        toast.querySelector(".app-toast-close").addEventListener("click", remove);
+
+        container.appendChild(toast);
+
+        requestAnimationFrame(function() { toast.classList.add("show"); });
+
+        setTimeout(remove, 4000);
+
+    },
+
     success(message) {
 
-        alert(message);
+        this._show(message, "success");
 
     },
 
     error(message) {
 
-        alert(message);
+        this._show(message, "error");
 
     },
 
     warning(message) {
 
-        alert(message);
+        this._show(message, "warning");
 
     },
 
     info(message) {
 
-        alert(message);
+        this._show(message, "info");
 
     }
 
@@ -246,15 +299,35 @@ const Toast = {
 
 const Loader = {
 
+    _getOverlay() {
+
+        var overlay = document.getElementById("appLoaderOverlay");
+
+        if (!overlay) {
+
+            overlay = document.createElement("div");
+            overlay.id = "appLoaderOverlay";
+            overlay.className = "app-loader-overlay";
+            overlay.innerHTML = '<div class="app-spinner"></div>';
+            document.body.appendChild(overlay);
+
+        }
+
+        return overlay;
+
+    },
+
     show() {
 
         Logger.log("Loading...");
+        this._getOverlay().classList.add("active");
 
     },
 
     hide() {
 
         Logger.log("Loading Finished");
+        this._getOverlay().classList.remove("active");
 
     }
 

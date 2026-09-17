@@ -13,6 +13,7 @@
     <!-- PAGE HEADER -->
     <header class="page-header">
         <div class="page-header-left">
+            <a href="../dashboard.html" class="fm-back-link">&larr; Back to Dashboard</a>
             <span class="page-tag">Fee Management</span>
             <h1>All-in-One Fee Manager</h1>
             <p>Manage fee heads, structure, payments, collections and dues from one place.</p>
@@ -53,7 +54,13 @@
                         <span>Select Card Color</span>
                     </div>
                 </div>
-                <button id="btnAddFH" class="fm-btn fm-btn-primary fm-btn-block">+ Add Fee Head</button>
+                <div id="fhEditingBanner" class="fm-editing-banner" style="display:none;">
+                    ✏️ Editing: <strong id="fhEditingBannerName"></strong>
+                </div>
+                <div class="fm-form-actions">
+                    <button id="btnAddFH" class="fm-btn fm-btn-primary fm-btn-block">+ Add Fee Head</button>
+                    <button id="btnCancelFHEdit" class="fm-btn-cancel" style="display:none;">Cancel</button>
+                </div>
             </aside>
             <section class="fm-card">
                 <div class="fm-card-header">

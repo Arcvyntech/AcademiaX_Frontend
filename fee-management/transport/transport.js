@@ -224,6 +224,55 @@ function hideLoader() {
 }
 
 /* ==========================================================
+   CONFIRM MODAL (replaces native confirm() popups)
+========================================================== */
+
+const confirmModal = $("confirmModal");
+const confirmModalTitle = $("confirmModalTitle");
+const confirmModalText = $("confirmModalText");
+const confirmModalOk = $("confirmModalOk");
+const confirmModalCancel = $("confirmModalCancel");
+
+function showConfirmModal(title, message, onConfirm) {
+
+    if (!confirmModal) {
+        // Fallback in case the modal markup isn't present for some reason
+        if (confirm(message)) onConfirm();
+        return;
+    }
+
+    if (confirmModalTitle) confirmModalTitle.textContent = title || "Are you sure?";
+    if (confirmModalText) confirmModalText.textContent = message || "This action cannot be undone.";
+
+    confirmModal.classList.add("active");
+
+    function cleanup() {
+        confirmModal.classList.remove("active");
+        confirmModalOk?.removeEventListener("click", handleOk);
+        confirmModalCancel?.removeEventListener("click", handleCancel);
+        confirmModal.removeEventListener("click", handleOverlayClick);
+    }
+
+    function handleOk() {
+        cleanup();
+        onConfirm();
+    }
+
+    function handleCancel() {
+        cleanup();
+    }
+
+    function handleOverlayClick(e) {
+        if (e.target === confirmModal) cleanup();
+    }
+
+    confirmModalOk?.addEventListener("click", handleOk);
+    confirmModalCancel?.addEventListener("click", handleCancel);
+    confirmModal.addEventListener("click", handleOverlayClick);
+
+}
+
+/* ==========================================================
    TOAST
 ========================================================== */
 
@@ -512,6 +561,12 @@ function renderRoutes() {
                 </button>
 
                 <button
+                    class="edit-route-btn"
+                    data-id="${route._id}">
+                    Edit
+                </button>
+
+                <button
                     class="delete-route-btn"
                     data-id="${route._id}">
                     Delete
@@ -542,6 +597,18 @@ function bindRouteEvents() {
             button.onclick = () => {
 
                 openRoute(button.dataset.id);
+
+            };
+
+        });
+
+    document
+        .querySelectorAll(".edit-route-btn")
+        .forEach(button => {
+
+            button.onclick = () => {
+
+                editRoute(button.dataset.id);
 
             };
 
@@ -659,6 +726,8 @@ async function openRoute(routeId) {
 
         routeDetailsSection?.classList.remove("hidden");
 
+        routeDetailsSection?.scrollIntoView({ behavior: "smooth", block: "start" });
+
         await loadBuses();
 
         await loadAssignedStudents();
@@ -685,8 +754,10 @@ async function openRoute(routeId) {
 
 async function deleteRoute(routeId) {
 
-    if (!confirm("Delete this route?"))
-        return;
+    showConfirmModal(
+        "Delete Route?",
+        "This route and its details will be permanently removed.",
+        async function () {
 
     try {
 
@@ -719,6 +790,9 @@ async function deleteRoute(routeId) {
         hideLoader();
 
     }
+
+        }
+    );
 
 }
 
@@ -838,11 +912,21 @@ function renderBuses() {
 
             <p>Registration : ${bus.registrationNumber || "-"}</p>
 
-            <button
-                class="delete-bus-btn"
-                data-id="${bus._id}">
-                Delete
-            </button>
+            <div class="bus-actions">
+
+                <button
+                    class="edit-bus-btn"
+                    data-id="${bus._id}">
+                    Edit
+                </button>
+
+                <button
+                    class="delete-bus-btn"
+                    data-id="${bus._id}">
+                    Delete
+                </button>
+
+            </div>
 
         `;
 
@@ -859,6 +943,18 @@ function renderBuses() {
 ========================================== */
 
 function bindBusEvents() {
+
+    document
+        .querySelectorAll(".edit-bus-btn")
+        .forEach(button => {
+
+            button.onclick = () => {
+
+                editBus(button.dataset.id);
+
+            };
+
+        });
 
     document
         .querySelectorAll(".delete-bus-btn")
@@ -966,9 +1062,10 @@ async function createBus() {
 
 async function deleteBus(id) {
 
-    if (!confirm(
-        "Delete this bus?"
-    )) return;
+    showConfirmModal(
+        "Delete Bus?",
+        "This bus and its history will be permanently removed.",
+        async function () {
 
     try {
 
@@ -1002,6 +1099,9 @@ async function deleteBus(id) {
         hideLoader();
 
     }
+
+        }
+    );
 
 }
 
@@ -1565,7 +1665,7 @@ function renderAssignedStudents() {
 
         assignedStudentTable.innerHTML = `
             <tr>
-                <td colspan="6">No Assigned Students</td>
+                <td colspan="6" class="empty-table">No Assigned Students</td>
             </tr>
         `;
         return;
@@ -1613,7 +1713,7 @@ if (Array.isArray(assignment.assignedMonths)) {
 
                 <td>${months}</td>
 
-               <td class="action-buttons">
+               <td class="row-actions">
 
     <button
         class="btn btn-primary edit-assignment"
@@ -1682,15 +1782,10 @@ async function editAssignment(id) {
 
 async function removeAssignment(id) {
 
-    if (
-
-        !confirm(
-
-            "Remove transport assignment?"
-
-        )
-
-    ) return;
+    showConfirmModal(
+        "Remove Transport Assignment?",
+        "This student's transport assignment will be removed.",
+        async function () {
 
     try {
 
@@ -1733,6 +1828,9 @@ async function removeAssignment(id) {
         hideLoader();
 
     }
+
+        }
+    );
 
 }
 
@@ -1905,23 +2003,6 @@ async function initTransport() {
         await loadAssignedStudents();
 
         updateDashboardSummary();
-        // Route Form
-routeForm?.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    await saveRoute();
-});
-
-// Bus Form
-busForm?.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    await saveBus();
-});
-
-// Assign Student Form
-assignStudentForm?.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    await assignStudents();
-});
 
         console.log(
 
@@ -2007,6 +2088,10 @@ async function editRoute(routeId) {
 
         routeForm.dataset.editId = route._id;
 
+        updateRouteFormUI();
+
+        routeForm?.scrollIntoView({ behavior: "smooth", block: "start" });
+
         showToast("Route loaded for editing.");
 
     } catch (error) {
@@ -2020,6 +2105,60 @@ async function editRoute(routeId) {
         hideLoader();
 
     }
+
+}
+
+/* ==========================================
+   ROUTE EDIT MODE UI
+========================================== */
+
+function updateRouteFormUI() {
+
+    const submitBtn = routeForm?.querySelector('button[type="submit"]');
+
+    if (!submitBtn) return;
+
+    let cancelBtn = $("cancelRouteEditBtn");
+
+    if (routeForm.dataset.editId) {
+
+        submitBtn.innerHTML = "💾 Save Route";
+
+        if (!cancelBtn) {
+
+            cancelBtn = document.createElement("button");
+            cancelBtn.type = "button";
+            cancelBtn.id = "cancelRouteEditBtn";
+            cancelBtn.className = "btn btn-secondary";
+            cancelBtn.innerHTML = "❌ Cancel Edit";
+
+            submitBtn.insertAdjacentElement("afterend", cancelBtn);
+
+            cancelBtn.onclick = cancelRouteEdit;
+
+        }
+
+    } else {
+
+        submitBtn.innerHTML = "💾 Save Route";
+
+        cancelBtn?.remove();
+
+    }
+
+}
+
+function cancelRouteEdit() {
+
+    delete routeForm.dataset.editId;
+
+    routeForm.reset();
+
+    state.currentStops = [];
+
+    renderStops();
+
+    updateRouteFormUI();
 
 }
 
@@ -2070,6 +2209,8 @@ createRoute = async function () {
         state.currentStops = [];
 
         renderStops();
+
+        updateRouteFormUI();
 
         showToast("Route updated successfully.");
 
@@ -2122,6 +2263,10 @@ async function editBus(busId) {
 
         busForm.dataset.editId = bus._id;
 
+        updateBusFormUI();
+
+        busForm?.scrollIntoView({ behavior: "smooth", block: "start" });
+
         showToast("Bus loaded for editing.");
 
     } catch (error) {
@@ -2135,6 +2280,56 @@ async function editBus(busId) {
         hideLoader();
 
     }
+
+}
+
+/* ==========================================
+   BUS EDIT MODE UI
+========================================== */
+
+function updateBusFormUI() {
+
+    const submitBtn = busForm?.querySelector('button[type="submit"]');
+
+    if (!submitBtn) return;
+
+    let cancelBtn = $("cancelBusEditBtn");
+
+    if (busForm.dataset.editId) {
+
+        submitBtn.innerHTML = "💾 Save Bus";
+
+        if (!cancelBtn) {
+
+            cancelBtn = document.createElement("button");
+            cancelBtn.type = "button";
+            cancelBtn.id = "cancelBusEditBtn";
+            cancelBtn.className = "btn btn-secondary";
+            cancelBtn.innerHTML = "❌ Cancel Edit";
+
+            submitBtn.insertAdjacentElement("afterend", cancelBtn);
+
+            cancelBtn.onclick = cancelBusEdit;
+
+        }
+
+    } else {
+
+        submitBtn.innerHTML = "💾 Save Bus";
+
+        cancelBtn?.remove();
+
+    }
+
+}
+
+function cancelBusEdit() {
+
+    delete busForm.dataset.editId;
+
+    busForm.reset();
+
+    updateBusFormUI();
 
 }
 
@@ -2188,6 +2383,8 @@ createBus = async function () {
         delete busForm.dataset.editId;
 
         busForm.reset();
+
+        updateBusFormUI();
 
         showToast("Bus updated successfully.");
 
@@ -2320,6 +2517,30 @@ function startAssignmentEdit(assignment) {
 
         bus.value =
             assignment.busId?._id || "";
+
+    }
+
+    const pickup = $("pickupStop");
+
+    if (pickup) {
+
+        pickup.value = assignment.pickupStop || "";
+
+    }
+
+    const drop = $("dropStop");
+
+    if (drop) {
+
+        drop.value = assignment.dropStop || "";
+
+    }
+
+    const remarksField = $("remarks");
+
+    if (remarksField) {
+
+        remarksField.value = assignment.remarks || "";
 
     }
 
@@ -3270,3 +3491,13 @@ function exportTransportCSV() {
 
 window.transportModule.exportCSV =
     exportTransportCSV;
+
+/* ==========================================================
+   TRANSPORT V6
+   FORM SUBMIT WIRING (single source of truth)
+   NOTE: routeForm / busForm / assignStudentForm submit
+   handlers are already bound above (createRoute, createBus,
+   assignStudents). Re-binding them here previously called
+   undefined saveRoute()/saveBus() functions and caused a
+   crash + duplicate submissions - removed for good.
+========================================================== */

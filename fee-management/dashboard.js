@@ -195,25 +195,31 @@ class DashboardManager {
 
         Logger.log("Loading Statistics...");
 
-        /*
-            Future API
+        const response = await ApiService.get("/fee/dashboard");
 
-            const response =
-            await ApiService.get("/fee/dashboard");
+        if (response && response.data) {
 
-        */
+            this.stats = {
+                feeHeads: response.data.feeHeads || 0,
+                students: response.data.students || 0,
+                todayCollection: response.data.todayCollection || 0,
+                pendingDue: response.data.pendingDue || 0
+            };
 
-        this.stats = {
+        } else {
 
-            feeHeads: 12,
+            // Backend not reachable yet — fall back to demo data so the
+            // dashboard is still reviewable, but flag it clearly in console.
+            Logger.log("Dashboard API unavailable, showing demo data.");
 
-            students: 856,
+            this.stats = {
+                feeHeads: 12,
+                students: 856,
+                todayCollection: 145000,
+                pendingDue: 362000
+            };
 
-            todayCollection: 145000,
-
-            pendingDue: 362000
-
-        };
+        }
 
         this.updateStatCards();
 
@@ -274,34 +280,25 @@ class DashboardManager {
 
         Logger.log("Loading Recent Collections...");
 
-        /*
-            Future API
+        const response = await ApiService.get("/collection/recent");
 
-            this.collections =
-            await ApiService.get("/collection/recent");
-        */
+        if (response && response.data) {
 
-        this.collections = [
+            this.collections = response.data;
 
-            {
-                student: "Rahul Sharma",
-                amount: 2500,
-                date: "22 Jul 2026"
-            },
+        } else {
 
-            {
-                student: "Aman Verma",
-                amount: 3200,
-                date: "22 Jul 2026"
-            },
+            Logger.log("Recent collections API unavailable, showing demo data.");
 
-            {
-                student: "Priya Joshi",
-                amount: 1800,
-                date: "22 Jul 2026"
-            }
+            this.collections = [
 
-        ];
+                { student: "Rahul Sharma", amount: 2500, date: "22 Jul 2026" },
+                { student: "Aman Verma", amount: 3200, date: "22 Jul 2026" },
+                { student: "Priya Joshi", amount: 1800, date: "22 Jul 2026" }
+
+            ];
+
+        }
 
         this.renderRecentCollections();
 
@@ -315,31 +312,25 @@ class DashboardManager {
 
         Logger.log("Loading Pending Due...");
 
-        /*
-            Future API
+        const response = await ApiService.get("/due/pending");
 
-            this.pendingDues =
-            await ApiService.get("/due/pending");
-        */
+        if (response && response.data) {
 
-        this.pendingDues = [
+            this.pendingDues = response.data;
 
-            {
-                student: "Karan Singh",
-                amount: 4500
-            },
+        } else {
 
-            {
-                student: "Neha Rawat",
-                amount: 2700
-            },
+            Logger.log("Pending due API unavailable, showing demo data.");
 
-            {
-                student: "Rohan Bisht",
-                amount: 3900
-            }
+            this.pendingDues = [
 
-        ];
+                { student: "Karan Singh", amount: 4500 },
+                { student: "Neha Rawat", amount: 2700 },
+                { student: "Rohan Bisht", amount: 3900 }
+
+            ];
+
+        }
 
         this.renderPendingDue();
 
@@ -355,6 +346,15 @@ class DashboardManager {
 
         this.elements.recentCollection.innerHTML = "";
 
+        if (!this.collections || this.collections.length === 0) {
+
+            this.elements.recentCollection.innerHTML =
+                '<p class="empty-state">No collections recorded yet.</p>';
+
+            return;
+
+        }
+
         this.collections.forEach(item => {
 
             const row = document.createElement("div");
@@ -362,18 +362,25 @@ class DashboardManager {
             row.className = "dashboard-item";
 
             row.innerHTML = `
-
-                <strong>${item.student}</strong>
-
-                <span>${Utils.formatCurrency(item.amount)}</span>
-
-                <small>${item.date}</small>
-
+                <div class="dashboard-item-avatar">${this.getInitials(item.student)}</div>
+                <div class="dashboard-item-info">
+                    <strong>${item.student}</strong>
+                    <small>${item.date}</small>
+                </div>
+                <span class="dashboard-item-amount amount-positive">+${Utils.formatCurrency(item.amount)}</span>
             `;
 
             this.elements.recentCollection.appendChild(row);
 
         });
+
+    }
+
+    getInitials(name) {
+
+        if (!name) return "?";
+
+        return name.split(" ").map(part => part[0]).join("").substring(0, 2).toUpperCase();
 
     }
 
@@ -387,6 +394,15 @@ class DashboardManager {
 
         this.elements.pendingDue.innerHTML = "";
 
+        if (!this.pendingDues || this.pendingDues.length === 0) {
+
+            this.elements.pendingDue.innerHTML =
+                '<p class="empty-state">🎉 No pending dues right now.</p>';
+
+            return;
+
+        }
+
         this.pendingDues.forEach(item => {
 
             const row = document.createElement("div");
@@ -394,11 +410,12 @@ class DashboardManager {
             row.className = "dashboard-item";
 
             row.innerHTML = `
-
-                <strong>${item.student}</strong>
-
-                <span>${Utils.formatCurrency(item.amount)}</span>
-
+                <div class="dashboard-item-avatar avatar-due">${this.getInitials(item.student)}</div>
+                <div class="dashboard-item-info">
+                    <strong>${item.student}</strong>
+                    <small>Pending payment</small>
+                </div>
+                <span class="dashboard-item-amount amount-due">${Utils.formatCurrency(item.amount)}</span>
             `;
 
             this.elements.pendingDue.appendChild(row);
@@ -425,13 +442,13 @@ class DashboardManager {
 
     openFeeSetup() {
 
-        window.location.href = "fee-setup/index.html";
+        window.location.href = "fee-management/index.html#tab-fee-setup";
 
     }
 
     openCollection() {
 
-        window.location.href = "collection/index.html";
+        window.location.href = "fee-management/index.html#tab-collection";
 
     }
 

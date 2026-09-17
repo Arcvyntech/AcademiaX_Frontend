@@ -510,11 +510,19 @@ button{
 
 .section-body{
 
-    padding:25px;
+    padding:14px 20px;
 
     color:var(--text-light);
 
     min-height:140px;
+
+    font-size:15px;
+
+}
+
+.empty-state{
+
+    min-height:112px;
 
     display:flex;
 
@@ -522,9 +530,149 @@ button{
 
     justify-content:center;
 
-    font-size:15px;
+    text-align:center;
+
+    color:var(--text-light);
 
 }
+
+/* =========================
+   STAT CARD ICON
+========================= */
+
+.stat-card-icon{
+
+    width:46px;
+
+    height:46px;
+
+    border-radius:12px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:22px;
+
+    margin-bottom:14px;
+
+    background:rgba(255,122,0,.12);
+
+}
+
+.stat-icon-students{ background:rgba(59,130,246,.12); }
+.stat-icon-collection{ background:rgba(16,185,129,.12); }
+.stat-icon-due{ background:rgba(239,68,68,.12); }
+
+/* =========================
+   DASHBOARD LIST ITEM
+   (Recent Collection / Pending Due rows)
+========================= */
+
+.dashboard-item{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:14px;
+
+    padding:14px 5px;
+
+    border-bottom:1px solid var(--border-color);
+
+}
+
+.dashboard-item:last-child{
+
+    border-bottom:none;
+
+}
+
+.dashboard-item-avatar{
+
+    width:40px;
+
+    height:40px;
+
+    border-radius:50%;
+
+    background:rgba(16,185,129,.12);
+
+    color:var(--success);
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-weight:700;
+
+    font-size:13px;
+
+    flex-shrink:0;
+
+}
+
+.dashboard-item-avatar.avatar-due{
+
+    background:rgba(239,68,68,.12);
+
+    color:var(--danger);
+
+}
+
+.dashboard-item-info{
+
+    flex:1;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:3px;
+
+    min-width:0;
+
+}
+
+.dashboard-item-info strong{
+
+    font-size:14.5px;
+
+    color:var(--text-dark);
+
+    white-space:nowrap;
+
+    overflow:hidden;
+
+    text-overflow:ellipsis;
+
+}
+
+.dashboard-item-info small{
+
+    font-size:12.5px;
+
+    color:var(--text-light);
+
+}
+
+.dashboard-item-amount{
+
+    font-weight:700;
+
+    font-size:14.5px;
+
+    flex-shrink:0;
+
+}
+
+.amount-positive{ color:var(--success); }
+.amount-due{ color:var(--danger); }
 
 
 /* ==========================================================

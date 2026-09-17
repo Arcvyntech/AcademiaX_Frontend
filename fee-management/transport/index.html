@@ -29,6 +29,10 @@
 
     <link
         rel="stylesheet"
+        href="../assets/css/sidebar.css">
+
+    <link
+        rel="stylesheet"
         href="../assets/css/header.css">
 
     <link
@@ -38,6 +42,80 @@
 </head>
 
 <body>
+
+    <!-- ==========================================
+        SIDEBAR NAVIGATION
+    =========================================== -->
+
+    <aside class="sidebar">
+
+        <div class="sidebar-top">
+            <div class="logo">
+                <div class="logo-icon">A</div>
+                <div class="logo-text">
+                    <h2>AcademiaX</h2>
+                    <span>Fee Management</span>
+                </div>
+            </div>
+        </div>
+
+        <nav class="sidebar-menu">
+
+            <a href="../dashboard.html" class="menu-item">
+                <span>🏠</span>
+                Dashboard
+            </a>
+
+            <a href="../fee-heads/index.html" class="menu-item">
+                <span>💳</span>
+                Fee Heads
+            </a>
+
+            <a href="index.html" class="menu-item active">
+                <span>🚌</span>
+                Transport
+            </a>
+
+            <div style="margin:14px 16px 8px;border-top:1px solid rgba(255,255,255,.12);padding-top:12px;">
+                <a href="../fee-management/index.html" class="menu-item" style="background:rgba(255,122,0,.15);border:1px solid rgba(255,122,0,.3);border-radius:10px;">
+                    <span>&#9733;</span>
+                    All-in-One Fee Manager
+                </a>
+            </div>
+
+            <a href="../fee-management/index.html#tab-fee-setup" class="menu-item">
+                <span>⚙</span>
+                Fee Setup
+            </a>
+
+            <a href="../fee-management/index.html#tab-fee-status" class="menu-item">
+                <span>📋</span>
+                Fee Status
+            </a>
+
+            <a href="../fee-management/index.html#tab-collection" class="menu-item">
+                <span>💰</span>
+                Collection
+            </a>
+
+            <a href="../fee-management/index.html#tab-dues" class="menu-item">
+                <span>⏳</span>
+                Due
+            </a>
+
+            <a href="../fee-management/index.html#tab-other-dues" class="menu-item">
+                <span>➕</span>
+                Other Dues
+            </a>
+
+        </nav>
+
+        <div class="sidebar-footer">
+            <a href="#">⚙ Settings</a>
+            <a href="#">🚪 Logout</a>
+        </div>
+
+    </aside>
 
     <!-- ==========================================
         PAGE CONTENT
@@ -542,9 +620,6 @@
 
                 </section>
 
-            </div>
-
-        </section>
                         <!-- ==========================================
                     ASSIGN STUDENTS
                 =========================================== -->
@@ -815,7 +890,7 @@
                                     <tr>
 
                                         <td
-                                            colspan="7"
+                                            colspan="6"
                                             class="empty-table">
 
                                             No Students Assigned
@@ -954,8 +1029,27 @@
         </div>
 
         <!-- ==========================================
-            PAGE LOADER
+            CONFIRM MODAL (replaces native confirm())
         =========================================== -->
+
+        <div id="confirmModal" class="confirm-modal-overlay">
+
+            <div class="confirm-modal-box">
+
+                <div class="confirm-modal-icon">⚠</div>
+
+                <h3 id="confirmModalTitle">Are you sure?</h3>
+
+                <p id="confirmModalText">This action cannot be undone.</p>
+
+                <div class="confirm-modal-actions">
+                    <button type="button" id="confirmModalCancel" class="confirm-modal-cancel">Cancel</button>
+                    <button type="button" id="confirmModalOk" class="confirm-modal-confirm">Delete</button>
+                </div>
+
+            </div>
+
+        </div>
 
         <div
             id="loader"
@@ -1003,6 +1097,7 @@
     <script src="../../js/config.js"></script>
 <script src="../../js/api.js"></script>
 <script src="../assets/js/common.js"></script>
+<script src="../assets/js/sidebar.js"></script>
    
     <script src="transport.js"></script>
 

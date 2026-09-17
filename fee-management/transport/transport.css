@@ -317,6 +317,17 @@ body{
 
 }
 
+/* Consistent focus ring for all interactive elements (keyboard accessibility) */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible{
+
+    outline:2px solid var(--primary);
+    outline-offset:2px;
+
+}
+
 /* =========================
    Stops Section
 ========================= */
@@ -381,6 +392,12 @@ body{
 
 }
 
+.primary-btn:active{
+
+    transform:translateY(0);
+
+}
+
 .secondary-btn{
 
     background:#eef4ff;
@@ -396,6 +413,80 @@ body{
 .secondary-btn:hover{
 
     background:var(--primary);
+
+    color:#fff;
+
+}
+
+/* =========================
+   Generic .btn system
+   (used by dynamically-injected
+   edit / cancel / remove controls)
+========================= */
+
+.btn{
+
+    border:none;
+
+    border-radius:8px;
+
+    padding:10px 16px;
+
+    cursor:pointer;
+
+    font-size:14px;
+
+    font-weight:600;
+
+    transition:var(--transition);
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:6px;
+
+}
+
+.btn-primary{
+
+    background:var(--primary);
+
+    color:#fff;
+
+}
+
+.btn-primary:hover{
+
+    background:var(--primary-dark);
+
+}
+
+.btn-secondary{
+
+    background:#eef2f7;
+
+    color:var(--text);
+
+}
+
+.btn-secondary:hover{
+
+    background:#e2e8f0;
+
+}
+
+.btn-danger{
+
+    background:#fee2e2;
+
+    color:var(--danger);
+
+}
+
+.btn-danger:hover{
+
+    background:var(--danger);
 
     color:#fff;
 
@@ -431,6 +522,12 @@ body{
 
     list-style:none;
 
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:10px;
+
 }
 
 #stopsPreview li{
@@ -449,8 +546,110 @@ body{
 
 }
 
+/* Stop chips rendered dynamically by JS (renderStops) */
+
+.stop-chip{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    padding:9px 10px 9px 16px;
+
+    border-radius:24px;
+
+    background:var(--primary-light);
+
+    color:var(--primary-dark);
+
+    font-size:14px;
+
+    font-weight:600;
+
+}
+
+.stop-chip span{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:6px;
+
+    white-space:nowrap;
+
+}
+
+.remove-stop{
+
+    width:22px;
+
+    height:22px;
+
+    flex:none;
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:rgba(255,255,255,.7);
+
+    color:var(--danger);
+
+    font-size:16px;
+
+    line-height:1;
+
+    cursor:pointer;
+
+    transition:var(--transition);
+
+}
+
+.remove-stop:hover{
+
+    background:var(--danger);
+
+    color:#fff;
+
+}
+
 /* =========================
-   Action Buttons
+   Generic Empty State
+   (routes / buses / stops / students
+   before any data has loaded)
+========================= */
+
+.empty-state{
+
+    width:100%;
+
+    text-align:center;
+
+    padding:40px 20px;
+
+    color:var(--text-light);
+
+    font-size:14px;
+
+    border:2px dashed var(--border);
+
+    border-radius:12px;
+
+    background:#fafbfd;
+
+}
+
+/* =========================
+   Action Buttons (form footer)
 ========================= */
 
 .action-buttons{
@@ -461,7 +660,11 @@ body{
 
     justify-content:flex-end;
 
-    gap:15px;
+    align-items:center;
+
+    gap:12px;
+
+    flex-wrap:wrap;
 
 }
 
@@ -501,9 +704,13 @@ body{
 
     .action-buttons .primary-btn,
 
-    .action-buttons .secondary-btn{
+    .action-buttons .secondary-btn,
+
+    .action-buttons .btn{
 
         width:100%;
+
+        justify-content:center;
 
     }
 
@@ -628,6 +835,8 @@ body{
 
     justify-content:flex-end;
 
+    flex-wrap:wrap;
+
     gap:10px;
 
     margin-top:20px;
@@ -652,7 +861,22 @@ body{
 
 }
 
-.edit-route{
+.select-route-btn{
+
+    background:var(--primary);
+
+    color:#fff;
+
+}
+
+.select-route-btn:hover{
+
+    background:var(--primary-dark);
+
+}
+
+.edit-route,
+.edit-route-btn{
 
     background:#e0f2fe;
 
@@ -660,7 +884,8 @@ body{
 
 }
 
-.edit-route:hover{
+.edit-route:hover,
+.edit-route-btn:hover{
 
     background:#0369a1;
 
@@ -668,7 +893,8 @@ body{
 
 }
 
-.delete-route{
+.delete-route,
+.delete-route-btn{
 
     background:#fee2e2;
 
@@ -676,7 +902,8 @@ body{
 
 }
 
-.delete-route:hover{
+.delete-route:hover,
+.delete-route-btn:hover{
 
     background:var(--danger);
 
@@ -733,6 +960,8 @@ body{
     border-radius:30px;
 
     font-weight:700;
+
+    flex:none;
 
 }
 
@@ -828,6 +1057,7 @@ body{
 
 }
 
+.bus-card h3,
 .bus-card h4{
 
     margin-bottom:10px;
@@ -852,6 +1082,8 @@ body{
 
     justify-content:flex-end;
 
+    flex-wrap:wrap;
+
     gap:10px;
 
     margin-top:15px;
@@ -872,9 +1104,12 @@ body{
 
     font-size:13px;
 
+    font-weight:600;
+
 }
 
-.bus-edit{
+.bus-edit,
+.edit-bus-btn{
 
     background:#dbeafe;
 
@@ -882,7 +1117,8 @@ body{
 
 }
 
-.bus-edit:hover{
+.bus-edit:hover,
+.edit-bus-btn:hover{
 
     background:var(--primary);
 
@@ -890,7 +1126,8 @@ body{
 
 }
 
-.bus-delete{
+.bus-delete,
+.delete-bus-btn{
 
     background:#fee2e2;
 
@@ -898,7 +1135,8 @@ body{
 
 }
 
-.bus-delete:hover{
+.bus-delete:hover,
+.delete-bus-btn:hover{
 
     background:var(--danger);
 
@@ -1078,6 +1316,8 @@ body{
     border-bottom:1px solid #f1f5f9;
 
     transition:var(--transition);
+
+    cursor:pointer;
 
 }
 
@@ -1264,8 +1504,25 @@ body{
 }
 
 /* =========================
-   Table Actions
+   Table Row Actions
+   (renamed from the old, overloaded
+   .action-buttons so form footers and
+   table action cells stop clashing)
 ========================= */
+
+.row-actions{
+
+    display:flex;
+
+    gap:10px;
+
+    justify-content:center;
+
+    align-items:center;
+
+    flex-wrap:wrap;
+
+}
 
 .table-actions{
 
@@ -1574,6 +1831,155 @@ body{
 
 }
 
+/* =========================
+   CONFIRM MODAL
+   (replaces native confirm() popups)
+========================= */
+
+.confirm-modal-overlay{
+
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(15,23,42,.45);
+
+    display:none;
+
+    justify-content:center;
+
+    align-items:center;
+
+    z-index:10010;
+
+    backdrop-filter:blur(2px);
+
+}
+
+.confirm-modal-overlay.active{
+
+    display:flex;
+
+}
+
+.confirm-modal-box{
+
+    background:#fff;
+
+    padding:30px;
+
+    border-radius:16px;
+
+    text-align:center;
+
+    box-shadow:0 20px 40px rgba(15,23,42,.18);
+
+    min-width:320px;
+
+    max-width:380px;
+
+}
+
+.confirm-modal-icon{
+
+    width:56px;
+
+    height:56px;
+
+    border-radius:50%;
+
+    background:rgba(239,68,68,.1);
+
+    color:#ef4444;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:26px;
+
+    margin:0 auto 16px;
+
+}
+
+.confirm-modal-box h3{
+
+    margin-bottom:8px;
+
+    color:var(--text);
+
+    font-size:18px;
+
+}
+
+.confirm-modal-box p{
+
+    color:var(--text-light);
+
+    font-size:14px;
+
+    margin-bottom:22px;
+
+}
+
+.confirm-modal-actions{
+
+    display:flex;
+
+    gap:10px;
+
+}
+
+.confirm-modal-actions button{
+
+    flex:1;
+
+    padding:11px 0;
+
+    border-radius:10px;
+
+    font-size:14px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    border:none;
+
+    transition:var(--transition);
+
+}
+
+.confirm-modal-cancel{
+
+    background:#f1f5f9;
+
+    color:var(--text);
+
+}
+
+.confirm-modal-cancel:hover{
+
+    background:#e2e8f0;
+
+}
+
+.confirm-modal-confirm{
+
+    background:#ef4444;
+
+    color:#fff;
+
+}
+
+.confirm-modal-confirm:hover{
+
+    background:#dc2626;
+
+}
+
 @keyframes spin{
 
     0%{
@@ -1770,13 +2176,18 @@ body{
 
     }
 
+    .row-actions{
+
+        justify-content:flex-start;
+
+    }
+
 }
-.action-buttons{
-    display:flex;
-    gap:10px;
-    justify-content:center;
-    align-items:center;
-}
+
+/* ==========================================================
+   Assignment table row actions
+   (edit-assignment / remove-assignment buttons injected by JS)
+========================================================== */
 
 .edit-assignment,
 .remove-assignment{
