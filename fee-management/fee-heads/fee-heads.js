@@ -1,7 +1,7 @@
 /* ==========================================================
    AcademiaX ERP
    Fee Heads Management
-   Version : 2.0 (Standalone) - Improved UX/UI
+   Version : 2.2 (Standalone) - Bugfixes + Nav + Improved UX/UI
 ========================================================== */
 
 const FeeHeads = {
@@ -13,6 +13,8 @@ const FeeHeads = {
     searchTerm: "",
     isLoading: false,
     searchDebounceTimer: null,
+
+    dashboardUrl: "../dashboard.html",
 
     elements: {},
 
@@ -35,7 +37,9 @@ const FeeHeads = {
 
     cacheDOM() {
 
+        this.elements.backBtn = document.getElementById("btnBackToDashboard");
         this.elements.search = document.getElementById("searchFeeHead");
+        this.elements.clearSearch = document.getElementById("clearSearchBtn");
         this.elements.name = document.getElementById("feeHeadName");
         this.elements.nameError = document.getElementById("feeHeadNameError");
         this.elements.description = document.getElementById("feeHeadDescription");
@@ -65,6 +69,15 @@ const FeeHeads = {
 
     bindEvents() {
 
+        // Back to Dashboard (warns if there's an unsaved edit in progress)
+        if (this.elements.backBtn) {
+
+            this.elements.backBtn.addEventListener("click", () => {
+                this.goToDashboard();
+            });
+
+        }
+
         this.elements.button.addEventListener("click", () => {
 
             if (this.editingId) {
@@ -88,6 +101,8 @@ const FeeHeads = {
 
             const value = event.target.value;
 
+            this.toggleClearButton(value);
+
             clearTimeout(this.searchDebounceTimer);
 
             this.searchDebounceTimer = setTimeout(() => {
@@ -96,6 +111,21 @@ const FeeHeads = {
             }, 250);
 
         });
+
+        // Clear-search button
+        if (this.elements.clearSearch) {
+
+            this.elements.clearSearch.addEventListener("click", () => {
+
+                this.elements.search.value = "";
+                this.searchTerm = "";
+                this.toggleClearButton("");
+                this.applyFilters();
+                this.elements.search.focus();
+
+            });
+
+        }
 
         // Submit form on Enter (but not inside the textarea)
         this.elements.name.addEventListener("keydown", (event) => {
@@ -107,10 +137,21 @@ const FeeHeads = {
 
         });
 
-        // Esc cancels an in-progress edit
+        // Esc: clears search if search is focused & has text,
+        // otherwise cancels an in-progress edit
         document.addEventListener("keydown", (event) => {
 
-            if (event.key === "Escape" && this.editingId) {
+            if (event.key !== "Escape") return;
+
+            if (document.activeElement === this.elements.search && this.elements.search.value) {
+                this.elements.search.value = "";
+                this.searchTerm = "";
+                this.toggleClearButton("");
+                this.applyFilters();
+                return;
+            }
+
+            if (this.editingId) {
                 this.resetForm();
             }
 
@@ -166,6 +207,45 @@ const FeeHeads = {
     },
 
     /* ======================================================
+       NAVIGATION
+    ====================================================== */
+
+    goToDashboard() {
+
+        const hasUnsavedEdit = !!this.editingId;
+
+        if (hasUnsavedEdit) {
+
+            this.showConfirm({
+                title: "Leave without saving?",
+                message: "You're currently editing a Fee Head. Unsaved changes will be lost.",
+                acceptLabel: "Leave Anyway",
+                onAccept: () => {
+                    window.location.href = this.dashboardUrl;
+                }
+            });
+
+            return;
+
+        }
+
+        window.location.href = this.dashboardUrl;
+
+    },
+
+    /* ======================================================
+       SEARCH CLEAR BUTTON VISIBILITY
+    ====================================================== */
+
+    toggleClearButton(value) {
+
+        if (!this.elements.clearSearch) return;
+
+        this.elements.clearSearch.hidden = !value;
+
+    },
+
+    /* ======================================================
        COLOR PRESETS
     ====================================================== */
 
@@ -188,6 +268,8 @@ const FeeHeads = {
             </button>
         `).join("");
 
+        this.markSelectedSwatch(this.elements.color.value);
+
         this.elements.colorPresets.addEventListener("click", (event) => {
 
             const swatch = event.target.closest(".color-swatch");
@@ -195,8 +277,33 @@ const FeeHeads = {
             if (!swatch) return;
 
             this.elements.color.value = swatch.dataset.color;
+            this.markSelectedSwatch(swatch.dataset.color);
 
         });
+
+        // Keep swatch highlight in sync if the user picks a custom color instead
+        this.elements.color.addEventListener("input", (event) => {
+            this.markSelectedSwatch(event.target.value);
+        });
+
+    },
+
+    markSelectedSwatch(hex) {
+
+        if (!this.elements.colorPresets) return;
+
+        const normalized = (hex || "").toLowerCase();
+
+        this.elements.colorPresets
+            .querySelectorAll(".color-swatch")
+            .forEach(swatch => {
+
+                swatch.classList.toggle(
+                    "selected",
+                    swatch.dataset.color.toLowerCase() === normalized
+                );
+
+            });
 
     },
 
@@ -245,9 +352,12 @@ const FeeHeads = {
 
         this.filteredFeeHeads = this.feeHeads.filter(item => {
 
+            const name = (item.name || "").toLowerCase();
+            const description = (item.description || "").toLowerCase();
+
             const matchesKeyword = !keyword ||
-                item.name.toLowerCase().includes(keyword) ||
-                (item.description || "").toLowerCase().includes(keyword);
+                name.includes(keyword) ||
+                description.includes(keyword);
 
             const matchesStatus =
                 this.statusFilter === "all" ||
@@ -333,6 +443,10 @@ const FeeHeads = {
 
         if (!this.elements.container) return;
 
+        if (this.elements.resultCount) {
+            this.elements.resultCount.textContent = "";
+        }
+
         this.elements.container.innerHTML = `
             <div class="empty-state empty-state-error">
                 <div class="empty-state-icon">⚠️</div>
@@ -362,6 +476,10 @@ const FeeHeads = {
 
         if (isLoading) {
 
+            if (this.elements.resultCount) {
+                this.elements.resultCount.textContent = "Loading…";
+            }
+
             this.elements.container.innerHTML = Array.from({ length: 3 })
                 .map(() => `
                     <div class="fee-head-card skeleton-card" aria-hidden="true">
@@ -383,6 +501,7 @@ const FeeHeads = {
     createCard(item) {
 
         const isEditing = this.editingId === item._id;
+        const name = item.name || "Untitled Fee Head";
 
         return `
             <div class="fee-head-card ${isEditing ? "is-editing" : ""}" style="--card-color:${item.color || "#ff7a00"}">
@@ -391,7 +510,7 @@ const FeeHeads = {
 
                     <div>
                         <div class="fee-head-title">
-                            ${this.escapeHTML(item.name)}
+                            ${this.escapeHTML(name)}
                         </div>
                         <div class="fee-head-description">
                             ${this.escapeHTML(item.description || "No description added.")}
@@ -412,15 +531,15 @@ const FeeHeads = {
 
                 <div class="card-actions">
 
-                    <button class="edit-btn" data-id="${item._id}" aria-label="Edit ${this.escapeHTML(item.name)}">
+                    <button class="edit-btn" data-id="${item._id}" aria-label="Edit ${this.escapeHTML(name)}">
                         ✏ Edit
                     </button>
 
-                    <button class="status-btn" data-id="${item._id}" aria-label="${item.status ? "Deactivate" : "Activate"} ${this.escapeHTML(item.name)}">
+                    <button class="status-btn" data-id="${item._id}" aria-label="${item.status ? "Deactivate" : "Activate"} ${this.escapeHTML(name)}">
                         ${item.status ? "⏸ Deactivate" : "▶ Activate"}
                     </button>
 
-                    <button class="delete-btn" data-id="${item._id}" aria-label="Delete ${this.escapeHTML(item.name)}">
+                    <button class="delete-btn" data-id="${item._id}" aria-label="Delete ${this.escapeHTML(name)}">
                         🗑 Delete
                     </button>
 
@@ -504,7 +623,11 @@ const FeeHeads = {
         const len = this.elements.description.value.length;
 
         this.elements.descCount.textContent = `${len}/${max}`;
-        this.elements.descCount.classList.toggle("over-limit", len > max);
+
+        const isOverLimit = len > max;
+
+        this.elements.descCount.classList.toggle("over-limit", isOverLimit);
+        this.elements.description.classList.toggle("over-limit", isOverLimit);
 
     },
 
@@ -523,7 +646,7 @@ const FeeHeads = {
         }
 
         const duplicate = this.feeHeads.find(item =>
-            item.name.toLowerCase() === name.toLowerCase() &&
+            (item.name || "").toLowerCase() === name.toLowerCase() &&
             item._id !== this.editingId
         );
 
@@ -550,12 +673,20 @@ const FeeHeads = {
         if (isBusy) {
 
             this.elements.button.dataset.originalText = this.elements.button.textContent;
+            this.elements.button.dataset.busyLabel = busyLabel;
             this.elements.button.textContent = busyLabel;
 
         }
         else if (this.elements.button.dataset.originalText) {
 
-            this.elements.button.textContent = this.elements.button.dataset.originalText;
+            // Only restore the saved label if nothing else (e.g. resetForm)
+            // has already changed the button's text while we were busy.
+            if (this.elements.button.textContent === this.elements.button.dataset.busyLabel) {
+                this.elements.button.textContent = this.elements.button.dataset.originalText;
+            }
+
+            delete this.elements.button.dataset.originalText;
+            delete this.elements.button.dataset.busyLabel;
 
         }
 
@@ -617,10 +748,11 @@ const FeeHeads = {
         this.editingId = id;
         this.clearFieldError();
 
-        this.elements.name.value = feeHead.name;
+        this.elements.name.value = feeHead.name || "";
         this.elements.description.value = feeHead.description || "";
         this.elements.color.value = feeHead.color || "#ff7a00";
 
+        this.markSelectedSwatch(this.elements.color.value);
         this.updateDescCount();
 
         this.elements.button.textContent = "Update Fee Head";
@@ -692,6 +824,7 @@ const FeeHeads = {
         this.elements.description.value = "";
         this.elements.color.value = "#ff7a00";
 
+        this.markSelectedSwatch(this.elements.color.value);
         this.updateDescCount();
 
         this.elements.button.textContent = "+ Add Fee Head";
@@ -844,7 +977,9 @@ const FeeHeads = {
 
         this.elements.confirmAccept.addEventListener("click", acceptHandler);
 
-        this.elements.confirmAccept.focus();
+        // Default focus goes to Cancel, not the destructive action —
+        // safer default for keyboard/Enter users.
+        this.elements.confirmCancel.focus();
 
     },
 

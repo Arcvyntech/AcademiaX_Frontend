@@ -1,7 +1,7 @@
 /* ==========================================================
    AcademiaX Fee Management Dashboard
    Dashboard JavaScript
-   Version 1.0
+   Version 1.1 - Removed demo/fake fallback data
 ========================================================== */
 
 "use strict";
@@ -26,6 +26,10 @@ class DashboardManager {
         this.pendingDues = [];
 
         this.elements = {};
+
+        // Tracks whether any data source failed, so we can show one
+        // combined notice instead of stacking multiple toasts.
+        this.hadLoadIssue = false;
 
     }
 
@@ -161,6 +165,8 @@ class DashboardManager {
 
         Loader.show();
 
+        this.hadLoadIssue = false;
+
         try {
 
             await this.loadStatistics();
@@ -168,6 +174,12 @@ class DashboardManager {
             await this.loadRecentCollections();
 
             await this.loadPendingDue();
+
+            if (this.hadLoadIssue) {
+
+                Toast.error("Some dashboard data couldn't be loaded. Showing what's available.");
+
+            }
 
         }
 
@@ -195,29 +207,49 @@ class DashboardManager {
 
         Logger.log("Loading Statistics...");
 
-        const response = await ApiService.get("/fee/dashboard");
+        try {
 
-        if (response && response.data) {
+            const response = await ApiService.get("/fee/dashboard");
+
+            if (response && response.data) {
+
+                this.stats = {
+                    feeHeads: response.data.feeHeads || 0,
+                    students: response.data.students || 0,
+                    todayCollection: response.data.todayCollection || 0,
+                    pendingDue: response.data.pendingDue || 0
+                };
+
+            } else {
+
+                // Backend responded but with no usable data — show real
+                // zeros rather than fabricating numbers.
+                Logger.log("Dashboard statistics unavailable from API.");
+
+                this.stats = {
+                    feeHeads: 0,
+                    students: 0,
+                    todayCollection: 0,
+                    pendingDue: 0
+                };
+
+                this.hadLoadIssue = true;
+
+            }
+
+        }
+        catch (error) {
+
+            Logger.error(error);
 
             this.stats = {
-                feeHeads: response.data.feeHeads || 0,
-                students: response.data.students || 0,
-                todayCollection: response.data.todayCollection || 0,
-                pendingDue: response.data.pendingDue || 0
+                feeHeads: 0,
+                students: 0,
+                todayCollection: 0,
+                pendingDue: 0
             };
 
-        } else {
-
-            // Backend not reachable yet — fall back to demo data so the
-            // dashboard is still reviewable, but flag it clearly in console.
-            Logger.log("Dashboard API unavailable, showing demo data.");
-
-            this.stats = {
-                feeHeads: 12,
-                students: 856,
-                todayCollection: 145000,
-                pendingDue: 362000
-            };
+            this.hadLoadIssue = true;
 
         }
 
@@ -280,23 +312,32 @@ class DashboardManager {
 
         Logger.log("Loading Recent Collections...");
 
-        const response = await ApiService.get("/collection/recent");
+        try {
 
-        if (response && response.data) {
+            const response = await ApiService.get("/collection/recent");
 
-            this.collections = response.data;
+            if (response && response.data) {
 
-        } else {
+                this.collections = response.data;
 
-            Logger.log("Recent collections API unavailable, showing demo data.");
+            } else {
 
-            this.collections = [
+                Logger.log("Recent collections unavailable from API.");
 
-                { student: "Rahul Sharma", amount: 2500, date: "22 Jul 2026" },
-                { student: "Aman Verma", amount: 3200, date: "22 Jul 2026" },
-                { student: "Priya Joshi", amount: 1800, date: "22 Jul 2026" }
+                this.collections = [];
 
-            ];
+                this.hadLoadIssue = true;
+
+            }
+
+        }
+        catch (error) {
+
+            Logger.error(error);
+
+            this.collections = [];
+
+            this.hadLoadIssue = true;
 
         }
 
@@ -312,23 +353,32 @@ class DashboardManager {
 
         Logger.log("Loading Pending Due...");
 
-        const response = await ApiService.get("/due/pending");
+        try {
 
-        if (response && response.data) {
+            const response = await ApiService.get("/due/pending");
 
-            this.pendingDues = response.data;
+            if (response && response.data) {
 
-        } else {
+                this.pendingDues = response.data;
 
-            Logger.log("Pending due API unavailable, showing demo data.");
+            } else {
 
-            this.pendingDues = [
+                Logger.log("Pending due data unavailable from API.");
 
-                { student: "Karan Singh", amount: 4500 },
-                { student: "Neha Rawat", amount: 2700 },
-                { student: "Rohan Bisht", amount: 3900 }
+                this.pendingDues = [];
 
-            ];
+                this.hadLoadIssue = true;
+
+            }
+
+        }
+        catch (error) {
+
+            Logger.error(error);
+
+            this.pendingDues = [];
+
+            this.hadLoadIssue = true;
 
         }
 

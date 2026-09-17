@@ -1,6 +1,6 @@
 /* ==========================================================
    AcademiaX ERP
-   Fee Heads CSS v3.0 -> v4.0 (Improved UX/UI)
+   Fee Heads CSS v4.2 (Bugfixes + Nav + Improved UX/UI)
 ========================================================== */
 
 /* ================= ROOT ================= */
@@ -101,6 +101,58 @@ select:focus-visible{
     flex:1;
 }
 
+.back-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    height:32px;
+    padding:0 12px;
+    margin-bottom:10px;
+    border:1px solid var(--border);
+    border-radius:8px;
+    background:#fff;
+    color:var(--text);
+    font-size:13px;
+    font-weight:600;
+    cursor:pointer;
+    transition:var(--transition);
+}
+
+.back-btn:hover{
+    background:#f8fafc;
+    border-color:var(--primary);
+    color:var(--primary);
+    transform:translateX(-2px);
+}
+
+.breadcrumb{
+    font-size:12px;
+    color:var(--text-light);
+    margin-bottom:10px;
+    display:flex;
+    align-items:center;
+    gap:6px;
+}
+
+.breadcrumb a{
+    color:var(--text-light);
+    text-decoration:none;
+}
+
+.breadcrumb a:hover{
+    color:var(--primary);
+    text-decoration:underline;
+}
+
+.breadcrumb-sep{
+    opacity:.6;
+}
+
+.breadcrumb-current{
+    color:var(--text);
+    font-weight:600;
+}
+
 .page-tag{
     display:inline-flex;
     align-items:center;
@@ -149,7 +201,7 @@ select:focus-visible{
 .page-header-right input{
     width:100%;
     height:42px;
-    padding:0 16px 0 42px;
+    padding:0 40px 0 42px;
     border-radius:12px;
     border:1px solid var(--border);
     background:#fff;
@@ -166,6 +218,30 @@ select:focus-visible{
 .page-header-right input:focus{
     border-color:var(--primary);
     box-shadow:0 0 0 3px rgba(255,122,0,.12);
+}
+
+.clear-search-btn{
+    position:absolute;
+    right:8px;
+    top:50%;
+    transform:translateY(-50%);
+    width:26px;
+    height:26px;
+    border:none;
+    border-radius:50%;
+    background:#eef1f6;
+    color:var(--text-light);
+    font-size:12px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transition:var(--transition);
+}
+
+.clear-search-btn:hover{
+    background:#e2e8f0;
+    color:var(--text);
 }
 
 /* ================= STATS BAR ================= */
@@ -186,6 +262,12 @@ select:focus-visible{
     align-items:center;
     justify-content:space-between;
     box-shadow:var(--shadow);
+    transition:var(--transition);
+}
+
+.stat-pill:hover{
+    box-shadow:var(--shadow-hover);
+    transform:translateY(-1px);
 }
 
 .stat-pill .stat-label{
@@ -229,6 +311,11 @@ select:focus-visible{
     box-shadow:var(--shadow-hover);
 }
 
+.add-fee-card{
+    position:sticky;
+    top:18px;
+}
+
 .section-title{
     margin-bottom:18px;
 }
@@ -269,6 +356,7 @@ select:focus-visible{
     font-size:12px;
     color:var(--text-light);
     margin-top:4px;
+    min-height:16px;
 }
 
 /* ================= FILTER SELECT ================= */
@@ -313,6 +401,10 @@ select:focus-visible{
     font-size:13px;
     font-weight:600;
     color:var(--text);
+}
+
+.required-mark{
+    color:var(--danger);
 }
 
 .form-group-header label{
@@ -384,6 +476,14 @@ select:focus-visible{
     box-shadow:0 0 0 3px rgba(255,122,0,.12);
 }
 
+.form-group textarea.over-limit{
+    border-color:var(--danger);
+}
+
+.form-group textarea.over-limit:focus{
+    box-shadow:0 0 0 3px rgba(239,68,68,.14);
+}
+
 .form-group input::placeholder,
 .form-group textarea::placeholder{
     color:#94a3b8;
@@ -441,6 +541,11 @@ select:focus-visible{
     box-shadow:0 0 0 2px var(--primary);
 }
 
+.color-swatch.selected{
+    transform:scale(1.1);
+    box-shadow:0 0 0 2px #fff, 0 0 0 4px var(--primary);
+}
+
 /* ==========================================================
    BUTTONS (form)
 ========================================================== */
@@ -491,11 +596,6 @@ select:focus-visible{
 #btnCancelEdit:hover{
     background:#f8fafc;
     color:var(--text);
-}
-
-.add-fee-card{
-    position:sticky;
-    top:18px;
 }
 
 /* ==========================================================
@@ -993,10 +1093,6 @@ button:disabled{
         position:static;
     }
 
-    .stats-bar{
-        grid-template-columns:repeat(3,1fr);
-    }
-
 }
 
 @media (max-width:600px){
@@ -1055,6 +1151,8 @@ button:disabled{
 @media print{
 
     .page-header-right,
+    .back-btn,
+    .breadcrumb,
     .card-actions,
     #btnAddFeeHead,
     #btnCancelEdit,

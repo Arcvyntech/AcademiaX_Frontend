@@ -23,6 +23,16 @@
 
         <div class="page-header-left">
 
+            <button type="button" id="btnBackToDashboard" class="back-btn" aria-label="Back to Dashboard">
+                ← Dashboard
+            </button>
+
+            <nav class="breadcrumb" aria-label="Breadcrumb">
+                <a href="../dashboard.html">Dashboard</a>
+                <span class="breadcrumb-sep">/</span>
+                <span class="breadcrumb-current">Fee Heads</span>
+            </nav>
+
             <span class="page-tag">
                 💰 Fee Management
             </span>
@@ -41,7 +51,17 @@
                 type="text"
                 id="searchFeeHead"
                 placeholder="Search Fee Head..."
-                aria-label="Search Fee Heads">
+                aria-label="Search Fee Heads"
+                autocomplete="off">
+
+            <button
+                type="button"
+                id="clearSearchBtn"
+                class="clear-search-btn"
+                aria-label="Clear search"
+                hidden>
+                ✕
+            </button>
 
         </div>
 
@@ -83,13 +103,16 @@
 
             <div class="form-group">
 
-                <label for="feeHeadName">Fee Head Name</label>
+                <label for="feeHeadName">
+                    Fee Head Name <span class="required-mark" aria-hidden="true">*</span>
+                </label>
 
                 <input
                     type="text"
                     id="feeHeadName"
                     placeholder="Admission Fee"
-                    autocomplete="off">
+                    autocomplete="off"
+                    aria-required="true">
 
                 <span class="field-error" id="feeHeadNameError" hidden></span>
 
