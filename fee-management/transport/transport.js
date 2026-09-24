@@ -1718,13 +1718,13 @@ if (Array.isArray(assignment.assignedMonths)) {
     <button
         class="btn btn-primary edit-assignment"
         data-id="${assignment._id}">
-        <i class="fas fa-edit"></i> Edit
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg> Edit
     </button>
 
     <button
         class="btn btn-danger remove-assignment"
         data-id="${assignment._id}">
-        <i class="fas fa-trash"></i> Remove
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0-.9 14a2 2 0 0 1-2 1.9H7.9a2 2 0 0 1-2-1.9L5 6"/></svg> Remove
     </button>
 
 </td>
@@ -2122,7 +2122,7 @@ function updateRouteFormUI() {
 
     if (routeForm.dataset.editId) {
 
-        submitBtn.innerHTML = "💾 Save Route";
+        submitBtn.innerHTML = "Save Route";
 
         if (!cancelBtn) {
 
@@ -2130,7 +2130,7 @@ function updateRouteFormUI() {
             cancelBtn.type = "button";
             cancelBtn.id = "cancelRouteEditBtn";
             cancelBtn.className = "btn btn-secondary";
-            cancelBtn.innerHTML = "❌ Cancel Edit";
+            cancelBtn.innerHTML = "Cancel Edit";
 
             submitBtn.insertAdjacentElement("afterend", cancelBtn);
 
@@ -2140,7 +2140,7 @@ function updateRouteFormUI() {
 
     } else {
 
-        submitBtn.innerHTML = "💾 Save Route";
+        submitBtn.innerHTML = "Save Route";
 
         cancelBtn?.remove();
 
@@ -2297,7 +2297,7 @@ function updateBusFormUI() {
 
     if (busForm.dataset.editId) {
 
-        submitBtn.innerHTML = "💾 Save Bus";
+        submitBtn.innerHTML = "Save Bus";
 
         if (!cancelBtn) {
 
@@ -2305,7 +2305,7 @@ function updateBusFormUI() {
             cancelBtn.type = "button";
             cancelBtn.id = "cancelBusEditBtn";
             cancelBtn.className = "btn btn-secondary";
-            cancelBtn.innerHTML = "❌ Cancel Edit";
+            cancelBtn.innerHTML = "Cancel Edit";
 
             submitBtn.insertAdjacentElement("afterend", cancelBtn);
 
@@ -2315,7 +2315,7 @@ function updateBusFormUI() {
 
     } else {
 
-        submitBtn.innerHTML = "💾 Save Bus";
+        submitBtn.innerHTML = "Save Bus";
 
         cancelBtn?.remove();
 
@@ -2552,7 +2552,7 @@ function startAssignmentEdit(assignment) {
     if (submitButton) {
 
         submitButton.innerHTML =
-            "💾 Update Assignment";
+            "Update Assignment";
 
     }
 
@@ -2650,7 +2650,7 @@ assignStudents = async function () {
         if (submitButton) {
 
             submitButton.innerHTML =
-                "👨‍🎓 Assign Selected Students";
+                "Assign Selected Students";
 
         }
 
@@ -2766,7 +2766,7 @@ function cancelAssignmentEdit() {
     if (submitButton) {
 
         submitButton.innerHTML =
-            "👨‍🎓 Assign Selected Students";
+            "Assign Selected Students";
 
     }
 
@@ -2902,7 +2902,7 @@ function updateAssignmentEditorUI() {
     if (assignmentEditor.isEditing) {
 
         submitBtn.innerHTML =
-            "💾 Update Assignment";
+            "Update Assignment";
 
         if (!cancelBtn) {
 
@@ -2918,7 +2918,7 @@ function updateAssignmentEditorUI() {
                 "btn btn-secondary";
 
             cancelBtn.innerHTML =
-                "❌ Cancel Edit";
+                "Cancel Edit";
 
             submitBtn.insertAdjacentElement(
                 "afterend",
@@ -2933,7 +2933,7 @@ function updateAssignmentEditorUI() {
     } else {
 
         submitBtn.innerHTML =
-            "👨‍🎓 Assign Selected Students";
+            "Assign Selected Students";
 
         cancelBtn?.remove();
 

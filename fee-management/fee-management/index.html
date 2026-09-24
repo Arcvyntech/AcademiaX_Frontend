@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AcademiaX | All-in-One Fee Manager</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../fee-management.css">
 </head>
 <body>
@@ -14,7 +17,10 @@
     <header class="page-header">
         <div class="page-header-left">
             <a href="../dashboard.html" class="fm-back-link">&larr; Back to Dashboard</a>
-            <span class="page-tag">Fee Management</span>
+            <span class="page-tag">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M8 12h8M12 8v8"/></svg>
+                Fee Management
+            </span>
             <h1>All-in-One Fee Manager</h1>
             <p>Manage fee heads, structure, payments, collections and dues from one place.</p>
         </div>
@@ -22,13 +28,34 @@
 
     <!-- TAB NAVIGATION -->
     <nav class="fm-tab-nav">
-        <button class="fm-tab-btn active" data-tab="tab-fee-heads">Fee Heads</button>
-        <button class="fm-tab-btn" data-tab="tab-transport">Transport</button>
-        <button class="fm-tab-btn" data-tab="tab-fee-setup">Fee Setup</button>
-        <button class="fm-tab-btn" data-tab="tab-fee-status">Fee Status</button>
-        <button class="fm-tab-btn" data-tab="tab-collection">Collection Report</button>
-        <button class="fm-tab-btn" data-tab="tab-dues">Dues Report</button>
-        <button class="fm-tab-btn" data-tab="tab-other-dues">Other Dues</button>
+        <button class="fm-tab-btn active" data-tab="tab-fee-heads">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12.5 3H5a2 2 0 0 0-2 2v7.5a2 2 0 0 0 .59 1.41l9.5 9.5a2 2 0 0 0 2.82 0l7.5-7.5a2 2 0 0 0 0-2.82l-9.5-9.5A2 2 0 0 0 12.5 3Z"/><circle cx="8.5" cy="8.5" r="1.3" fill="currentColor" stroke="none"/></svg>
+            <span class="fm-tab-label">Fee Heads</span>
+        </button>
+        <button class="fm-tab-btn" data-tab="tab-transport">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="12" rx="2.5"/><path d="M3 12h18M7 17v2M17 17v2"/><circle cx="7.5" cy="19.2" r="1.1" fill="currentColor" stroke="none"/><circle cx="16.5" cy="19.2" r="1.1" fill="currentColor" stroke="none"/></svg>
+            <span class="fm-tab-label">Transport</span>
+        </button>
+        <button class="fm-tab-btn" data-tab="tab-fee-setup">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h9M17 6h3M4 12h3M9 12h11M4 18h13M21 18h-1"/><circle cx="14" cy="6" r="1.6" fill="currentColor" stroke="none"/><circle cx="6.5" cy="12" r="1.6" fill="currentColor" stroke="none"/><circle cx="17" cy="18" r="1.6" fill="currentColor" stroke="none"/></svg>
+            <span class="fm-tab-label">Fee Setup</span>
+        </button>
+        <button class="fm-tab-btn" data-tab="tab-fee-status">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m4 7 1.7 1.7L9 5.3"/><path d="M13 6h7"/><path d="m4 14 1.7 1.7L9 12.3"/><path d="M13 13h7"/><path d="m4 21 1.7 1.7L9 19.3"/><path d="M13 20h7"/></svg>
+            <span class="fm-tab-label">Fee Status</span>
+        </button>
+        <button class="fm-tab-btn" data-tab="tab-collection">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><rect x="6" y="12" width="3.2" height="9"/><rect x="11.4" y="7" width="3.2" height="14"/><rect x="16.8" y="15" width="3.2" height="6"/></svg>
+            <span class="fm-tab-label">Collection Report</span>
+        </button>
+        <button class="fm-tab-btn" data-tab="tab-dues">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5 22 20H2z"/><path d="M12 10v4"/><circle cx="12" cy="17" r=".9" fill="currentColor" stroke="none"/></svg>
+            <span class="fm-tab-label">Dues Report</span>
+        </button>
+        <button class="fm-tab-btn" data-tab="tab-other-dues">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9.3"/><path d="M12 8v8M8 12h8"/></svg>
+            <span class="fm-tab-label">Other Dues</span>
+        </button>
     </nav>
 
     <!-- TAB 1: FEE HEADS -->
@@ -50,12 +77,13 @@
                 <div class="fm-form-group">
                     <label for="fhColor">Color Tag</label>
                     <div class="fm-color-picker">
-                        <input type="color" id="fhColor" value="#ff7a00">
+                        <input type="color" id="fhColor" value="#e15b0f">
                         <span>Select Card Color</span>
                     </div>
                 </div>
                 <div id="fhEditingBanner" class="fm-editing-banner" style="display:none;">
-                    ✏️ Editing: <strong id="fhEditingBannerName"></strong>
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+                    Editing: <strong id="fhEditingBannerName"></strong>
                 </div>
                 <div class="fm-form-actions">
                     <button id="btnAddFH" class="fm-btn fm-btn-primary fm-btn-block">+ Add Fee Head</button>
@@ -68,7 +96,10 @@
                         <h2>Existing Fee Heads</h2>
                         <p>Manage, edit or deactivate fee heads</p>
                     </div>
-                    <input type="text" id="searchFH" placeholder="Search fee heads..." class="fm-input" style="width:220px;">
+                    <div class="fm-search-wrap" style="width:220px;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+                        <input type="text" id="searchFH" placeholder="Search fee heads..." class="fm-input">
+                    </div>
                 </div>
                 <div id="fhContainer" class="fm-fee-head-list">
                     <!-- Rendered by JS -->
@@ -81,11 +112,14 @@
     <div id="tab-transport" class="fm-tab-content">
         <div class="fm-section-title" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
             <div>
-                <h2>🚌 Transport Overview</h2>
+                <h2>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="12" rx="2.5"/><path d="M3 12h18M7 17v2M17 17v2"/><circle cx="7.5" cy="19.2" r="1.1" fill="currentColor" stroke="none"/><circle cx="16.5" cy="19.2" r="1.1" fill="currentColor" stroke="none"/></svg>
+                    Transport Overview
+                </h2>
                 <p>View transport routes, buses and student assignments</p>
             </div>
             <a href="../transport/index.html" class="fm-btn fm-btn-primary" style="text-decoration:none;">
-                ⚙ Manage Routes, Buses & Drivers
+                Manage Routes, Buses &amp; Drivers
             </a>
         </div>
         <div id="transportStats" class="fm-transport-stats">
@@ -178,7 +212,10 @@
                     <option value="">All Classes</option>
                 </select>
             </div>
-            <input type="text" id="statusSearch" placeholder="Search student..." class="fm-input">
+            <div class="fm-search-wrap">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+                <input type="text" id="statusSearch" placeholder="Search student..." class="fm-input">
+            </div>
             <button id="btnLoadStatus" class="fm-btn fm-btn-primary">Load Status</button>
         </div>
         <div id="feeStatusContainer">
@@ -253,20 +290,35 @@
                     <option value="">All Classes</option>
                 </select>
             </div>
-            <input type="text" id="duesSearch" placeholder="Search student..." class="fm-input">
+            <div class="fm-search-wrap">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+                <input type="text" id="duesSearch" placeholder="Search student..." class="fm-input">
+            </div>
             <button id="btnLoadDues" class="fm-btn fm-btn-primary">Load Dues</button>
-            <button id="btnWhatsAppAll" class="fm-btn" style="background:#25D366;color:#fff;">💬 WhatsApp Reminder (All)</button>
-            <button id="btnAttendanceFlags" class="fm-btn" style="background:#f59e0b;color:#fff;">⚠ Attendance Flags</button>
+            <button id="btnWhatsAppAll" class="fm-btn fm-btn-whatsapp">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                WhatsApp Reminders
+            </button>
+            <button id="btnAttendanceFlags" class="fm-btn fm-btn-flag">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4"/><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/><circle cx="12" cy="16" r=".9" fill="currentColor" stroke="none"/></svg>
+                Attendance Flags
+            </button>
         </div>
         <div id="duesSummary" class="fm-dues-summary">
             <!-- Summary stats rendered by JS -->
         </div>
-        <div id="attendanceFlagsPanel" style="display:none;margin:16px 0;padding:16px;background:#fff7ed;border:1px solid #f59e0b;border-radius:12px;">
-            <h3 style="margin:0 0 12px;color:#92400e;">⚠ Students Flagged for Long Absences (Fee Concession Review)</h3>
+        <div id="attendanceFlagsPanel" class="fm-info-panel fm-info-panel-warning" style="display:none;">
+            <h3>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4"/><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/><circle cx="12" cy="16" r=".9" fill="currentColor" stroke="none"/></svg>
+                Students Flagged for Long Absences (Fee Concession Review)
+            </h3>
             <div id="attendanceFlagsList"></div>
         </div>
-        <div id="whatsappPanel" style="display:none;margin:16px 0;padding:16px;background:#f0fdf4;border:1px solid #16a34a;border-radius:12px;">
-            <h3 style="margin:0 0 12px;color:#166534;">💬 WhatsApp Fee Reminders — click a link to open WhatsApp with pre-filled message</h3>
+        <div id="whatsappPanel" class="fm-info-panel fm-info-panel-success" style="display:none;">
+            <h3>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                WhatsApp Fee Reminders — tap Send to open a pre-filled message
+            </h3>
             <div id="whatsappList"></div>
         </div>
         <div id="duesTableContainer">

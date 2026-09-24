@@ -3,6 +3,7 @@
    Common / Shared Component Styles
    Used across Dashboard, Fee Heads, Transport, and any
    other module page that includes assets/css/common.css
+   Version 1.2 - Added styled Modal.confirm() dialog
 ========================================================== */
 
 /* ================= TOAST NOTIFICATIONS ================= */
@@ -13,79 +14,147 @@
   z-index: 10050;
   display: flex;
   flex-direction: column-reverse;
-  gap: 10px;
+  gap: 12px;
   pointer-events: none;
 }
+
 .app-toast {
-  min-width: 280px;
-  max-width: 400px;
-  padding: 14px 16px;
-  border-radius: 12px;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, .15);
+  min-width: 300px;
+  max-width: 410px;
+  padding: 15px 16px;
+  border-radius: 13px;
+  box-shadow: 0 16px 36px rgba(16, 24, 40, .18);
   color: #fff;
-  font-size: 14px;
+  font-family: "Inter", "Segoe UI", sans-serif;
+  font-size: 13.5px;
   font-weight: 600;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   pointer-events: auto;
+  position: relative;
+  overflow: hidden;
   transform: translateX(120%);
   opacity: 0;
   transition: all .35s cubic-bezier(.4, 0, .2, 1);
 }
+
 .app-toast.show {
   transform: translateX(0);
   opacity: 1;
 }
+
 .app-toast.hide {
   transform: translateX(120%);
   opacity: 0;
 }
-.app-toast-success { background: linear-gradient(135deg, #10b981, #16a34a); }
-.app-toast-error   { background: linear-gradient(135deg, #ef4444, #dc2626); }
-.app-toast-warning { background: linear-gradient(135deg, #f59e0b, #d97706); }
+
+.app-toast-success { background: linear-gradient(135deg, #17b26a, #0d8a51); }
+.app-toast-error   { background: linear-gradient(135deg, #f04438, #d92d20); }
+.app-toast-warning { background: linear-gradient(135deg, #f79009, #dc7609); }
 .app-toast-info    { background: linear-gradient(135deg, #3b82f6, #2563eb); }
+
 .app-toast-icon {
-  font-size: 17px;
+  width: 26px;
+  height: 26px;
   flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  background: rgba(255, 255, 255, .22);
+  border-radius: 50%;
 }
+
 .app-toast-msg {
   flex: 1;
-  line-height: 1.4;
+  line-height: 1.45;
 }
+
 .app-toast-close {
   background: none;
   border: none;
-  color: rgba(255, 255, 255, .75);
-  font-size: 18px;
+  color: rgba(255, 255, 255, .8);
+  font-size: 17px;
   cursor: pointer;
-  padding: 0;
+  padding: 2px;
   line-height: 1;
   flex-shrink: 0;
-  transition: color .15s;
+  border-radius: 6px;
+  transition: color .15s ease, background .15s ease;
 }
-.app-toast-close:hover { color: #fff; }
+
+.app-toast-close:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, .15);
+}
+
+/* Subtle auto-dismiss progress bar along the bottom edge */
+.app-toast::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 3px;
+  width: 100%;
+  background: rgba(255, 255, 255, .45);
+  transform-origin: left;
+  animation: appToastProgress 4s linear forwards;
+}
+
+@keyframes appToastProgress {
+  from { transform: scaleX(1); }
+  to   { transform: scaleX(0); }
+}
 
 /* ================= LOADING OVERLAY ================= */
 .app-loader-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(255, 255, 255, .75);
-  backdrop-filter: blur(3px);
+  background: rgba(255, 255, 255, .78);
+  backdrop-filter: blur(4px);
   z-index: 10040;
   display: none;
   align-items: center;
   justify-content: center;
 }
-.app-loader-overlay.active { display: flex; }
-.app-spinner {
-  width: 44px;
-  height: 44px;
-  border: 4px solid #e2e8f0;
-  border-top-color: #ff7a00;
-  border-radius: 50%;
-  animation: appSpin .8s linear infinite;
+
+.app-loader-overlay.active {
+  display: flex;
+  animation: appFadeIn .2s ease;
 }
+
+@keyframes appFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.app-spinner {
+  width: 48px;
+  height: 48px;
+  position: relative;
+}
+
+.app-spinner::before,
+.app-spinner::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 4px solid transparent;
+}
+
+.app-spinner::before {
+  border-top-color: #ff7a00;
+  border-right-color: #ff7a00;
+  animation: appSpin .75s linear infinite;
+}
+
+.app-spinner::after {
+  border: 4px solid #eef1f6;
+  z-index: -1;
+}
+
 @keyframes appSpin {
   to { transform: rotate(360deg); }
 }
@@ -99,5 +168,127 @@
   .app-toast {
     min-width: 0;
     width: 100%;
+  }
+}
+
+/* ================= MODAL (Confirm Dialog) ================= */
+.app-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 20, 30, .55);
+  backdrop-filter: blur(2px);
+  z-index: 10060;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .18s ease, visibility .18s ease;
+}
+
+.app-modal-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.app-modal-box {
+  background: var(--white, #fff);
+  border-radius: var(--radius, 16px);
+  padding: 28px 26px 22px;
+  width: 100%;
+  max-width: 360px;
+  text-align: center;
+  box-shadow: var(--shadow-lg, 0 24px 56px rgba(20, 23, 31, .18));
+  transform: translateY(10px) scale(.98);
+  transition: transform .18s ease;
+}
+
+.app-modal-overlay.active .app-modal-box {
+  transform: translateY(0) scale(1);
+}
+
+.app-modal-icon {
+  width: 48px;
+  height: 48px;
+  margin: 0 auto 14px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--info-soft, #eaf1ff);
+  color: var(--info-dark, #1c439e);
+}
+
+.app-modal-icon svg {
+  width: 22px;
+  height: 22px;
+}
+
+.app-modal-box.app-modal-danger .app-modal-icon {
+  background: var(--danger-soft, #fdedec);
+  color: var(--danger-dark, #b02419);
+}
+
+.app-modal-title {
+  font-size: 16.5px;
+  font-weight: 700;
+  color: var(--text-dark, #14171f);
+  margin-bottom: 8px;
+}
+
+.app-modal-message {
+  font-size: 13.5px;
+  color: var(--text-light, #626b7a);
+  line-height: 1.6;
+  margin-bottom: 22px;
+}
+
+.app-modal-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.app-modal-btn {
+  flex: 1;
+  height: 42px;
+  border-radius: var(--radius-sm, 10px);
+  font-size: 13.5px;
+  font-weight: 700;
+  font-family: inherit;
+  border: none;
+  cursor: pointer;
+  transition: var(--transition, .18s cubic-bezier(.4, 0, .2, 1));
+}
+
+.app-modal-btn-cancel {
+  background: var(--border-soft, #edf0f5);
+  color: var(--text-body, #333a47);
+}
+
+.app-modal-btn-cancel:hover {
+  background: var(--border-color, #e2e6ed);
+}
+
+.app-modal-btn-confirm {
+  background: var(--primary-color, #e15b0f);
+  color: #fff;
+}
+
+.app-modal-btn-confirm:hover {
+  background: var(--primary-dark, #b84509);
+}
+
+.app-modal-box.app-modal-danger .app-modal-btn-confirm {
+  background: var(--danger, #d92d20);
+}
+
+.app-modal-box.app-modal-danger .app-modal-btn-confirm:hover {
+  background: var(--danger-dark, #b02419);
+}
+
+@media (max-width: 480px) {
+  .app-modal-box {
+    padding: 24px 20px 18px;
   }
 }

@@ -19,6 +19,17 @@ const FeeManagement = {
   MONTH_NAMES: ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],
   MONTH_FULL: ["January","February","March","April","May","June","July","August","September","October","November","December"],
 
+  // Small inline icon set — kept as strings so every rendered panel/card
+  // shares the exact same visual language instead of mixed emoji.
+  ICONS: {
+    routes: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 20V10l3-7 3 7v10"/><path d="M5 20h14"/><circle cx="12" cy="14" r="1" fill="currentColor" stroke="none"/></svg>',
+    users: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M2.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6"/><path d="M16.5 5.5a3 3 0 0 1 0 5.8"/><path d="M19.5 20c0-2.9-1.7-5-4-5.7"/></svg>',
+    bus: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="12" rx="2.5"/><path d="M3 12h18M7 17v2M17 17v2"/><circle cx="7.5" cy="19.2" r="1.1" fill="currentColor" stroke="none"/><circle cx="16.5" cy="19.2" r="1.1" fill="currentColor" stroke="none"/></svg>',
+    money: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2.5"/><circle cx="12" cy="12" r="3"/><path d="M6 9v.01M18 15v.01"/></svg>',
+    whatsapp: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>',
+    check: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>'
+  },
+
   // ══════════════════════════════════════════════════════════
   //  HELPERS
   // ══════════════════════════════════════════════════════════
@@ -119,6 +130,11 @@ const FeeManagement = {
     if (cls.nickname) return name + " (" + cls.nickname + ")";
     if (cls.section) return name + " - " + cls.section;
     return name || "-";
+  },
+
+  emptyState(iconSvg, title, message) {
+    return '<div class="fm-empty"><div class="fm-empty-icon">' + iconSvg + "</div>" +
+      "<h3>" + this.escapeHtml(title) + "</h3><p>" + this.escapeHtml(message) + "</p></div>";
   },
 
   // ══════════════════════════════════════════════════════════
@@ -312,9 +328,11 @@ const FeeManagement = {
     var container = document.getElementById("fhContainer");
     if (!container) return;
     if (!heads || heads.length === 0) {
-      container.innerHTML =
-        '<div class="fm-empty"><div class="fm-empty-icon">&#128203;</div>' +
-        "<h3>No Fee Heads</h3><p>No fee heads found. Create one using the form.</p></div>";
+      container.innerHTML = this.emptyState(
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12.5 3H5a2 2 0 0 0-2 2v7.5a2 2 0 0 0 .59 1.41l9.5 9.5a2 2 0 0 0 2.82 0l7.5-7.5a2 2 0 0 0 0-2.82l-9.5-9.5A2 2 0 0 0 12.5 3Z"/><circle cx="8.5" cy="8.5" r="1.3" fill="currentColor" stroke="none"/></svg>',
+        "No fee heads yet",
+        "Create your first fee category using the form on the left."
+      );
       return;
     }
     var self = this;
@@ -369,7 +387,7 @@ const FeeManagement = {
     var formCard = document.querySelector(".fm-fee-heads-form");
     if (nameInput) nameInput.value = fh.name || "";
     if (descInput) descInput.value = fh.description || "";
-    if (colorInput) colorInput.value = fh.color || "#ff7a00";
+    if (colorInput) colorInput.value = fh.color || "#e15b0f";
     if (btnAdd) btnAdd.textContent = "Update Fee Head";
     if (banner) banner.style.display = "block";
     if (bannerName) bannerName.textContent = fh.name || "";
@@ -388,7 +406,7 @@ const FeeManagement = {
     var btnCancel = document.getElementById("btnCancelFHEdit");
     if (nameInput) nameInput.value = "";
     if (descInput) descInput.value = "";
-    if (colorInput) colorInput.value = "#ff7a00";
+    if (colorInput) colorInput.value = "#e15b0f";
     if (btnAdd) btnAdd.textContent = "+ Add Fee Head";
     if (banner) banner.style.display = "none";
     if (btnCancel) btnCancel.style.display = "none";
@@ -397,7 +415,7 @@ const FeeManagement = {
   async saveFeeHead() {
     var name = (document.getElementById("fhName")?.value || "").trim();
     var description = (document.getElementById("fhDesc")?.value || "").trim();
-    var color = document.getElementById("fhColor")?.value || "#ff7a00";
+    var color = document.getElementById("fhColor")?.value || "#e15b0f";
     if (!name) { this.showToast("Fee head name is required", "error"); return; }
 
     this.setLoading(true);
@@ -494,16 +512,19 @@ const FeeManagement = {
     if (!container) return;
     var self = this;
     var stats = [
-      { label: "Total Routes", value: data.totalRoutes || 0, icon: "&#128652;" },
-      { label: "Total Students", value: data.totalStudents || 0, icon: "&#128100;" },
-      { label: "Vehicle Capacity", value: data.totalVehicles || 0, icon: "&#128663;" },
-      { label: "Monthly Revenue", value: self.formatCurrency(data.monthlyRevenue || 0), icon: "&#128176;" }
+      { label: "Total Routes", value: data.totalRoutes || 0, icon: self.ICONS.routes },
+      { label: "Total Students", value: data.totalStudents || 0, icon: self.ICONS.users },
+      { label: "Vehicle Capacity", value: data.totalVehicles || 0, icon: self.ICONS.bus },
+      { label: "Monthly Revenue", value: self.formatCurrency(data.monthlyRevenue || 0), icon: self.ICONS.money }
     ];
     container.className = "fm-transport-stats";
     container.innerHTML = stats.map(function(s) {
       return '<div class="fm-transport-stat">' +
-        '<div class="stat-value">' + s.value + "</div>" +
-        '<div class="stat-label">' + s.label + "</div>" +
+        '<div class="stat-icon">' + s.icon + "</div>" +
+        "<div>" +
+          '<div class="stat-value">' + s.value + "</div>" +
+          '<div class="stat-label">' + s.label + "</div>" +
+        "</div>" +
       "</div>";
     }).join("");
   },
@@ -512,9 +533,7 @@ const FeeManagement = {
     var container = document.getElementById("transportContainer");
     if (!container) return;
     if (!routeList || routeList.length === 0) {
-      container.innerHTML =
-        '<div class="fm-empty"><div class="fm-empty-icon">&#128652;</div>' +
-        "<h3>No Routes</h3><p>No transport routes configured.</p></div>";
+      container.innerHTML = this.emptyState(this.ICONS.bus, "No routes yet", "No transport routes have been configured.");
       return;
     }
     var self = this;
@@ -661,8 +680,8 @@ const FeeManagement = {
         var id = cls._id;
         var checked = selected.has(id) ? " checked" : "";
         var label = cls.name + (cls.nickname ? " (" + cls.nickname + ")" : cls.section ? " " + cls.section : "");
-        return '<label style="display:inline-flex;align-items:center;gap:4px;padding:4px 8px;background:#f8fafc;border:1px solid #e6ebf2;border-radius:6px;font-size:13px;cursor:pointer;">' +
-          '<input type="checkbox" name="' + prefix + '_class" value="' + id + '"' + checked + ' style="accent-color:#ff7a00;"> ' +
+        return '<label style="display:inline-flex;align-items:center;gap:4px;padding:4px 8px;background:var(--card-sunk);border:1px solid var(--border-soft);border-radius:6px;font-size:13px;cursor:pointer;">' +
+          '<input type="checkbox" name="' + prefix + '_class" value="' + id + '"' + checked + ' style="accent-color:var(--primary);"> ' +
           FeeManagement.escapeHtml(label) +
         "</label>";
       }).join("") +
@@ -819,9 +838,11 @@ const FeeManagement = {
     var container = document.getElementById("feeStatusContainer");
     if (!container) return;
     if (!students || students.length === 0) {
-      container.innerHTML =
-        '<div class="fm-empty"><div class="fm-empty-icon">&#128203;</div>' +
-        "<h3>No Students Found</h3><p>Select a session and class, then click Load Status.</p></div>";
+      container.innerHTML = this.emptyState(
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2h6l1 4H8Z"/><path d="M5 6h14l-1 15H6Z"/><path d="M9 11h6M9 15h6"/></svg>',
+        "No students loaded",
+        "Select a session and class, then click Load Status."
+      );
       return;
     }
     var self = this;
@@ -850,7 +871,7 @@ const FeeManagement = {
         }).join("");
 
         return '<div style="margin-top:12px;">' +
-          '<h4 style="font-size:14px;font-weight:600;margin-bottom:8px;color:' + (entry.color || '#ff7a00') + ';">' +
+          '<h4 style="font-size:13.5px;font-weight:700;margin-bottom:8px;color:' + (entry.color || 'var(--primary-dark)') + ';">' +
             self.escapeHtml(entry.feeHeadName) +
           "</h4>" +
           '<div class="fm-payment-tiles">' + tilesHtml + "</div>" +
@@ -873,7 +894,9 @@ const FeeManagement = {
         }).join("");
 
         transportHtml = '<div style="margin-top:12px;">' +
-          '<h4 style="font-size:14px;font-weight:600;margin-bottom:8px;color:#3b82f6;">&#128652; Transport (' + self.escapeHtml(stu.transport.routeName || "Route") + ")</h4>" +
+          '<h4 style="font-size:13.5px;font-weight:700;margin-bottom:8px;color:var(--transport);display:flex;align-items:center;gap:6px;">' +
+            '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="12" rx="2.5"/><path d="M3 12h18M7 17v2M17 17v2"/></svg>' +
+            "Transport (" + self.escapeHtml(stu.transport.routeName || "Route") + ")</h4>" +
           '<div class="fm-payment-tiles">' + tTilesHtml + "</div>" +
         "</div>";
       }
@@ -1028,10 +1051,10 @@ const FeeManagement = {
     var kpis = [
       { label: "Total Collected", value: self.formatCurrency(summary.totalCollected || 0), color: "var(--success)" },
       { label: "Regular Fees", value: self.formatCurrency(summary.totalRegular || 0), color: "var(--primary)" },
-      { label: "Transport Fees", value: self.formatCurrency(summary.totalTransport || 0), color: "var(--info)" },
+      { label: "Transport Fees", value: self.formatCurrency(summary.totalTransport || 0), color: "var(--transport)" },
       { label: "Cash", value: self.formatCurrency(summary.totalCash || 0), color: "var(--warning)" },
-      { label: "Online", value: self.formatCurrency(summary.totalOnline || 0), color: "#8b5cf6" },
-      { label: "Transactions", value: summary.totalTransactions || 0, color: "var(--text)" }
+      { label: "Online", value: self.formatCurrency(summary.totalOnline || 0), color: "var(--info)" },
+      { label: "Transactions", value: summary.totalTransactions || 0, color: "var(--text-muted)" }
     ];
     container.innerHTML = kpis.map(function(k) {
       return '<div class="fm-kpi-card" style="--kpi-color:' + k.color + '">' +
@@ -1045,9 +1068,7 @@ const FeeManagement = {
     var container = document.getElementById("collectionTableContainer");
     if (!container) return;
     if (!rows || rows.length === 0) {
-      container.innerHTML =
-        '<div class="fm-empty"><div class="fm-empty-icon">&#128176;</div>' +
-        "<h3>No Records</h3><p>No payment records found for the selected filters.</p></div>";
+      container.innerHTML = this.emptyState(this.ICONS.money, "No records found", "No payment records match the selected filters.");
       return;
     }
     var self = this;
@@ -1111,25 +1132,33 @@ const FeeManagement = {
     var list = document.getElementById("whatsappList");
     if (!panel || !list) return;
     panel.style.display = "block";
-    list.innerHTML = "Loading...";
+    list.innerHTML = '<p class="fm-empty-note">Loading reminders...</p>';
+    var self = this;
     try {
       var res = await apiFetch("/fee-features/whatsapp-reminders?session=" + encodeURIComponent(session), { auth: true });
       var items = res.data || [];
-      if (items.length === 0) { list.innerHTML = "<p style='color:#166534;'>🎉 No defaulters — everyone's paid up!</p>"; return; }
-      var self = this;
-      list.innerHTML = "<table style='width:100%;border-collapse:collapse;'>" +
-        "<thead><tr style='background:#dcfce7;'><th style='text-align:left;padding:8px;'>Student</th><th style='text-align:left;padding:8px;'>Class</th><th style='text-align:left;padding:8px;'>Pending</th><th style='text-align:left;padding:8px;'>Amount</th><th style='padding:8px;'>Action</th></tr></thead>" +
-        "<tbody>" + items.map(function(r) {
-          return "<tr style='border-bottom:1px solid #d1fae5;'>" +
-            "<td style='padding:8px;'>" + self.escapeHtml(r.studentName) + "</td>" +
-            "<td style='padding:8px;'>" + self.escapeHtml(r.className) + "</td>" +
-            "<td style='padding:8px;'>" + self.escapeHtml(r.pendingMonths) + "</td>" +
-            "<td style='padding:8px;'>₹" + r.totalDue + "</td>" +
-            "<td style='padding:8px;'>" + (r.whatsappLink ? "<a href='" + r.whatsappLink + "' target='_blank' style='background:#25D366;color:#fff;padding:6px 12px;border-radius:6px;text-decoration:none;'>💬 Send</a>" : "<em>No mobile</em>") + "</td>" +
-            "</tr>";
+      if (items.length === 0) {
+        list.innerHTML = '<p class="fm-empty-note is-success">No defaulters — every fee is paid up for this session.</p>';
+        return;
+      }
+      list.innerHTML =
+        '<table class="fm-mini-table"><thead><tr>' +
+          "<th>Student</th><th>Class</th><th>Pending</th><th>Amount</th><th>Action</th>" +
+        "</tr></thead><tbody>" +
+        items.map(function(r) {
+          var action = r.whatsappLink
+            ? '<a href="' + r.whatsappLink + '" target="_blank" rel="noopener" class="fm-chip-link">' + self.ICONS.whatsapp + " Send</a>"
+            : '<span class="fm-text-muted">No mobile on file</span>';
+          return "<tr>" +
+            "<td>" + self.escapeHtml(r.studentName) + "</td>" +
+            "<td>" + self.escapeHtml(r.className) + "</td>" +
+            "<td>" + self.escapeHtml(r.pendingMonths) + "</td>" +
+            "<td>" + self.formatCurrency(r.totalDue) + "</td>" +
+            "<td>" + action + "</td>" +
+          "</tr>";
         }).join("") + "</tbody></table>";
     } catch (err) {
-      list.innerHTML = "<p style='color:#b91c1c;'>Failed to load reminders: " + err.message + "</p>";
+      list.innerHTML = '<p class="fm-empty-note is-error">Couldn\'t load reminders: ' + self.escapeHtml(err.message || "unknown error") + "</p>";
     }
   },
 
@@ -1138,25 +1167,30 @@ const FeeManagement = {
     var list = document.getElementById("attendanceFlagsList");
     if (!panel || !list) return;
     panel.style.display = "block";
-    list.innerHTML = "Loading...";
+    list.innerHTML = '<p class="fm-empty-note">Loading attendance flags...</p>';
+    var self = this;
     try {
       var res = await apiFetch("/fee-features/attendance-flags?threshold=15", { auth: true });
       var items = res.data || [];
-      if (items.length === 0) { list.innerHTML = "<p style='color:#166534;'>No students flagged (threshold: 15+ consecutive absences).</p>"; return; }
-      var self = this;
-      list.innerHTML = "<table style='width:100%;border-collapse:collapse;'>" +
-        "<thead><tr style='background:#fed7aa;'><th style='text-align:left;padding:8px;'>Student</th><th style='text-align:left;padding:8px;'>Class</th><th style='text-align:left;padding:8px;'>Absent Days</th><th style='text-align:left;padding:8px;'>Period</th><th style='text-align:left;padding:8px;'>Suggestion</th></tr></thead>" +
-        "<tbody>" + items.map(function(r) {
-          return "<tr style='border-bottom:1px solid #fed7aa;'>" +
-            "<td style='padding:8px;'>" + self.escapeHtml(r.studentName) + "</td>" +
-            "<td style='padding:8px;'>" + self.escapeHtml(r.className) + "</td>" +
-            "<td style='padding:8px;font-weight:600;color:#b91c1c;'>" + r.consecutiveAbsentDays + " days</td>" +
-            "<td style='padding:8px;'>" + r.streakStart + " → " + r.streakEnd + "</td>" +
-            "<td style='padding:8px;color:#92400e;'>" + r.suggestion + "</td>" +
-            "</tr>";
+      if (items.length === 0) {
+        list.innerHTML = '<p class="fm-empty-note is-success">No students flagged (threshold: 15+ consecutive absences).</p>';
+        return;
+      }
+      list.innerHTML =
+        '<table class="fm-mini-table"><thead><tr>' +
+          "<th>Student</th><th>Class</th><th>Absent Days</th><th>Period</th><th>Suggestion</th>" +
+        "</tr></thead><tbody>" +
+        items.map(function(r) {
+          return "<tr>" +
+            "<td>" + self.escapeHtml(r.studentName) + "</td>" +
+            "<td>" + self.escapeHtml(r.className) + "</td>" +
+            '<td class="fm-text-danger" style="font-weight:700;">' + r.consecutiveAbsentDays + " days</td>" +
+            "<td>" + r.streakStart + " → " + r.streakEnd + "</td>" +
+            '<td class="fm-text-warning">' + r.suggestion + "</td>" +
+          "</tr>";
         }).join("") + "</tbody></table>";
     } catch (err) {
-      list.innerHTML = "<p style='color:#b91c1c;'>Failed to load flags: " + err.message + "</p>";
+      list.innerHTML = '<p class="fm-empty-note is-error">Couldn\'t load flags: ' + self.escapeHtml(err.message || "unknown error") + "</p>";
     }
   },
 
@@ -1214,9 +1248,7 @@ const FeeManagement = {
     var container = document.getElementById("duesTableContainer");
     if (!container) return;
     if (!students || students.length === 0) {
-      container.innerHTML =
-        '<div class="fm-empty"><div class="fm-empty-icon">&#10003;</div>' +
-        "<h3>No Dues</h3><p>No students with pending dues found.</p></div>";
+      container.innerHTML = this.emptyState(this.ICONS.check, "No dues", "No students with pending dues were found.");
       return;
     }
     var self = this;
@@ -1281,26 +1313,26 @@ const FeeManagement = {
   async loadStudentsForExtraDues(classId) {
     var container = document.getElementById("edStudentList");
     if (!container) return;
-    container.innerHTML = '<p style="color:#64748b;font-size:13px;">Loading students...</p>';
+    container.innerHTML = '<p class="fm-hint">Loading students...</p>';
     try {
       var res = await apiFetch("/fee/students?classId=" + encodeURIComponent(classId), { auth: true });
       var students = res.data || [];
       if (students.length === 0) {
-        container.innerHTML = '<p style="color:#64748b;font-size:13px;">No students in this class.</p>';
+        container.innerHTML = '<p class="fm-hint">No students in this class.</p>';
         return;
       }
       container.innerHTML = students.map(function(s) {
-        return '<label style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #f1f5f9;font-size:13px;cursor:pointer;">' +
-          '<input type="checkbox" name="edStudent" value="' + s._id + '" style="accent-color:#ff7a00;"> ' +
+        return '<label style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--border-soft);font-size:13px;cursor:pointer;">' +
+          '<input type="checkbox" name="edStudent" value="' + s._id + '" style="accent-color:var(--primary);"> ' +
           FeeManagement.escapeHtml(s.name) +
-          (s.fatherName ? ' <span style="color:#94a3b8;">(' + FeeManagement.escapeHtml(s.fatherName) + ")</span>" : "") +
+          (s.fatherName ? ' <span style="color:var(--text-muted);">(' + FeeManagement.escapeHtml(s.fatherName) + ")</span>" : "") +
         "</label>";
       }).join("");
       // Reset select all
       var selectAll = document.getElementById("edSelectAll");
       if (selectAll) selectAll.checked = false;
     } catch (err) {
-      container.innerHTML = '<p style="color:#ef4444;font-size:13px;">Failed to load students.</p>';
+      container.innerHTML = '<p class="fm-empty-note is-error">Failed to load students.</p>';
     }
   },
 
@@ -1364,9 +1396,10 @@ const FeeManagement = {
     var container = document.getElementById("extraDuesContainer");
     if (!container) return;
     if (!history || history.length === 0) {
-      container.innerHTML =
-        '<div class="fm-empty"><div class="fm-empty-icon">&#128204;</div>' +
-        "<h3>No Extra Dues</h3><p>No extra fees have been assigned yet.</p></div>";
+      container.innerHTML = this.emptyState(
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/></svg>',
+        "No extra dues", "No extra fees have been assigned yet."
+      );
       return;
     }
     var self = this;
@@ -1405,8 +1438,8 @@ const FeeManagement = {
             "<span>Due: " + dueDate + "</span>" +
             statusBadge +
           "</div>" +
-          (item.description ? '<p style="font-size:13px;color:#64748b;margin-top:8px;">' + self.escapeHtml(item.description) + "</p>" : "") +
-          (item.paidNote ? '<p style="font-size:12px;color:#10b981;margin-top:4px;">' + self.escapeHtml(item.paidNote) + "</p>" : "") +
+          (item.description ? '<p style="font-size:13px;color:var(--text-light);margin-top:8px;">' + self.escapeHtml(item.description) + "</p>" : "") +
+          (item.paidNote ? '<p style="font-size:12px;color:var(--success-dark);margin-top:4px;">' + self.escapeHtml(item.paidNote) + "</p>" : "") +
           '<div class="fm-dues-card-actions">' + actions + "</div>" +
         "</div>"
       );

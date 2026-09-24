@@ -1,7 +1,8 @@
 /* ==========================================================
    AcademiaX Fee Management Dashboard
    Dashboard JavaScript
-   Version 1.1 - Removed demo/fake fallback data
+   Version 1.6 - Logout now uses the styled Modal.confirm()
+   dialog instead of the native browser confirm().
 ========================================================== */
 
 "use strict";
@@ -27,9 +28,7 @@ class DashboardManager {
 
         this.elements = {};
 
-        // Tracks whether any data source failed, so we can show one
-        // combined notice instead of stacking multiple toasts.
-        this.hadLoadIssue = false;
+        this.isLoading = false;
 
     }
 
@@ -91,7 +90,19 @@ class DashboardManager {
 
             btnReports:
 
-                document.getElementById("btnReports")
+                document.getElementById("btnReports"),
+
+            btnRefresh:
+
+                document.getElementById("btnRefreshDashboard"),
+
+            lastUpdated:
+
+                document.getElementById("lastUpdated"),
+
+            btnLogout:
+
+                document.getElementById("btnLogout")
 
         };
 
@@ -155,6 +166,30 @@ class DashboardManager {
 
         }
 
+        if (this.elements.btnRefresh) {
+
+            this.elements.btnRefresh.addEventListener("click", () => {
+
+                if (!this.isLoading) {
+                    this.loadDashboard();
+                }
+
+            });
+
+        }
+
+        if (this.elements.btnLogout) {
+
+            this.elements.btnLogout.addEventListener("click", async (e) => {
+
+                e.preventDefault();
+
+                await this.handleLogout();
+
+            });
+
+        }
+
     }
 
     /* ======================================================
@@ -163,9 +198,10 @@ class DashboardManager {
 
     async loadDashboard() {
 
-        Loader.show();
+        this.isLoading = true;
+        this.setRefreshBusy(true);
 
-        this.hadLoadIssue = false;
+        Loader.show();
 
         try {
 
@@ -175,25 +211,23 @@ class DashboardManager {
 
             await this.loadPendingDue();
 
-            if (this.hadLoadIssue) {
-
-                Toast.error("Some dashboard data couldn't be loaded. Showing what's available.");
-
-            }
+            this.updateLastUpdated();
 
         }
 
         catch (error) {
 
+            // Loading issues are logged, not surfaced as an alarming
+            // banner/toast — the UI just shows zero/empty states.
             Logger.error(error);
-
-            Toast.error("Unable to load dashboard.");
 
         }
 
         finally {
 
             Loader.hide();
+            this.isLoading = false;
+            this.setRefreshBusy(false);
 
         }
 
@@ -207,40 +241,20 @@ class DashboardManager {
 
         Logger.log("Loading Statistics...");
 
-        try {
+        const response = await ApiService.get("/fee/dashboard", { silent: true });
 
-            const response = await ApiService.get("/fee/dashboard");
+        if (response && response.data) {
 
-            if (response && response.data) {
+            this.stats = {
+                feeHeads: response.data.feeHeads || 0,
+                students: response.data.students || 0,
+                todayCollection: response.data.todayCollection || 0,
+                pendingDue: response.data.pendingDue || 0
+            };
 
-                this.stats = {
-                    feeHeads: response.data.feeHeads || 0,
-                    students: response.data.students || 0,
-                    todayCollection: response.data.todayCollection || 0,
-                    pendingDue: response.data.pendingDue || 0
-                };
+        } else {
 
-            } else {
-
-                // Backend responded but with no usable data — show real
-                // zeros rather than fabricating numbers.
-                Logger.log("Dashboard statistics unavailable from API.");
-
-                this.stats = {
-                    feeHeads: 0,
-                    students: 0,
-                    todayCollection: 0,
-                    pendingDue: 0
-                };
-
-                this.hadLoadIssue = true;
-
-            }
-
-        }
-        catch (error) {
-
-            Logger.error(error);
+            Logger.log("Dashboard statistics unavailable from API.");
 
             this.stats = {
                 feeHeads: 0,
@@ -248,8 +262,6 @@ class DashboardManager {
                 todayCollection: 0,
                 pendingDue: 0
             };
-
-            this.hadLoadIssue = true;
 
         }
 
@@ -304,7 +316,8 @@ class DashboardManager {
         }
 
     }
-        /* ======================================================
+
+    /* ======================================================
                 LOAD RECENT COLLECTIONS
     ====================================================== */
 
@@ -312,32 +325,17 @@ class DashboardManager {
 
         Logger.log("Loading Recent Collections...");
 
-        try {
+        const response = await ApiService.get("/collection/recent", { silent: true });
 
-            const response = await ApiService.get("/collection/recent");
+        if (response && response.data) {
 
-            if (response && response.data) {
+            this.collections = response.data;
 
-                this.collections = response.data;
+        } else {
 
-            } else {
-
-                Logger.log("Recent collections unavailable from API.");
-
-                this.collections = [];
-
-                this.hadLoadIssue = true;
-
-            }
-
-        }
-        catch (error) {
-
-            Logger.error(error);
+            Logger.log("Recent collections unavailable from API.");
 
             this.collections = [];
-
-            this.hadLoadIssue = true;
 
         }
 
@@ -353,32 +351,17 @@ class DashboardManager {
 
         Logger.log("Loading Pending Due...");
 
-        try {
+        const response = await ApiService.get("/due/pending", { silent: true });
 
-            const response = await ApiService.get("/due/pending");
+        if (response && response.data) {
 
-            if (response && response.data) {
+            this.pendingDues = response.data;
 
-                this.pendingDues = response.data;
+        } else {
 
-            } else {
-
-                Logger.log("Pending due data unavailable from API.");
-
-                this.pendingDues = [];
-
-                this.hadLoadIssue = true;
-
-            }
-
-        }
-        catch (error) {
-
-            Logger.error(error);
+            Logger.log("Pending due data unavailable from API.");
 
             this.pendingDues = [];
-
-            this.hadLoadIssue = true;
 
         }
 
@@ -447,7 +430,7 @@ class DashboardManager {
         if (!this.pendingDues || this.pendingDues.length === 0) {
 
             this.elements.pendingDue.innerHTML =
-                '<p class="empty-state">🎉 No pending dues right now.</p>';
+                '<p class="empty-state">All caught up — no pending dues.</p>';
 
             return;
 
@@ -471,6 +454,31 @@ class DashboardManager {
             this.elements.pendingDue.appendChild(row);
 
         });
+
+    }
+
+    /* ======================================================
+                REFRESH BUTTON STATE
+    ====================================================== */
+
+    setRefreshBusy(isBusy) {
+
+        if (!this.elements.btnRefresh) return;
+
+        this.elements.btnRefresh.disabled = isBusy;
+        this.elements.btnRefresh.classList.toggle("is-refreshing", isBusy);
+
+    }
+
+    updateLastUpdated() {
+
+        if (!this.elements.lastUpdated) return;
+
+        const now = new Date();
+
+        const time = now.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+
+        this.elements.lastUpdated.textContent = `Updated ${time}`;
 
     }
 
@@ -505,6 +513,31 @@ class DashboardManager {
     openReports() {
 
         Toast.info("Reports Module Coming Soon");
+
+    }
+
+    /* ======================================================
+                LOGOUT
+    ====================================================== */
+
+    async handleLogout() {
+
+        const confirmed = await Modal.confirm({
+            title: "Log out?",
+            message: "You'll need to sign in again to access your dashboard.",
+            confirmText: "Logout",
+            cancelText: "Cancel",
+            variant: "danger"
+        });
+
+        if (!confirmed) return;
+
+        Logger.log("Logging out...");
+
+        Storage.remove("token");
+        localStorage.clear();
+
+        window.location.href = "index.html";
 
     }
 
